@@ -191,7 +191,6 @@ object Main: TMain
     Height = 369
     Align = alClient
     TabOrder = 1
-    ExplicitHeight = 361
     object Panel3: TPanel
       Left = 1
       Top = 352
@@ -199,8 +198,6 @@ object Main: TMain
       Height = 16
       Align = alBottom
       TabOrder = 1
-      ExplicitLeft = 5
-      ExplicitTop = 354
       object Label8: TLabel
         Left = 1
         Top = 1
@@ -220,9 +217,7 @@ object Main: TMain
         Align = alClient
         Alignment = taCenter
         Caption = 'Septiembre 2018'
-        ExplicitLeft = 200
-        ExplicitTop = 3
-        ExplicitWidth = 99
+        ExplicitWidth = 81
         ExplicitHeight = 13
       end
     end
@@ -234,10 +229,8 @@ object Main: TMain
       ActivePage = PFacturas
       Align = alClient
       TabOrder = 0
-      ExplicitTop = 6
       object PDevoluciones: TTabSheet
         Caption = 'Devoluciones'
-        ExplicitHeight = 315
         object GridDevoluciones: TDBGridEh
           Left = 0
           Top = 0
@@ -413,7 +406,6 @@ object Main: TMain
       object PFacturas: TTabSheet
         Caption = 'Facturas'
         ImageIndex = 1
-        ExplicitHeight = 315
         object GridFacturas: TDBGridEh
           Left = 0
           Top = 0
@@ -570,7 +562,6 @@ object Main: TMain
       object PNotas: TTabSheet
         Caption = 'Notas'
         ImageIndex = 2
-        ExplicitHeight = 315
         object GridNotas: TDBGridEh
           Left = 0
           Top = 0
@@ -747,7 +738,7 @@ object Main: TMain
   end
   object Conexion: TFDConnection
     Params.Strings = (
-      'Database=D:\SAIOPEN\BASICO.FDB'
+      'Database=D:\SAIOPEN\FACTELECTRONICA.FDB'
       'User_Name=SYSDBA'
       'Password=masterkey'
       'Protocol=TCPIP'
@@ -1005,7 +996,7 @@ object Main: TMain
     Left = 208
     Top = 152
     Bitmap = {
-      494C0101010008002C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010101000800300010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       00000000000000000000000000000000000000000000D3D2CF31515151AE5151
       51AE515151AE515151AE515151AE515151AE515151AE515151AE515151AE5151
@@ -1843,8 +1834,8 @@ object Main: TMain
       'SELECT C.ACCT CUENTA,A.APLI_IMPUESTO,A.PORCENRETENCION,C.BASE,'
       
         'IIF(C.CRUCE IN(select T.CLASE FROM TIPDOC T WHERE T.TIPO = '#39'FA'#39')' +
-        ' AND (A.APLI_IMPUESTO='#39#39' OR A.APLI_IMPUESTO IS NULL) AND C.ACCT=' +
-        'P.ACCT ,'#39'S'#39','#39'N'#39') AS PRINCIPAL,'
+        ' AND (A.APLI_IMPUESTO='#39#39' OR A.APLI_IMPUESTO IS NULL) ,'#39'S'#39','#39'N'#39') A' +
+        'S PRINCIPAL,'
       
         '(C.debiT - (C.CREDIT * -1)) AS VALOR,c.TIPO, c.BATCH,CE.CONCEPTO' +
         '_NOTAFE, CE.ENVIADO,'
@@ -1854,11 +1845,7 @@ object Main: TMain
       
         'INNER JOIN MOTIVOS_NOTAS MT ON (CE.CONCEPTO_NOTAFE =MT.CODIGO) A' +
         'ND (MT.TIPO=:CLASE)'
-      ''
       'INNER JOIN ACCT A ON (A.ACCT=C.ACCT)'
-      
-        'LEFT JOIN PAGOS P ON (C.ACCT=P.ACCT) AND (P.TIPO=C.CRUCE) AND (P' +
-        '.NUMERO=C.INVC)'
       'WHERE C.tipo=:Tipo and C.batch=:BATCH '
       'ORDER BY   PRINCIPAL DESC,VALOR ASC ')
     Left = 264
@@ -1868,19 +1855,19 @@ object Main: TMain
         Name = 'CLASE'
         DataType = ftString
         ParamType = ptInput
-        Value = Null
+        Value = 'NC'
       end
       item
         Name = 'TIPO'
         DataType = ftString
         ParamType = ptInput
-        Value = Null
+        Value = 'N11'
       end
       item
         Name = 'BATCH'
         DataType = ftInteger
         ParamType = ptInput
-        Value = Null
+        Value = 15
       end>
     object QNotDetalleCUENTA: TFloatField
       FieldName = 'CUENTA'

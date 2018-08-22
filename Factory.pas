@@ -798,7 +798,6 @@ begin
       vImpuestos := nil;
       SetLength(vImpuestos, Length(vImpuestos) + 1);
       Main.QNotDetalle.First;
-      vImpuestos := nil;
       while not Main.QNotDetalle.Eof do
       begin
         if Main.QNotDetalleAPLI_IMPUESTO.AsString = 'IVA' then
