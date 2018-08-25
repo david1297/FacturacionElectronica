@@ -226,7 +226,7 @@ object Main: TMain
       Top = 1
       Width = 1185
       Height = 351
-      ActivePage = PFacturas
+      ActivePage = PDevoluciones
       Align = alClient
       TabOrder = 0
       object PDevoluciones: TTabSheet
@@ -738,7 +738,7 @@ object Main: TMain
   end
   object Conexion: TFDConnection
     Params.Strings = (
-      'Database=D:\SAIOPEN\FACTELECTRONICA.FDB'
+      'Database=D:\SAIOPEN\FACTORY.FDB'
       'User_Name=SYSDBA'
       'Password=masterkey'
       'Protocol=TCPIP'
@@ -798,9 +798,9 @@ object Main: TMain
         '1.TOTALDCT + O1.IMPCONSUMO)TOTAL,coalesce((O1.IMPCONSUMO/o1.exte' +
         'nd)*100,0) PORC_CONSUMO,'
       
-        'o1.cod_unidad_venta uofmsales, O1.TOTALDCT,PORC_IVA,o1.vlr_iva,'#39 +
-        'XD12'#39' SERIALES,O1.IMPCONSUMO VLR_CONSUMO,(O1.EXTEND - O1.TOTALDC' +
-        'T) BASE,O1.EXTEND,O1.SERIALES DESC_ADICIONAL'
+        'o1.cod_unidad_venta uofmsales, O1.TOTALDCT,PORC_IVA,o1.vlr_iva,O' +
+        '1.IMPCONSUMO VLR_CONSUMO,(O1.EXTEND - O1.TOTALDCT) BASE,O1.EXTEN' +
+        'D,O1.SERIALES DESC_ADICIONAL'
       'FROM OEDET O1'
       'INNER JOIN ITEM I ON O1.item = I.ITEM'
       'where O1.tipo=:Tipo and O1.number=:number')
@@ -811,13 +811,13 @@ object Main: TMain
         Name = 'TIPO'
         DataType = ftString
         ParamType = ptInput
-        Value = Null
+        Value = 'F34'
       end
       item
         Name = 'NUMBER'
         DataType = ftInteger
         ParamType = ptInput
-        Value = Null
+        Value = 303
       end>
     object QFacDetalleITEM: TStringField
       FieldName = 'ITEM'
@@ -893,15 +893,6 @@ object Main: TMain
     object QFacDetalleVLR_IVA: TFloatField
       FieldName = 'VLR_IVA'
       Origin = 'VLR_IVA'
-    end
-    object QFacDetalleSERIALES: TStringField
-      AutoGenerateValue = arDefault
-      FieldName = 'SERIALES'
-      Origin = 'SERIALES'
-      ProviderFlags = []
-      ReadOnly = True
-      FixedChar = True
-      Size = 4
     end
     object QFacDetalleVLR_CONSUMO: TFloatField
       FieldName = 'VLR_CONSUMO'
@@ -996,7 +987,7 @@ object Main: TMain
     Left = 208
     Top = 152
     Bitmap = {
-      494C010101000800300010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010101000800340010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       00000000000000000000000000000000000000000000D3D2CF31515151AE5151
       51AE515151AE515151AE515151AE515151AE515151AE515151AE515151AE5151
@@ -1319,6 +1310,26 @@ object Main: TMain
       FieldName = 'Observaciones'
       Size = 500
     end
+    object MemFacturaPREFIJO_DIAN: TStringField
+      FieldName = 'PREFIJO_DIAN'
+      Size = 5
+    end
+    object MemFacturaRES_DIAN: TStringField
+      FieldName = 'RES_DIAN'
+      Size = 150
+    end
+    object MemFacturaFECHAINIFAC: TSQLTimeStampField
+      FieldName = 'FECHAINIFAC'
+    end
+    object MemFacturaFECHAVENFAC: TSQLTimeStampField
+      FieldName = 'FECHAVENFAC'
+    end
+    object MemFacturaNUMDESDE: TIntegerField
+      FieldName = 'NUMDESDE'
+    end
+    object MemFacturaNUMHASTA: TIntegerField
+      FieldName = 'NUMHASTA'
+    end
   end
   object MemDevolucion: TMemTableEh
     Params = <>
@@ -1505,8 +1516,7 @@ object Main: TMain
         'SUMO,'
       
         'o1.cod_unidad_venta uofmsales, (O1.TOTALDCT)*(-1) TOTALDCT,PORC_' +
-        'IVA,(o1.vlr_iva)*(-1) vlr_iva,'#39'XD12'#39' SERIALES,(O1.IMPCONSUMO)*(-' +
-        '1) VLR_CONSUMO,'
+        'IVA,(o1.vlr_iva)*(-1) vlr_iva,(O1.IMPCONSUMO)*(-1) VLR_CONSUMO,'
       
         '((O1.EXTEND)*(-1) - (O1.TOTALDCT)*(-1)) BASE,(O1.EXTEND)*(-1)EXT' +
         'END,O1.SERIALES DESC_ADICIONAL'
@@ -1611,15 +1621,6 @@ object Main: TMain
       Origin = 'VLR_IVA'
       ProviderFlags = []
       ReadOnly = True
-    end
-    object QDevDetalleSERIALES: TStringField
-      AutoGenerateValue = arDefault
-      FieldName = 'SERIALES'
-      Origin = 'SERIALES'
-      ProviderFlags = []
-      ReadOnly = True
-      FixedChar = True
-      Size = 4
     end
     object QDevDetalleVLR_CONSUMO: TFloatField
       AutoGenerateValue = arDefault
@@ -2016,6 +2017,41 @@ object Main: TMain
       FieldName = 'ADDRESS2'
       Size = 33
       Calculated = True
+    end
+  end
+  object QSeriales: TFDQuery
+    Connection = Conexion
+    SQL.Strings = (
+      
+        'SELECT NOSERIE FROM ITEMACT WHERE ITEM = :ITEM AND TIPO = :TIPO ' +
+        'AND BATCH= :BATCH')
+    Left = 368
+    Top = 331
+    ParamData = <
+      item
+        Name = 'ITEM'
+        DataType = ftString
+        ParamType = ptInput
+        Value = '03'
+      end
+      item
+        Name = 'TIPO'
+        DataType = ftString
+        ParamType = ptInput
+        Size = 10
+        Value = 'F34'
+      end
+      item
+        Name = 'BATCH'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = 303
+      end>
+    object QSerialesNOSERIE: TStringField
+      FieldName = 'NOSERIE'
+      Origin = 'NOSERIE'
+      FixedChar = True
+      Size = 50
     end
   end
 end

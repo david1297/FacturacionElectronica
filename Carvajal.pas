@@ -116,7 +116,7 @@ begin
         iFactura.ENC.ENC_3 := Main.memFACTURANIT.AsInteger;
         iFactura.ENC.ENC_4 := 'UBL 2.0';
         iFactura.ENC.ENC_5 := 'DIAN 1.0';
-        iFactura.ENC.ENC_6 := Main.memFACTURATIPO.AsString +
+        iFactura.ENC.ENC_6 := Main.MemFacturaPREFIJO_DIAN.AsString +
           Main.memFACTURANUMERO.AsString;
 
         iFactura.ENC.ENC_7 := FormatDateTime('yyyy-mm-dd',
@@ -198,7 +198,7 @@ begin
         // REFERENCIA
         iREFLista := iFactura.REF.Add;
         iREFLista.REF_1 := 'IV';
-        iREFLista.REF_2 := Main.memFACTURATIPO.AsString +
+        iREFLista.REF_2 := Main.MemFacturaPREFIJO_DIAN.AsString +
           Main.memFACTURANUMERO.AsString;
         iREFLista.REF_3 := FormatDateTime('yyyy-mm-dd',
           Main.memFACTURAFECHA.AsDateTime);
@@ -291,8 +291,15 @@ begin
           iFactura.TDC.TDC_4 := FormatDateTime('yyyy-mm-dd',
             Main.memFACTURAFECHA.AsDateTime);
         END;
-
-        iFactura.DRF.DRF_4 := Main.memFACTURATIPO.AsString;
+        // RESOLUCION
+        iFactura.DRF.DRF_1 := Main.MemFacturaRES_DIAN.AsString;
+        iFactura.DRF.DRF_2 := FormatDateTime('yyyy-mm-dd',
+          Main.MemFacturaFECHAINIFAC.AsDateTime);
+        iFactura.DRF.DRF_3 := FormatDateTime('yyyy-mm-dd',
+          Main.MemFacturaFECHAVENFAC.AsDateTime);
+        iFactura.DRF.DRF_4 := Main.MemFacturaPREFIJO_DIAN.AsString;
+        iFactura.DRF.DRF_5 := Main.MemFacturaNUMDESDE.AsInteger;
+        iFactura.DRF.DRF_6 := Main.MemFacturaNUMHASTA.AsInteger;
 
         // NOTAS
         if Main.memFACTURACOMMENTS.AsString <> '' then
@@ -399,14 +406,14 @@ begin
           END;
           Main.QFacDetalle.Next;
         END;
-//        vStringStream := TStringStream.Create(iFactura.Xml);
-//        try
-//          vStringStream.SaveToFile(Main.vRuta + '/' +
-//            Main.memFACTURATIPO.AsString + Main.memFACTURANUMERO.AsString
-//            + '.xml');
-//        finally
-//          vStringStream.DisposeOf;
-//        end;
+         vStringStream := TStringStream.Create(iFactura.Xml);
+         try
+         vStringStream.SaveToFile(Main.vRuta + '/' +
+         Main.memFACTURATIPO.AsString + Main.memFACTURANUMERO.AsString
+         + '.xml');
+         finally
+         vStringStream.DisposeOf;
+         end;
         vArchivo := TStringStream.Create(iFactura.Xml);
         vArchivoDest := TStringStream.Create;
         System.NetEncoding.TBase64Encoding.Base64.Encode(vArchivo,
@@ -423,7 +430,7 @@ begin
           vBody := UploadRequest.Create;
           vBody.companyId := Main.vlTokenEmpresa;
           vBody.accountId := Main.vlTokenPassword;
-          vBody.fileName := Main.memFACTURATIPO.AsString + '-' +
+          vBody.fileName := Main.MemFacturaPREFIJO_DIAN.AsString + '-' +
             Main.memFACTURANUMERO.AsString + '.XML';
           vBody.fileData := vArchivoDest.DataString;
           servicio := GetinvoiceService(True, '', MyRIO);
@@ -551,7 +558,7 @@ begin
         vCliente := Main.getCliente(Main.memNotaID_N.AsInteger);
         iFactura := NewNOTA;
         // INFORMACION CABECERA
-        iFactura.ENC.ENC_1 :=  Main.QTip_DocTIPO.AsString;
+        iFactura.ENC.ENC_1 := Main.QTip_DocTIPO.AsString;
         iFactura.ENC.ENC_2 := Nit.ToInteger;
         iFactura.ENC.ENC_3 := Main.memNotaID_N.AsInteger;
         iFactura.ENC.ENC_4 := 'UBL 2.0';
@@ -766,13 +773,13 @@ begin
 
         // PREFIJO
         iFactura.DRF.DRF_4 := Main.memNotaTIPO.AsString;
-//        vStringStream := TStringStream.Create(iFactura.Xml);
-//        try
-//          vStringStream.SaveToFile(Main.vRuta + '/' + Main.memNotaTIPO.AsString
-//            + Main.memNotaBATCH.AsString + '.xml');
-//        finally
-//          vStringStream.DisposeOf;
-//        end;
+        // vStringStream := TStringStream.Create(iFactura.Xml);
+        // try
+        // vStringStream.SaveToFile(Main.vRuta + '/' + Main.memNotaTIPO.AsString
+        // + Main.memNotaBATCH.AsString + '.xml');
+        // finally
+        // vStringStream.DisposeOf;
+        // end;
         vArchivo := TStringStream.Create(iFactura.Xml);
         vArchivoDest := TStringStream.Create;
         System.NetEncoding.TBase64Encoding.Base64.Encode(vArchivo,
@@ -817,8 +824,7 @@ begin
               vQ.Connection := Main.Conexion;
               vQ.ExecSQL
                 ('update carproen set enviado = ''S'' where tipo = :tipo and batch = :num',
-                [Main.memNotaTIPO.AsString,
-                Main.MemNotaBATCH.AsInteger],
+                [Main.memNotaTIPO.AsString, Main.memNotaBATCH.AsInteger],
                 [TFieldType.ftString, TFieldType.ftInteger]);
             finally
               vQ.DisposeOf;
@@ -1159,14 +1165,14 @@ begin
           END;
           Main.QDevDetalle.Next;
         END;
-//        vStringStream := TStringStream.Create(iFactura.Xml);
-//        try
-//          vStringStream.SaveToFile(Main.vRuta + '/' +
-//            Main.memDevolucionTIPO.AsString + Main.memDevolucionNUMBER.AsString
-//            + '.xml');
-//        finally
-//          vStringStream.DisposeOf;
-//        end;
+        // vStringStream := TStringStream.Create(iFactura.Xml);
+        // try
+        // vStringStream.SaveToFile(Main.vRuta + '/' +
+        // Main.memDevolucionTIPO.AsString + Main.memDevolucionNUMBER.AsString
+        // + '.xml');
+        // finally
+        // vStringStream.DisposeOf;
+        // end;
         vArchivo := TStringStream.Create(iFactura.Xml);
         vArchivoDest := TStringStream.Create;
         System.NetEncoding.TBase64Encoding.Base64.Encode(vArchivo,
@@ -1367,8 +1373,8 @@ begin
           statusReq.documentType := 'FV';
         End;
 
-        statusReq.documentPrefix := Main.memFACTURATIPO.AsString;
-        statusReq.documentNumber := Main.memFACTURATIPO.AsString +
+        statusReq.documentPrefix := Main.MemFacturaPREFIJO_DIAN.AsString;
+        statusReq.documentNumber := Main.MemFacturaPREFIJO_DIAN.AsString +
           Main.memFACTURANUMERO.AsString;
         servicio := GetinvoiceService(True, '', MyRIO);
         statusRes := servicio.DocumentStatusByNumber(statusReq);
@@ -1429,20 +1435,20 @@ VAR
   servicio: invoiceService;
   vQ: TFDQuery;
 begin
-  vBook := Main.MemNota.GetBookmark;
-  Main.MemNota.DisableControls;
-  if Main.MemNotaTIPO.AsString = '' then
+  vBook := Main.memNota.GetBookmark;
+  Main.memNota.DisableControls;
+  if Main.memNotaTIPO.AsString = '' then
   begin
     exit;
   end;
   try
-    Main.MemNota.Filtered := False;
-    Main.MemNota.Filtered := True;
-    Main.MemNota.First;
-    while not Main.MemNota.Eof do
+    Main.memNota.Filtered := False;
+    Main.memNota.Filtered := True;
+    Main.memNota.First;
+    while not Main.memNota.Eof do
     begin
-      Main.MemNota.Open;
-      Main.MemNota.Edit;
+      Main.memNota.Open;
+      Main.memNota.Edit;
       try
         DoSecurity(Hdr, Main.vUser, THashSHA2.GetHashString(Main.vPass),
           TNetEncoding.Base64.Encode(TGUID.NewGuid.ToString));
@@ -1453,10 +1459,10 @@ begin
         statusRes := DocumentStatusByNumberResponse.Create;
         statusReq.companyId := Main.vlTokenEmpresa;
         statusReq.accountId := Main.vlTokenPassword;
-        statusReq.documentType :=  Main.QTip_DocTIPO.AsString;
-        statusReq.documentPrefix := Main.MemNotaTIPO.AsString;
-        statusReq.documentNumber := Main.MemNotaTIPO.AsString +
-          Main.MemNotaBATCH.AsString;
+        statusReq.documentType := Main.QTip_DocTIPO.AsString;
+        statusReq.documentPrefix := Main.memNotaTIPO.AsString;
+        statusReq.documentNumber := Main.memNotaTIPO.AsString +
+          Main.memNotaBATCH.AsString;
         servicio := GetinvoiceService(True, '', MyRIO);
         statusRes := servicio.DocumentStatusByNumber(statusReq);
 
@@ -1471,8 +1477,7 @@ begin
             vQ.Connection := Main.Conexion;
             vQ.ExecSQL
               ('update carproen set enviado = ''S'' where tipo = :tipo and batch = :num',
-              [Main.MemNotaTIPO.AsString,
-              Main.MemNotaBATCH.AsInteger],
+              [Main.memNotaTIPO.AsString, Main.memNotaBATCH.AsInteger],
               [TFieldType.ftString, TFieldType.ftInteger]);
           finally
             vQ.DisposeOf;
@@ -1485,8 +1490,7 @@ begin
             vQ.Connection := Main.Conexion;
             vQ.ExecSQL
               ('update carproen set enviado = ''N'' where tipo = :tipo and batch = :num',
-              [Main.MemNotaTIPO.AsString,
-              Main.MemNotaBATCH.AsInteger],
+              [Main.memNotaTIPO.AsString, Main.memNotaBATCH.AsInteger],
               [TFieldType.ftString, TFieldType.ftInteger]);
           finally
             vQ.DisposeOf;
@@ -1497,13 +1501,13 @@ begin
         FreeAndNil(Headers);
       end;
 
-      Main.MemNota.Next;
+      Main.memNota.Next;
     end;
   finally
-    Main.MemNota.Filtered := False;
-    Main.MemNota.GotoBookmark(vBook);
-    Main.MemNota.FreeBookmark(vBook);
-    Main.MemNota.EnableControls;
+    Main.memNota.Filtered := False;
+    Main.memNota.GotoBookmark(vBook);
+    Main.memNota.FreeBookmark(vBook);
+    Main.memNota.EnableControls;
   end;
 end;
 
@@ -1624,9 +1628,9 @@ begin
         downReq.companyId := Main.vlTokenEmpresa;
         downReq.accountId := Main.vlTokenPassword;
         downReq.documentType := 'FV';
-        downReq.documentNumber := Main.memFACTURATIPO.AsString +
+        downReq.documentNumber := Main.MemFacturaPREFIJO_DIAN.AsString +
           Main.memFACTURANUMERO.AsString;
-        downReq.documentPrefix := Main.memFACTURATIPO.AsString;
+        downReq.documentPrefix := Main.MemFacturaPREFIJO_DIAN.AsString;
         downReq.resourceType := 'PDF';
 
         DoSecurity(Hdr, Main.vUser, THashSHA2.GetHashString(Main.vPass),
@@ -1866,9 +1870,9 @@ begin
         downReq.companyId := Main.vlTokenEmpresa;
         downReq.accountId := Main.vlTokenPassword;
         downReq.documentType := 'FV';
-        downReq.documentNumber := Main.memFACTURATIPO.AsString +
+        downReq.documentNumber := Main.MemFacturaPREFIJO_DIAN.AsString +
           Main.memFACTURANUMERO.AsString;
-        downReq.documentPrefix := Main.memFACTURATIPO.AsString;
+        downReq.documentPrefix := Main.MemFacturaPREFIJO_DIAN.AsString;
         downReq.resourceType := 'SIGNED_XML';
 
         DoSecurity(Hdr, Main.vUser, THashSHA2.GetHashString(Main.vPass),

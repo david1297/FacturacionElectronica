@@ -97,7 +97,6 @@ type
     QFacDetalleTOTALDCT: TFloatField;
     QFacDetallePORC_IVA: TFloatField;
     QFacDetalleVLR_IVA: TFloatField;
-    QFacDetalleSERIALES: TStringField;
     QFacDetalleVLR_CONSUMO: TFloatField;
     QFacDetalleBASE: TFloatField;
     QFacDetalleEXTEND: TFloatField;
@@ -210,7 +209,6 @@ type
     QDevDetalleTOTALDCT: TFloatField;
     QDevDetallePORC_IVA: TFloatField;
     QDevDetalleVLR_IVA: TFloatField;
-    QDevDetalleSERIALES: TStringField;
     QDevDetalleVLR_CONSUMO: TFloatField;
     QDevDetalleBASE: TFloatField;
     QDevDetalleEXTEND: TFloatField;
@@ -284,6 +282,14 @@ type
     Label9: TLabel;
     Panel3: TPanel;
     Label8: TLabel;
+    MemFacturaPREFIJO_DIAN: TStringField;
+    MemFacturaRES_DIAN: TStringField;
+    MemFacturaFECHAINIFAC: TSQLTimeStampField;
+    MemFacturaFECHAVENFAC: TSQLTimeStampField;
+    MemFacturaNUMDESDE: TIntegerField;
+    MemFacturaNUMHASTA: TIntegerField;
+    QSeriales: TFDQuery;
+    QSerialesNOSERIE: TStringField;
     procedure FormCreate(Sender: TObject);
     procedure ConsultarClick(Sender: TObject);
     procedure EnviarClick(Sender: TObject);
@@ -436,9 +442,10 @@ begin
     vQ.SQL.Add
       ('SELECT ''EDITAR''  LOGO,S.SUCCLIENTE,c.company NOMBRE,S.CONTACT1,S.CARGO1,coalesce(MT.TASA,1) tasa,p.fecha fecha_pago,p.DIAS DIAS_PAGO,o.COMMENTS,'
       + ' O.OTROSCARGOS,IIF(O.COD_MONEDA =''DOLAR'',''COP'',O.COD_MONEDA) COD_MONEDA,C.PHONE1,PA.COD_ISO,O.ID_N NIT,S.email EMAIL,O.TIPO,O.FECHA,'
-      + ' O.HORCRE,O.DUEDATE,O.NUMBER NUMERO,O.SUBTOTAL,O.SALESTAX TOTALIMP,O.TOTAL,'
+      + ' O.HORCRE,O.DUEDATE,O.NUMBER NUMERO,O.SUBTOTAL,O.SALESTAX TOTALIMP,O.TOTAL,TI.PREFIJO_DIAN,TI.RES_DIAN,'
       + ' O.CUFE,C.addr1,FP.tipo AS medios_pago,O.salestax VIVA,O.disc1 RETE, O.disc2 RETICA,O.disc3 RETIVA,'
-      + ' O.impconsumo,R.porcentaje porc_rete,' +
+      + ' O.impconsumo,R.porcentaje porc_rete,'
+      +' FA.NUMDESDE,FA.NUMHASTA,FA.FECHAVENFAC,FA.FECHAINIFAC,'+
       ' substring(R.tipo_retencion from 1 for 1) tipo_retencion,o.porceniva Porc_Iva,'
       + ' (select R2.porcentaje from reten R2 where R2.tipo=cs.codica) porc_ica,''False'' SELECCIONAR,'
       + '  O.destotal' + ' FROM OE O' + ' INNER JOIN CUST C ON O.ID_N=C.ID_N' +
@@ -448,6 +455,8 @@ begin
       ' LEFT JOIN RETEN R ON O.RFAPLICADA=R.tipo' +
       ' INNER JOIN PAISES PA ON (C.PAIS = PA.PAIS)' +
       ' INNER JOIN CIUDADES CS ON C.city=CS.ciudad' +
+      ' INNER JOIN TIPDOC TI ON (TI.CLASE = O.TIPO)' +
+      'INNER JOIN FATIPDOC FA ON (O.ID_USUARIO = FA.ID_USUARIO)' +
       ' LEFT JOIN MONEDA_TASAS MT ON O.COD_MONEDA=MT.CODIGO AND O.FECHA = MT.FECHA where O.FECHA BETWEEN :FI and :FF');
     vQ.ParamByName('FI').AsDate := Desde.Date;
     vQ.ParamByName('FF').AsDate := Hasta.Date;

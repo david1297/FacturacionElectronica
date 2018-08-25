@@ -162,6 +162,8 @@ end;
 
 procedure PFactory.EnviarDevoluciones;
 var
+  h: Integer;
+  vSeriales: string;
   vQ: TFDQuery;
   vBook: TBookmark;
   vCliente: Cliente;
@@ -249,7 +251,37 @@ begin
         vDetalle := FacturaDetalle2.Create;
         vDetalle.codigoProducto := Main.QDevDetalleITEM.AsString;
         vDetalle.descripcion := Main.QDevDetalleDESCRIPCION.AsString;
-        vDetalle.seriales := Main.QDevDetalleSERIALES.AsString;
+        Main.QSeriales.Close;
+        Main.QSeriales.ParamByName('TIPO').AsString :=
+          Main.MemDevolucionTIPO.AsString;
+        Main.QSeriales.ParamByName('BATCH').AsInteger :=
+          Main.MemDevolucionNUMBER.AsInteger;
+        Main.QSeriales.ParamByName('ITEM').AsString :=
+          Main.QDevDetalleITEM.AsString;
+        Main.QSeriales.Open;
+        Main.QSeriales.First;
+        vSeriales := '';
+        h := 0;
+        while not Main.QSeriales.Eof do
+        BEGIN
+          if Main.QSerialesNOSERIE.AsString <> '' then
+          begin
+            if h = 0 then
+            begin
+              vSeriales := Main.QSerialesNOSERIE.AsString;
+            end
+            else
+              vSeriales := Main.QSerialesNOSERIE.AsString + ',' + vSeriales;
+
+            h := h + 1;
+          end;
+          Main.QSeriales.Next;
+        END;
+
+        if (vSeriales <> '') then
+        begin
+          vDetalle.seriales := vSeriales;
+        end;
         vDetalle.cantidadUnidades := Main.QDevDetalleQTYSHIP.AsString;
         vDetalle.precioVentaUnitario := Main.QDevDetallePRICE.AsString;
         vDetalle.precioTotalSinImpuestos := Main.QDevDetalleTSIMPUESTO.AsString;
@@ -429,6 +461,8 @@ end;
 
 procedure PFactory.EnviarFacturas;
 var
+  h: Integer;
+  vSeriales: string;
   vQ: TFDQuery;
   vBook: TBookmark;
   vCliente: Cliente;
@@ -517,7 +551,37 @@ begin
         vDetalle := FacturaDetalle2.Create;
         vDetalle.codigoProducto := Main.QFacDetalleITEM.AsString;
         vDetalle.descripcion := Main.QFacDetalleDESCRIPCION.AsString;
-        vDetalle.seriales := Main.QFacDetalleSERIALES.AsString;
+        Main.QSeriales.Close;
+        Main.QSeriales.ParamByName('TIPO').AsString :=
+          Main.memFACTURATIPO.AsString;
+        Main.QSeriales.ParamByName('BATCH').AsInteger :=
+          Main.memFACTURANUMERO.AsInteger;
+        Main.QSeriales.ParamByName('ITEM').AsString :=
+          Main.QFacDetalleITEM.AsString;
+        Main.QSeriales.Open;
+        Main.QSeriales.First;
+        vSeriales := '';
+        h := 0;
+        while not Main.QSeriales.Eof do
+        BEGIN
+          if Main.QSerialesNOSERIE.AsString <> '' then
+          begin
+            if h = 0 then
+            begin
+              vSeriales := Main.QSerialesNOSERIE.AsString;
+            end
+            else
+              vSeriales := Main.QSerialesNOSERIE.AsString + ',' + vSeriales;
+
+            h := h + 1;
+          end;
+          Main.QSeriales.Next;
+        END;
+
+        if (vSeriales <> '') then
+        begin
+          vDetalle.seriales := vSeriales;
+        end;
         vDetalle.cantidadUnidades := Main.QFacDetalleQTYSHIP.AsString;
         vDetalle.precioVentaUnitario :=
           ReplaceStr(FormatFloat('##0.##',
