@@ -173,16 +173,6 @@ object Main: TMain
       TabOrder = 10
       OnClick = ReenvioClick
     end
-    object Memo1: TMemo
-      Left = 744
-      Top = 5
-      Width = 438
-      Height = 97
-      Lines.Strings = (
-        'Memo1')
-      TabOrder = 11
-      Visible = False
-    end
   end
   object Panel2: TPanel
     Left = 0
@@ -987,7 +977,7 @@ object Main: TMain
     Left = 208
     Top = 152
     Bitmap = {
-      494C010101000800340010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010101000800400010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       00000000000000000000000000000000000000000000D3D2CF31515151AE5151
       51AE515151AE515151AE515151AE515151AE515151AE515151AE515151AE5151
@@ -1459,6 +1449,10 @@ object Main: TMain
       FieldName = 'CARGO1'
       Size = 120
     end
+    object MemDevolucionRES_DIAN: TStringField
+      FieldName = 'RES_DIAN'
+      Size = 150
+    end
     object MemDevolucionINVC: TIntegerField
       FieldName = 'INVC'
     end
@@ -1493,6 +1487,10 @@ object Main: TMain
     object MemDevolucionObservaciones: TStringField
       FieldName = 'Observaciones'
       Size = 500
+    end
+    object MemDevolucionPREFIJO_DIAN: TStringField
+      FieldName = 'PREFIJO_DIAN'
+      Size = 5
     end
   end
   object DDevolucion: TDataSource
@@ -1824,9 +1822,17 @@ object Main: TMain
       FieldName = 'Seleccionar'
       Size = 30
     end
+    object MemNotaPREFIJO_DIAN: TStringField
+      FieldName = 'PREFIJO_DIAN'
+      Size = 5
+    end
     object MemNotaObservaciones: TStringField
       FieldName = 'Observaciones'
       Size = 500
+    end
+    object MemNotaRES_DIAN: TStringField
+      FieldName = 'RES_DIAN'
+      Size = 150
     end
   end
   object QNotDetalle: TFDQuery

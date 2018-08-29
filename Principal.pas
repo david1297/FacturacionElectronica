@@ -278,7 +278,6 @@ type
     QSysPHONE: TStringField;
     QSysCITY: TStringField;
     QSysADDRESS2: TStringField;
-    Memo1: TMemo;
     Label9: TLabel;
     Panel3: TPanel;
     Label8: TLabel;
@@ -290,6 +289,10 @@ type
     MemFacturaNUMHASTA: TIntegerField;
     QSeriales: TFDQuery;
     QSerialesNOSERIE: TStringField;
+    MemDevolucionPREFIJO_DIAN: TStringField;
+    MemNotaPREFIJO_DIAN: TStringField;
+    MemNotaRES_DIAN: TStringField;
+    MemDevolucionRES_DIAN: TStringField;
     procedure FormCreate(Sender: TObject);
     procedure ConsultarClick(Sender: TObject);
     procedure EnviarClick(Sender: TObject);
@@ -398,6 +401,7 @@ begin
       ' INNER JOIN OECONCEPTOS OC ON O.CONCEPTO_DV = OC.TIPO AND OC.APLICA = ''FE'''
       + ' LEFT JOIN MONEDA_TASAS MT ON O.COD_MONEDA=MT.CODIGO AND O.FECHA = MT.FECHA'
       + ' INNER JOIN PAISES PA ON (C.PAIS = PA.PAIS)' +
+      ' INNER JOIN TIPDOC TI ON (TI.CLASE = O.TIPO)'+
       ' INNER JOIN SYS SY ON O.ID_EMPRESA =SY.E ' + ' WHERE' +
       ' (SELECT t.TIPO FROM TIPDOC t WHERE t.CLASE = O.TIPO) IN (''DV'') and (SELECT t2.TIPO FROM TIPDOC t2 WHERE t2.CLASE = O.dev_tipofac) IN (''FA'') and'
       + ' coalesce((select fv.cufe from oe fv where fv.tipo=O.dev_tipofac and fv.number=o.dev_factura), '''') <> '''' and O.FECHA BETWEEN :FI and :FF');
@@ -443,7 +447,7 @@ begin
       ('SELECT ''EDITAR''  LOGO,S.SUCCLIENTE,c.company NOMBRE,S.CONTACT1,S.CARGO1,coalesce(MT.TASA,1) tasa,p.fecha fecha_pago,p.DIAS DIAS_PAGO,o.COMMENTS,'
       + ' O.OTROSCARGOS,IIF(O.COD_MONEDA =''DOLAR'',''COP'',O.COD_MONEDA) COD_MONEDA,C.PHONE1,PA.COD_ISO,O.ID_N NIT,S.email EMAIL,O.TIPO,O.FECHA,'
       + ' O.HORCRE,O.DUEDATE,O.NUMBER NUMERO,O.SUBTOTAL,O.SALESTAX TOTALIMP,O.TOTAL,TI.PREFIJO_DIAN,TI.RES_DIAN,'
-      + ' O.CUFE,C.addr1,FP.tipo AS medios_pago,O.salestax VIVA,O.disc1 RETE, O.disc2 RETICA,O.disc3 RETIVA,'
+      + ' O.CUFE,C.addr1,FP.tipo AS medios_pago,O.salestax VIVA,O.disc1 RETE, O.disc2 RETICA,O.disc3 RETIVA,TI.PREFIJO_DIAN,TI.RES_DIAN,'
       + ' O.impconsumo,R.porcentaje porc_rete,'
       +' FA.NUMDESDE,FA.NUMHASTA,FA.FECHAVENFAC,FA.FECHAINIFAC,'+
       ' substring(R.tipo_retencion from 1 for 1) tipo_retencion,o.porceniva Porc_Iva,'
@@ -498,13 +502,14 @@ begin
     vQ.SQL.Add
       ('SELECT DISTINCT ''EDITAR''  LOGO,S.SUCCLIENTE, cu.company,S.email EMAIL,CU.addr1,S.CONTACT1,S.CARGO1,CU.PHONE1,PA.COD_ISO,MT.DESCRIPCION AS MOTIVO,CE.TIPO, CE.BATCH, CE.FECHA, CE.CONCEPTO_NOTAFE, CE.ENVIADO,'
       + ' O.SUBTOTAL,substring(R.tipo_retencion from 1 for 1) TIPO_RETENCION,' +
-      ' cE.DUEDATE, c.cruce, c.invc, CE.ID_N,''False'' SELECCIONAR,' +
+      ' cE.DUEDATE, c.cruce, c.invc, CE.ID_N,''False'' SELECCIONAR,TI.PREFIJO_DIAN,TI.RES_DIAN,' +
       ' CE.TOTAL AS VALOR,O.cufe, O.FECHA FECHA_FV,O.RFAPLICADA ' +
       ' FROM CARPROEN CE ' +
       ' INNER JOIN  CARPRODE C ON C.tipo=CE.tipo AND C.batch=CE.batch' +
       ' INNER JOIN SHIPTO S ON C.ID_N=S.ID_N AND CE.SHIPTO = S.SUCCLIENTE ' +
       ' INNER JOIN CUST CU ON C.ID_N=CU.ID_N' +
       ' INNER JOIN PAISES PA ON (CU.PAIS = PA.PAIS)' +
+      ' INNER JOIN TIPDOC TI ON (TI.CLASE = C.TIPO)'+
       ' INNER JOIN OE O  ON O.tipo = c.cruce and O.number = iif(coalesce(c.invc, 0) = '''', 0, coalesce(c.invc, 0))'
       + ' LEFT JOIN RETEN R ON O.RFAPLICADA=R.tipo' +
       ' INNER JOIN MOTIVOS_NOTAS MT ON (CE.CONCEPTO_NOTAFE =MT.CODIGO) AND (MT.TIPO='

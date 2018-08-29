@@ -34,8 +34,7 @@ type
     procedure XmlFacturas;
     procedure XmlNotas;
     procedure XmlDevoluciones;
-    procedure HTTPRIO1BeforeExecute(const MethodName: string;
-      SOAPRequest: TStream);
+
 
   var
     iFactura: IXMLFACTURA;
@@ -789,7 +788,6 @@ begin
           DoSecurity(Hdr, Main.vUser, THashSHA2.GetHashString(Main.vPass),
             TNetEncoding.Base64.Encode(TGUID.NewGuid.ToString));
           MyRIO := THTTPRIO.Create(nil);
-          MyRIO.OnBeforeExecute := HTTPRIO1BeforeExecute;
           Headers := MyRIO as ISOAPHeaders;
           Headers.Send(Hdr);
           downRes := UploadResponse.Create;
@@ -845,12 +843,7 @@ begin
   end;
 end;
 
-procedure PCarvajal.HTTPRIO1BeforeExecute(const MethodName: string;
-  SOAPRequest: TStream);
-begin
-  SOAPRequest.Position := 0;
-  Main.Memo1.Lines.LoadFromStream(SOAPRequest);
-end;
+
 
 procedure PCarvajal.EnviarDevoluciones;
 var
@@ -1182,7 +1175,6 @@ begin
           DoSecurity(Hdr, Main.vUser, THashSHA2.GetHashString(Main.vPass),
             TNetEncoding.Base64.Encode(TGUID.NewGuid.ToString));
           MyRIO := THTTPRIO.Create(nil);
-          MyRIO.OnBeforeExecute := HTTPRIO1BeforeExecute;
           Headers := MyRIO as ISOAPHeaders;
           Headers.Send(Hdr);
           downRes := UploadResponse.Create;
