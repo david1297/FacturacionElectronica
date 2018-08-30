@@ -728,7 +728,7 @@ object Main: TMain
   end
   object Conexion: TFDConnection
     Params.Strings = (
-      'Database=D:\SAIOPEN\FACTORY.FDB'
+      'Database=D:\SAIOPEN\NUTRITEC2017.FDB'
       'User_Name=SYSDBA'
       'Password=masterkey'
       'Protocol=TCPIP'
@@ -977,7 +977,7 @@ object Main: TMain
     Left = 208
     Top = 152
     Bitmap = {
-      494C010101000800400010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010101000800440010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       00000000000000000000000000000000000000000000D3D2CF31515151AE5151
       51AE515151AE515151AE515151AE515151AE515151AE515151AE515151AE5151
@@ -2019,10 +2019,8 @@ object Main: TMain
       Size = 30
     end
     object QSysADDRESS2: TStringField
-      FieldKind = fkCalculated
       FieldName = 'ADDRESS2'
       Size = 33
-      Calculated = True
     end
   end
   object QSeriales: TFDQuery

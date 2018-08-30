@@ -146,7 +146,7 @@ begin
         iFactura.EMI.CDE.CDE_1 := 1;
         iFactura.EMI.CDE.CDE_2 := 'CONTABILIDAD';
         iFactura.EMI.CDE.CDE_3 := Main.QSysPHONE.AsString;
-        iFactura.EMI.CDE.CDE_4 := 'contabilidad@nutritec.com.co';
+        iFactura.EMI.CDE.CDE_4 := 'CONTABILIDAD@NUTRITEC.COM.CO';
 
         // INFORMACION DEL ADQUIRIENTE
         iFactura.ADQ.ADQ_1 := vCliente.tipoPersona.ToInteger;
@@ -241,32 +241,32 @@ begin
             end;
             Main.QFacImpuestos.Next;
           end;
-          if Main.memFACTURARETIVA.AsFloat <> 0 then
-          begin
-            iTIMLista := iFactura.TIM.Add;
-            iTIMLista.TIM_1 := 'true';
-            iTIMLista.TIM_2 := Main.memFACTURARETIVA.AsInteger;
-            iTIMLista.TIM_3 := Main.memFACTURACOD_MONEDA.AsString;
-            iTIMLista.IMP.IMP_1 := '02C';
-            iTIMLista.IMP.IMP_2 := Main.memFACTURAVIVA.AsInteger;
-            iTIMLista.IMP.IMP_3 := Main.memFACTURACOD_MONEDA.AsString;
-            iTIMLista.IMP.IMP_4 := Main.memFACTURARETIVA.AsInteger;
-            iTIMLista.IMP.IMP_5 := Main.memFACTURACOD_MONEDA.AsString;
-            iTIMLista.IMP.IMP_6 := Main.QSysRETEI.AsInteger;
-          end;
-          if Main.memFACTURARETE.AsFloat <> 0 then
-          begin
-            iTIMLista := iFactura.TIM.Add;
-            iTIMLista.TIM_1 := 'true';
-            iTIMLista.TIM_2 := Main.memFACTURARETE.AsInteger;
-            iTIMLista.TIM_3 := Main.memFACTURACOD_MONEDA.AsString;
-            iTIMLista.IMP.IMP_1 := '01C';
-            iTIMLista.IMP.IMP_2 := Main.memFACTURASUBTOTAL.AsInteger;
-            iTIMLista.IMP.IMP_3 := Main.memFACTURACOD_MONEDA.AsString;
-            iTIMLista.IMP.IMP_4 := Main.memFACTURARETE.AsInteger;
-            iTIMLista.IMP.IMP_5 := Main.memFACTURACOD_MONEDA.AsString;
-            iTIMLista.IMP.IMP_6 := Main.memFACTURAPORC_RETE.AsInteger;
-          end;
+//          if Main.memFACTURARETIVA.AsFloat <> 0 then
+//          begin
+//            iTIMLista := iFactura.TIM.Add;
+//            iTIMLista.TIM_1 := 'true';
+//            iTIMLista.TIM_2 := Main.memFACTURARETIVA.AsInteger;
+//            iTIMLista.TIM_3 := Main.memFACTURACOD_MONEDA.AsString;
+//            iTIMLista.IMP.IMP_1 := '02C';
+//            iTIMLista.IMP.IMP_2 := Main.memFACTURAVIVA.AsInteger;
+//            iTIMLista.IMP.IMP_3 := Main.memFACTURACOD_MONEDA.AsString;
+//            iTIMLista.IMP.IMP_4 := Main.memFACTURARETIVA.AsInteger;
+//            iTIMLista.IMP.IMP_5 := Main.memFACTURACOD_MONEDA.AsString;
+//            iTIMLista.IMP.IMP_6 := Main.QSysRETEI.AsInteger;
+//          end;
+//          if Main.memFACTURARETE.AsFloat <> 0 then
+//          begin
+//            iTIMLista := iFactura.TIM.Add;
+//            iTIMLista.TIM_1 := 'true';
+//            iTIMLista.TIM_2 := Main.memFACTURARETE.AsInteger;
+//            iTIMLista.TIM_3 := Main.memFACTURACOD_MONEDA.AsString;
+//            iTIMLista.IMP.IMP_1 := '01C';
+//            iTIMLista.IMP.IMP_2 := Main.memFACTURASUBTOTAL.AsInteger;
+//            iTIMLista.IMP.IMP_3 := Main.memFACTURACOD_MONEDA.AsString;
+//            iTIMLista.IMP.IMP_4 := Main.memFACTURARETE.AsInteger;
+//            iTIMLista.IMP.IMP_5 := Main.memFACTURACOD_MONEDA.AsString;
+//            iTIMLista.IMP.IMP_6 := Main.memFACTURAPORC_RETE.AsInteger;
+//          end;
           if Main.memFACTURARETICA.AsFloat <> 0 then
           begin
             iTIMLista := iFactura.TIM.Add;
@@ -356,7 +356,7 @@ begin
           iITELista.ITE_11 := Main.QFacDetalleDESCRIPCION.AsString;
           iITELista.ITE_12 := Main.QFacDetalleDESCRIPCION.AsString;
           iITELista.ITE_17 := Main.QFacDetalleITEM.AsString;
-          iITELista.ITE_19 := Main.QFacDetalleTOTAL.AsFloat /
+          iITELista.ITE_19 := Main.QFacDetalleBASE.AsFloat /
             Main.memFACTURATASA.AsFloat;
           iITELista.ITE_20 := Main.memFACTURACOD_MONEDA.AsString;
           iITELista.ITE_21 := Main.QFacDetalleTOTAL.AsFloat /
@@ -585,7 +585,7 @@ begin
         iFactura.EMI.CDE.CDE_1 := 1;
         iFactura.EMI.CDE.CDE_2 := 'CONTABILIDAD';
         iFactura.EMI.CDE.CDE_3 := Main.QSysPHONE.AsString;
-        iFactura.EMI.CDE.CDE_4 := 'contabilidad@nutritec.com.co';
+        iFactura.EMI.CDE.CDE_4 := 'CONTABILIDAD@NUTRITEC.COM.CO';
         // INFORMACION DEL ADQUIRIENTE
         iFactura.ADQ.ADQ_1 := vCliente.tipoPersona.ToInteger;
         iFactura.ADQ.ADQ_2 := vCliente.Nit.ToInteger;
@@ -937,7 +937,7 @@ begin
         iFactura.EMI.CDE.CDE_1 := 1;
         iFactura.EMI.CDE.CDE_2 := 'CONTABILIDAD';
         iFactura.EMI.CDE.CDE_3 := Main.QSysPHONE.AsString;
-        iFactura.EMI.CDE.CDE_4 := 'contabilidad@nutritec.com.co';
+        iFactura.EMI.CDE.CDE_4 := 'CONTABILIDAD@NUTRITEC.COM.CO';
         // INFORMACION DEL ADQUIRIENTE
         iFactura.ADQ.ADQ_1 := vCliente.tipoPersona.ToInteger;
         iFactura.ADQ.ADQ_2 := vCliente.Nit.ToInteger;
@@ -1113,7 +1113,7 @@ begin
           iITELista.ITE_11 := Main.QDevDetalleDESCRIPCION.AsString;
           iITELista.ITE_12 := Main.QDevDetalleDESCRIPCION.AsString;
           iITELista.ITE_17 := Main.QDevDetalleITEM.AsString;
-          iITELista.ITE_19 := Main.QDevDetalleTOTAL.AsFloat;
+          iITELista.ITE_19 := Main.QDevDetalleBASE.AsFloat;
           iITELista.ITE_20 := Main.memDevolucionCOD_MONEDA.AsString;
           iITELista.ITE_21 := Main.QDevDetalleTOTAL.AsFloat;
           iITELista.ITE_22 := Main.memDevolucionCOD_MONEDA.AsString;
