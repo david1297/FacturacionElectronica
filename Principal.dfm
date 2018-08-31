@@ -782,7 +782,7 @@ object Main: TMain
     SQL.Strings = (
       
         'SELECT O1.item, I.descripcion, O1.qtyship, O1.price,O1.BONO,O1.C' +
-        'ONTEO,'
+        'ONTEO,O1.NUMERO_PEDIDO,'
       
         '(O1.EXTEND - O1.TOTALDCT) TSIMPUESTO,(O1.extend + O1.VLR_IVA - O' +
         '1.TOTALDCT + O1.IMPCONSUMO)TOTAL,coalesce((O1.IMPCONSUMO/o1.exte' +
@@ -904,6 +904,9 @@ object Main: TMain
       Origin = 'SERIALES'
       Size = 32000
     end
+    object QFacDetalleNUMERO_PEDIDO: TIntegerField
+      FieldName = 'NUMERO_PEDIDO'
+    end
   end
   object QFacImpuestos: TFDQuery
     Connection = Conexion
@@ -977,7 +980,7 @@ object Main: TMain
     Left = 208
     Top = 152
     Bitmap = {
-      494C010101000800440010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010101000800480010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       00000000000000000000000000000000000000000000D3D2CF31515151AE5151
       51AE515151AE515151AE515151AE515151AE515151AE515151AE515151AE5151
@@ -1319,6 +1322,13 @@ object Main: TMain
     end
     object MemFacturaNUMHASTA: TIntegerField
       FieldName = 'NUMHASTA'
+    end
+    object MemFacturaOCNUMERO: TStringField
+      FieldName = 'OCNUMERO'
+    end
+    object MemFacturaNROREMISION: TStringField
+      FieldName = 'NROREMISION'
+      Size = 100
     end
   end
   object MemDevolucion: TMemTableEh

@@ -35,7 +35,6 @@ type
     procedure XmlNotas;
     procedure XmlDevoluciones;
 
-
   var
     iFactura: IXMLFACTURA;
   end;
@@ -60,6 +59,7 @@ var
   iITELista: IXMLFACTURA_ITE;
   iITETIILista: IXMLFACTURA_ITE_TII;
   iITEIDELista: IXMLFACTURA_ITE_IDE;
+  iITEIRFLista: IXMLFACTURA_ITE_IRF;
   iITETIIIIMLista: IXMLFACTURA_ITE_TII_IIM;
   vBody: UploadRequest;
   vRes: UploadResponse;
@@ -117,7 +117,6 @@ begin
         iFactura.ENC.ENC_5 := 'DIAN 1.0';
         iFactura.ENC.ENC_6 := Main.MemFacturaPREFIJO_DIAN.AsString +
           Main.memFACTURANUMERO.AsString;
-
         iFactura.ENC.ENC_7 := FormatDateTime('yyyy-mm-dd',
           Main.memFACTURAFECHA.AsDateTime);
         iFactura.ENC.ENC_8 := Main.memFACTURAHORCRE.AsString;
@@ -195,12 +194,22 @@ begin
         iFactura.TOT.TOT_13 := 0;
         iFactura.TOT.TOT_14 := Main.memFACTURACOD_MONEDA.AsString;
         // REFERENCIA
-        iREFLista := iFactura.REF.Add;
-        iREFLista.REF_1 := 'IV';
-        iREFLista.REF_2 := Main.MemFacturaPREFIJO_DIAN.AsString +
-          Main.memFACTURANUMERO.AsString;
-        iREFLista.REF_3 := FormatDateTime('yyyy-mm-dd',
-          Main.memFACTURAFECHA.AsDateTime);
+        if Main.MemFacturaNROREMISION.AsString <> '' then
+        BEGIN
+          iREFLista := iFactura.REF.Add;
+          iREFLista.REF_1 := 'AAJ';
+          iREFLista.REF_2 := Main.MemFacturaNROREMISION.AsString;
+        END
+        ELSE
+        BEGIN
+          iREFLista := iFactura.REF.Add;
+          iREFLista.REF_1 := 'IV';
+          iREFLista.REF_2 := Main.MemFacturaPREFIJO_DIAN.AsString +
+            Main.memFACTURANUMERO.AsString;
+          iREFLista.REF_3 := FormatDateTime('yyyy-mm-dd',
+            Main.memFACTURAFECHA.AsDateTime);
+        END;
+
         // TOTAL IMPUESTOS
         if Main.memFACTURACOD_MONEDA.AsString = 'COP' then
         BEGIN
@@ -241,32 +250,32 @@ begin
             end;
             Main.QFacImpuestos.Next;
           end;
-//          if Main.memFACTURARETIVA.AsFloat <> 0 then
-//          begin
-//            iTIMLista := iFactura.TIM.Add;
-//            iTIMLista.TIM_1 := 'true';
-//            iTIMLista.TIM_2 := Main.memFACTURARETIVA.AsInteger;
-//            iTIMLista.TIM_3 := Main.memFACTURACOD_MONEDA.AsString;
-//            iTIMLista.IMP.IMP_1 := '02C';
-//            iTIMLista.IMP.IMP_2 := Main.memFACTURAVIVA.AsInteger;
-//            iTIMLista.IMP.IMP_3 := Main.memFACTURACOD_MONEDA.AsString;
-//            iTIMLista.IMP.IMP_4 := Main.memFACTURARETIVA.AsInteger;
-//            iTIMLista.IMP.IMP_5 := Main.memFACTURACOD_MONEDA.AsString;
-//            iTIMLista.IMP.IMP_6 := Main.QSysRETEI.AsInteger;
-//          end;
-//          if Main.memFACTURARETE.AsFloat <> 0 then
-//          begin
-//            iTIMLista := iFactura.TIM.Add;
-//            iTIMLista.TIM_1 := 'true';
-//            iTIMLista.TIM_2 := Main.memFACTURARETE.AsInteger;
-//            iTIMLista.TIM_3 := Main.memFACTURACOD_MONEDA.AsString;
-//            iTIMLista.IMP.IMP_1 := '01C';
-//            iTIMLista.IMP.IMP_2 := Main.memFACTURASUBTOTAL.AsInteger;
-//            iTIMLista.IMP.IMP_3 := Main.memFACTURACOD_MONEDA.AsString;
-//            iTIMLista.IMP.IMP_4 := Main.memFACTURARETE.AsInteger;
-//            iTIMLista.IMP.IMP_5 := Main.memFACTURACOD_MONEDA.AsString;
-//            iTIMLista.IMP.IMP_6 := Main.memFACTURAPORC_RETE.AsInteger;
-//          end;
+          // if Main.memFACTURARETIVA.AsFloat <> 0 then
+          // begin
+          // iTIMLista := iFactura.TIM.Add;
+          // iTIMLista.TIM_1 := 'true';
+          // iTIMLista.TIM_2 := Main.memFACTURARETIVA.AsInteger;
+          // iTIMLista.TIM_3 := Main.memFACTURACOD_MONEDA.AsString;
+          // iTIMLista.IMP.IMP_1 := '02C';
+          // iTIMLista.IMP.IMP_2 := Main.memFACTURAVIVA.AsInteger;
+          // iTIMLista.IMP.IMP_3 := Main.memFACTURACOD_MONEDA.AsString;
+          // iTIMLista.IMP.IMP_4 := Main.memFACTURARETIVA.AsInteger;
+          // iTIMLista.IMP.IMP_5 := Main.memFACTURACOD_MONEDA.AsString;
+          // iTIMLista.IMP.IMP_6 := Main.QSysRETEI.AsInteger;
+          // end;
+          // if Main.memFACTURARETE.AsFloat <> 0 then
+          // begin
+          // iTIMLista := iFactura.TIM.Add;
+          // iTIMLista.TIM_1 := 'true';
+          // iTIMLista.TIM_2 := Main.memFACTURARETE.AsInteger;
+          // iTIMLista.TIM_3 := Main.memFACTURACOD_MONEDA.AsString;
+          // iTIMLista.IMP.IMP_1 := '01C';
+          // iTIMLista.IMP.IMP_2 := Main.memFACTURASUBTOTAL.AsInteger;
+          // iTIMLista.IMP.IMP_3 := Main.memFACTURACOD_MONEDA.AsString;
+          // iTIMLista.IMP.IMP_4 := Main.memFACTURARETE.AsInteger;
+          // iTIMLista.IMP.IMP_5 := Main.memFACTURACOD_MONEDA.AsString;
+          // iTIMLista.IMP.IMP_6 := Main.memFACTURAPORC_RETE.AsInteger;
+          // end;
           if Main.memFACTURARETICA.AsFloat <> 0 then
           begin
             iTIMLista := iFactura.TIM.Add;
@@ -305,6 +314,10 @@ begin
         BEGIN
           iFactura.NOT_.Add.NOT_1 := Main.memFACTURACOMMENTS.AsString;
         END;
+        if Main.MemFacturaOCNUMERO.AsString <> '' then
+        begin
+          iFactura.ORC.ORC_1 := Main.MemFacturaOCNUMERO.AsString;
+        end;
 
         // MEDIO DE PAGO
         if Main.memFACTURAMEDIOS_PAGO.AsString = 'EF' then
@@ -373,7 +386,18 @@ begin
             iITEIDELista.IDE_7 := Main.QFacDetalleEXTEND.AsFloat /
               Main.memFACTURATASA.AsFloat;
             iITEIDELista.IDE_8 := Main.memFACTURACOD_MONEDA.AsString;
+          END
+          ELSE
+          BEGIN
+            iITEIDELista := iITELista.IDE.Add;
+            iITEIDELista.IDE_1 := 'false';
+            iITEIDELista.IDE_2 := 0;
+            iITEIDELista.IDE_3 := Main.memFACTURACOD_MONEDA.AsString;
+            iITEIDELista.IDE_7 := Main.QFacDetalleEXTEND.AsFloat /
+              Main.memFACTURATASA.AsFloat;
+            iITEIDELista.IDE_8 := Main.memFACTURACOD_MONEDA.AsString;
           END;
+
           // IMPUESTOS DEL ITEM
           if Main.QFacDetalleVLR_IVA.AsFloat <> 0 then
           BEGIN
@@ -405,14 +429,14 @@ begin
           END;
           Main.QFacDetalle.Next;
         END;
-         vStringStream := TStringStream.Create(iFactura.Xml);
-         try
-         vStringStream.SaveToFile(Main.vRuta + '/' +
-         Main.memFACTURATIPO.AsString + Main.memFACTURANUMERO.AsString
-         + '.xml');
-         finally
-         vStringStream.DisposeOf;
-         end;
+        vStringStream := TStringStream.Create(iFactura.Xml);
+        try
+          vStringStream.SaveToFile(Main.vRuta + '/' +
+            Main.memFACTURATIPO.AsString + Main.memFACTURANUMERO.AsString
+            + '.xml');
+        finally
+          vStringStream.DisposeOf;
+        end;
         vArchivo := TStringStream.Create(iFactura.Xml);
         vArchivoDest := TStringStream.Create;
         System.NetEncoding.TBase64Encoding.Base64.Encode(vArchivo,
@@ -842,8 +866,6 @@ begin
     Main.memNota.EnableControls;
   end;
 end;
-
-
 
 procedure PCarvajal.EnviarDevoluciones;
 var

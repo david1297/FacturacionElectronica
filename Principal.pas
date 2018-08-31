@@ -293,6 +293,9 @@ type
     MemNotaPREFIJO_DIAN: TStringField;
     MemNotaRES_DIAN: TStringField;
     MemDevolucionRES_DIAN: TStringField;
+    MemFacturaOCNUMERO: TStringField;
+    MemFacturaNROREMISION: TStringField;
+    QFacDetalleNUMERO_PEDIDO: TIntegerField;
     procedure FormCreate(Sender: TObject);
     procedure ConsultarClick(Sender: TObject);
     procedure EnviarClick(Sender: TObject);
@@ -444,7 +447,7 @@ begin
     vQ.Close;
     vQ.SQL.Clear;
     vQ.SQL.Add
-      ('SELECT ''EDITAR''  LOGO,S.SUCCLIENTE,c.company NOMBRE,S.CONTACT1,S.CARGO1,coalesce(MT.TASA,1) tasa,p.fecha fecha_pago,p.DIAS DIAS_PAGO,o.COMMENTS,'
+      ('SELECT ''EDITAR''  LOGO,S.SUCCLIENTE,o.OCNUMERO,O.NROREMISION,c.company NOMBRE,S.CONTACT1,S.CARGO1,coalesce(MT.TASA,1) tasa,p.fecha fecha_pago,p.DIAS DIAS_PAGO,o.COMMENTS,'
       + ' O.OTROSCARGOS,IIF(O.COD_MONEDA =''DOLAR'',''COP'',O.COD_MONEDA) COD_MONEDA,C.PHONE1,PA.COD_ISO,O.ID_N NIT,S.email EMAIL,O.TIPO,O.FECHA,'
       + ' O.HORCRE,O.DUEDATE,O.NUMBER NUMERO,O.SUBTOTAL,O.SALESTAX TOTALIMP,O.TOTAL,TI.PREFIJO_DIAN,TI.RES_DIAN,'
       + ' O.CUFE,C.addr1,FP.tipo AS medios_pago,O.salestax VIVA,O.disc1 RETE, O.disc2 RETICA,O.disc3 RETIVA,TI.PREFIJO_DIAN,TI.RES_DIAN,'

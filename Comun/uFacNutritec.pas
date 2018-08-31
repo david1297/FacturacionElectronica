@@ -43,6 +43,8 @@ type
   IXMLFACTURA_ITEList = interface;
   IXMLFACTURA_ITE_IDE = interface;
   IXMLFACTURA_ITE_IDEList = interface;
+  IXMLFACTURA_ITE_IRF = interface;
+  IXMLFACTURA_ITE_IRFList = interface;
   IXMLFACTURA_ITE_TII = interface;
   IXMLFACTURA_ITE_TIIList = interface;
   IXMLFACTURA_ITE_TII_IIM = interface;
@@ -651,6 +653,7 @@ type
     function Get_ITE_23: UnicodeString;
     function Get_ITE_24: UnicodeString;
     function Get_IDE: IXMLFACTURA_ITE_IDEList;
+    function Get_IRF: IXMLFACTURA_ITE_IRFList;
     function Get_TII: IXMLFACTURA_ITE_TIIList;
     procedure Set_ITE_1(Value: Double);
     procedure Set_ITE_2(Value: UnicodeString);
@@ -702,6 +705,7 @@ type
     property ITE_23: UnicodeString read Get_ITE_23 write Set_ITE_23;
     property ITE_24: UnicodeString read Get_ITE_24 write Set_ITE_24;
     property IDE: IXMLFACTURA_ITE_IDEList read Get_IDE;
+    property IRF: IXMLFACTURA_ITE_IRFList read Get_IRF;
     property TII: IXMLFACTURA_ITE_TIIList read Get_TII;
   end;
 
@@ -761,6 +765,42 @@ type
     function Get_Item(Index: Integer): IXMLFACTURA_ITE_IDE;
     property Items[Index: Integer]: IXMLFACTURA_ITE_IDE read Get_Item; default;
   end;
+
+  { IXMLFACTURA_ITE_IRF }
+
+  IXMLFACTURA_ITE_IRF = interface(IXMLNode)
+    ['{64FCE8AB-BC43-4635-BE61-B86FCBBD3E59}']
+    { Property Accessors }
+    function Get_IRF_1: UnicodeString;
+    function Get_IRF_2: UnicodeString;
+    function Get_IRF_3: UnicodeString;
+    function Get_IRF_4: UnicodeString;
+
+    procedure Set_IRF_1(Value: UnicodeString);
+    procedure Set_IRF_2(Value: UnicodeString);
+    procedure Set_IRF_3(Value: UnicodeString);
+    procedure Set_IRF_4(Value: UnicodeString);
+
+    { Methods & Properties }
+    property IRF_1: UnicodeString read Get_IRF_1 write Set_IRF_1;
+    property IRF_2: UnicodeString read Get_IRF_2 write Set_IRF_2;
+    property IRF_3: UnicodeString read Get_IRF_3 write Set_IRF_3;
+    property IRF_4: UnicodeString read Get_IRF_4 write Set_IRF_4;
+
+  end;
+
+  { IXMLFACTURA_ITE_IRFList }
+
+  IXMLFACTURA_ITE_IRFList = interface(IXMLNodeCollection)
+    ['{746AC2BC-1339-4F95-AF8D-018F79F4871E}']
+    { Methods & Properties }
+    function Add: IXMLFACTURA_ITE_IRF;
+    function Insert(const Index: Integer): IXMLFACTURA_ITE_IRF;
+
+    function Get_Item(Index: Integer): IXMLFACTURA_ITE_IRF;
+    property Items[Index: Integer]: IXMLFACTURA_ITE_IRF read Get_Item; default;
+  end;
+
   { IXMLFACTURA_ITE_TII }
 
   IXMLFACTURA_ITE_TII = interface(IXMLNode)
@@ -1289,6 +1329,7 @@ type
 
   TXMLFACTURA_ITE = class(TXMLNode, IXMLFACTURA_ITE)
   private
+    FIRF: IXMLFACTURA_ITE_IRFList;
     FIDE: IXMLFACTURA_ITE_IDEList;
     FTII: IXMLFACTURA_ITE_TIIList;
   protected
@@ -1318,6 +1359,7 @@ type
     function Get_ITE_23: UnicodeString;
     function Get_ITE_24: UnicodeString;
     function Get_IDE: IXMLFACTURA_ITE_IDEList;
+    function Get_IRF: IXMLFACTURA_ITE_IRFList;
     function Get_TII: IXMLFACTURA_ITE_TIIList;
     procedure Set_ITE_1(Value: Double);
     procedure Set_ITE_2(Value: UnicodeString);
@@ -1393,11 +1435,40 @@ type
     function Get_Item(Index: Integer): IXMLFACTURA_ITE_IDE;
   end;
 
+  { TXMLFACTURA_ITE_IRF }
+
+  TXMLFACTURA_ITE_IRF = class(TXMLNode, IXMLFACTURA_ITE_IRF)
+  protected
+    { IXMLFACTURA_ITE_IDE }
+    function Get_IRF_1: UnicodeString;
+    function Get_IRF_2: UnicodeString;
+    function Get_IRF_3: UnicodeString;
+    function Get_IRF_4: UnicodeString;
+
+    procedure Set_IRF_1(Value: UnicodeString);
+    procedure Set_IRF_2(Value: UnicodeString);
+    procedure Set_IRF_3(Value: UnicodeString);
+    procedure Set_IRF_4(Value: UnicodeString);
+
+  end;
+
+  { TXMLFACTURA_ITE_IRFList }
+
+  TXMLFACTURA_ITE_IRFList = class(TXMLNodeCollection, IXMLFACTURA_ITE_IRFList)
+  protected
+    { IXMLFACTURA_ITE_IDEList }
+    function Add: IXMLFACTURA_ITE_IRF;
+    function Insert(const Index: Integer): IXMLFACTURA_ITE_IRF;
+
+    function Get_Item(Index: Integer): IXMLFACTURA_ITE_IRF;
+  end;
+
+  { TXMLFACTURA_ITE_TIIList }
   TXMLFACTURA_ITE_TII = class(TXMLNode, IXMLFACTURA_ITE_TII)
   PRIVATE
     FIIM: IXMLFACTURA_ITE_TII_IIMList;
   protected
-    { IXMLFACTURA_ITE_IDE }
+    { IXMLFACTURA_ITE_TII }
     function Get_TII_1: Double;
     function Get_TII_2: UnicodeString;
     function Get_TII_3: UnicodeString;
@@ -1420,7 +1491,7 @@ type
 
   TXMLFACTURA_ITE_TII_IIM = class(TXMLNode, IXMLFACTURA_ITE_TII_IIM)
   protected
-    { IXMLFACTURA_ITE_IDE }
+    { IXMLFACTURA_ITE_IIM }
     function Get_IIM_1: UnicodeString;
     function Get_IIM_2: Double;
     function Get_IIM_3: UnicodeString;
@@ -1478,10 +1549,11 @@ begin
   Result := NewXMLDocument.GetDocBinding('FACTURA', TXMLFACTURA,
     TargetNamespace) as IXMLFACTURA;
 end;
+
 function NewNOTA: IXMLFACTURA;
 begin
-  Result := NewXMLDocument.GetDocBinding('NOTA', TXMLFACTURA,
-    TargetNamespace) as IXMLFACTURA;
+  Result := NewXMLDocument.GetDocBinding('NOTA', TXMLFACTURA, TargetNamespace)
+    as IXMLFACTURA;
 end;
 
 { TXMLFACTURA }
@@ -2919,6 +2991,11 @@ begin
   RegisterChildNode('IDE', TXMLFACTURA_ITE_IDE);
   FIDE := CreateCollection(TXMLFACTURA_ITE_IDEList, IXMLFACTURA_ITE_IDE, 'IDE')
     as IXMLFACTURA_ITE_IDEList;
+
+  RegisterChildNode('IRF', TXMLFACTURA_ITE_IRF);
+  FIRF := CreateCollection(TXMLFACTURA_ITE_IRFList, IXMLFACTURA_ITE_IRF, 'IRF')
+    as IXMLFACTURA_ITE_IRFList;
+
   RegisterChildNode('TII', TXMLFACTURA_ITE_TII);
   FTII := CreateCollection(TXMLFACTURA_ITE_TIIList, IXMLFACTURA_ITE_TII, 'TII')
     as IXMLFACTURA_ITE_TIIList;
@@ -3177,6 +3254,10 @@ function TXMLFACTURA_ITE.Get_IDE: IXMLFACTURA_ITE_IDEList;
 begin
   Result := FIDE;
 end;
+function TXMLFACTURA_ITE.Get_IRF: IXMLFACTURA_ITE_IRFList;
+begin
+  Result := FIRF;
+end;
 
 function TXMLFACTURA_ITE.Get_TII: IXMLFACTURA_ITE_TIIList;
 begin
@@ -3293,6 +3374,24 @@ begin
   Result := List[Index] as IXMLFACTURA_ITE_IDE;
 end;
 
+{ TXMLFACTURA_ITE_IRFList }
+
+function TXMLFACTURA_ITE_IRFList.Add: IXMLFACTURA_ITE_IRF;
+begin
+  Result := AddItem(-1) as IXMLFACTURA_ITE_IRF;
+end;
+
+function TXMLFACTURA_ITE_IRFList.Insert(const Index: Integer)
+  : IXMLFACTURA_ITE_IRF;
+begin
+  Result := AddItem(Index) as IXMLFACTURA_ITE_IRF;
+end;
+
+function TXMLFACTURA_ITE_IRFList.Get_Item(Index: Integer): IXMLFACTURA_ITE_IRF;
+begin
+  Result := List[Index] as IXMLFACTURA_ITE_IRF;
+end;
+{ TXMLFACTURA_ITE_TIIList }
 function TXMLFACTURA_ITE_TII.Get_TII_1: Double;
 begin
   Result := ChildNodes['TII_1'].NodeValue;
@@ -3423,6 +3522,44 @@ function TXMLFACTURA_ITE_TII_IIMList.Get_Item(Index: Integer)
   : IXMLFACTURA_ITE_TII_IIM;
 begin
   Result := List[Index] as IXMLFACTURA_ITE_TII_IIM;
+end;
+{ TXMLFACTURA_ITE_IRF }
+
+function TXMLFACTURA_ITE_IRF.Get_IRF_1: UnicodeString;
+begin
+  Result := ChildNodes['IRF_1'].Text;
+end;
+
+procedure TXMLFACTURA_ITE_IRF.Set_IRF_1(Value: UnicodeString);
+begin
+  ChildNodes['IRF_1'].NodeValue := Value;
+end;
+function TXMLFACTURA_ITE_IRF.Get_IRF_2: UnicodeString;
+begin
+  Result := ChildNodes['IRF_2'].Text;
+end;
+
+procedure TXMLFACTURA_ITE_IRF.Set_IRF_2(Value: UnicodeString);
+begin
+  ChildNodes['IRF_2'].NodeValue := Value;
+end;
+function TXMLFACTURA_ITE_IRF.Get_IRF_3: UnicodeString;
+begin
+  Result := ChildNodes['IRF_3'].Text;
+end;
+
+procedure TXMLFACTURA_ITE_IRF.Set_IRF_3(Value: UnicodeString);
+begin
+  ChildNodes['IRF_3'].NodeValue := Value;
+end;
+function TXMLFACTURA_ITE_IRF.Get_IRF_4: UnicodeString;
+begin
+  Result := ChildNodes['IRF_4'].Text;
+end;
+
+procedure TXMLFACTURA_ITE_IRF.Set_IRF_4(Value: UnicodeString);
+begin
+  ChildNodes['IRF_4'].NodeValue := Value;
 end;
 
 end.
