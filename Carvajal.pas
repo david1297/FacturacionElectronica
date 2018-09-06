@@ -316,11 +316,27 @@ begin
         iFactura.DRF.DRF_6 := Main.MemFacturaNUMHASTA.AsInteger;
 
         // NOTAS
+
+        with TStringList.Create do
+          try
+            Delimiter := '-';
+            StrictDelimiter := True;
+            DelimitedText := Main.QSysMFACT.AsString;
+            for I := 1 to Count - 1 do
+            begin
+              iFactura.NOT_.Add.NOT_1 := I.ToString + '.-' + Strings[I];
+            end;
+          finally
+            Free;
+          end;
+
         if Main.memFACTURACOMMENTS.AsString <> '' then
         BEGIN
-          iFactura.NOT_.Add.NOT_1 := '3_' + Main.memFACTURACOMMENTS.AsString;
+          iFactura.NOT_.Add.NOT_1 := '3.-' + Main.memFACTURACOMMENTS.AsString;
         END;
-        iFactura.NOT_.Add.NOT_1 := '6_' + Main.memFACTURADIAS_PAGO.AsString;
+
+        iFactura.NOT_.Add.NOT_1 := '6.-' + Main.memFACTURADIAS_PAGO.AsString
+          + ' Dias';
         if Main.MemFacturaOCNUMERO.AsString <> '' then
         begin
           iFactura.ORC.ORC_1 := Main.MemFacturaOCNUMERO.AsString;
@@ -342,7 +358,6 @@ begin
         iFactura.MEP.MEP_3 := FormatDateTime('yyyy-mm-dd',
           Main.memFACTURAfecha_pago.AsDateTime);
         iFactura.MEP.MEP_5 := Main.memFACTURADIAS_PAGO.AsString;
-
 
         Main.QFacDetalle.Close;
         Main.QFacDetalle.ParamByName('Tipo').AsString :=
@@ -374,8 +389,9 @@ begin
           iITELista.ITE_8 := Main.memFACTURACOD_MONEDA.AsString;
           iITELista.ITE_9 := Main.QFacDetalleITEM.AsString;
           iITELista.ITE_10 := Main.QFacDetalleDESC_ADICIONAL.AsString;
-          iITELista.ITE_11 := Main.QFacDetalleDESCRIPCION.AsString;
-          iITELista.ITE_12 := Main.QFacDetalleDESCRIPCION.AsString;
+          iITELista.ITE_11 := Main.QFacDetalleDESCRIPCION.AsString + ' ';
+          iITELista.ITE_12 := Main.QFacDetalleDESC_ADICIONAL.AsString + ' - ' +
+            Main.QFacDetalleUNIDAD.AsString;
           iITELista.ITE_17 := Main.QFacDetalleITEM.AsString;
           iITELista.ITE_19 := Main.QFacDetalleBASE.AsFloat /
             Main.memFACTURATASA.AsFloat;
@@ -546,6 +562,8 @@ var
   Nit: string;
   vBook: TBookmark;
   vQ: TFDQuery;
+  vHoy: TDateTime;
+  vDias: Double;
 begin
   if Main.memNotaTIPO.AsString = '' then
   begin
@@ -784,6 +802,31 @@ begin
           Main.memNotaINVC.AsString;
         iREFLista.REF_3 := FormatDateTime('yyyy-mm-dd',
           Main.memNotaFECHA_FV.AsDateTime);
+
+        // NOTAS
+
+        with TStringList.Create do
+          try
+            Delimiter := '-';
+            StrictDelimiter := True;
+            DelimitedText := Main.QSysMFACT.AsString;
+            for I := 1 to Count - 1 do
+            begin
+              iFactura.NOT_.Add.NOT_1 := I.ToString + '.-' + Strings[I];
+            end;
+          finally
+            Free;
+          end;
+
+        if Main.MemNotaDESCRIPCION.AsString <> '' then
+        BEGIN
+          iFactura.NOT_.Add.NOT_1 := '3.-' + Main.MemNotaDESCRIPCION.AsString;
+        END;
+        vHoy := Now;
+        vDias := Trunc(Main.memNotaDUEDATE.AsDateTime -
+          Main.memNotaFECHA.AsDateTime);
+
+        iFactura.NOT_.Add.NOT_1 := '6.-' + vDias.ToString + ' Dias';
 
         // PREFIJO
         iFactura.DRF.DRF_4 := Main.memNotaTIPO.AsString;
@@ -1075,10 +1118,27 @@ begin
           iOVTLista.OVT_3 := Main.memDevolucionCOD_MONEDA.AsString;
         End;
         // NOTAS
+        with TStringList.Create do
+          try
+            Delimiter := '-';
+            StrictDelimiter := True;
+            DelimitedText := Main.QSysMFACT.AsString;
+            for I := 1 to Count - 1 do
+            begin
+              iFactura.NOT_.Add.NOT_1 := I.ToString + '.-' + Strings[I];
+            end;
+          finally
+            Free;
+          end;
+
         if Main.memDevolucionCOMMENTS.AsString <> '' then
         BEGIN
-          iFactura.NOT_.Add.NOT_1 := Main.memDevolucionCOMMENTS.AsString;
+          iFactura.NOT_.Add.NOT_1 := '3.-' +
+            Main.memDevolucionCOMMENTS.AsString;
         END;
+
+        iFactura.NOT_.Add.NOT_1 := '6.-' + Main.memDevolucionDIAS_PAGO.AsString
+          + ' Dias';
 
         // REFERENCIA
         iREFLista := iFactura.REF.Add;
@@ -1129,8 +1189,9 @@ begin
           iITELista.ITE_8 := Main.memDevolucionCOD_MONEDA.AsString;
           iITELista.ITE_9 := Main.QDevDetalleITEM.AsString;
           iITELista.ITE_10 := Main.QDevDetalleDESC_ADICIONAL.AsString;
-          iITELista.ITE_11 := Main.QDevDetalleDESCRIPCION.AsString;
-          iITELista.ITE_12 := Main.QDevDetalleDESCRIPCION.AsString;
+          iITELista.ITE_11 := Main.QDevDetalleDESCRIPCION.AsString + ' ';
+          iITELista.ITE_12 := Main.QDevDetalleDESC_ADICIONAL.AsString + ' - ' +
+            Main.QDevDetalleUNIDAD.AsString;
           iITELista.ITE_17 := Main.QDevDetalleITEM.AsString;
           iITELista.ITE_19 := Main.QDevDetalleBASE.AsFloat;
           iITELista.ITE_20 := Main.memDevolucionCOD_MONEDA.AsString;

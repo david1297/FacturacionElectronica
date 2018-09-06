@@ -296,6 +296,10 @@ type
     MemFacturaOCNUMERO: TStringField;
     MemFacturaNROREMISION: TStringField;
     QFacDetalleNUMERO_PEDIDO: TIntegerField;
+    QSysMFACT: TMemoField;
+    QFacDetalleUNIDAD: TStringField;
+    QDevDetalleUNIDAD: TStringField;
+    MemNotaDESCRIPCION: TStringField;
     procedure FormCreate(Sender: TObject);
     procedure ConsultarClick(Sender: TObject);
     procedure EnviarClick(Sender: TObject);
@@ -506,7 +510,7 @@ begin
       ('SELECT DISTINCT ''EDITAR''  LOGO,S.SUCCLIENTE, cu.company,S.email EMAIL,CU.addr1,S.CONTACT1,S.CARGO1,CU.PHONE1,PA.COD_ISO,MT.DESCRIPCION AS MOTIVO,CE.TIPO, CE.BATCH, CE.FECHA, CE.CONCEPTO_NOTAFE, CE.ENVIADO,'
       + ' O.SUBTOTAL,substring(R.tipo_retencion from 1 for 1) TIPO_RETENCION,' +
       ' cE.DUEDATE, c.cruce, c.invc, CE.ID_N,''False'' SELECCIONAR,TI.PREFIJO_DIAN,TI.RES_DIAN,' +
-      ' CE.TOTAL AS VALOR,O.cufe, O.FECHA FECHA_FV,O.RFAPLICADA ' +
+      ' CE.TOTAL AS VALOR,O.cufe, O.FECHA FECHA_FV,O.RFAPLICADA,C.OBSERV DESCRIPCION ' +
       ' FROM CARPROEN CE ' +
       ' INNER JOIN  CARPRODE C ON C.tipo=CE.tipo AND C.batch=CE.batch' +
       ' INNER JOIN SHIPTO S ON C.ID_N=S.ID_N AND CE.SHIPTO = S.SUCCLIENTE ' +

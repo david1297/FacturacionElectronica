@@ -782,7 +782,7 @@ object Main: TMain
     SQL.Strings = (
       
         'SELECT O1.item, I.descripcion, O1.qtyship, O1.price,O1.BONO,O1.C' +
-        'ONTEO,O1.NUMERO_PEDIDO,'
+        'ONTEO,O1.NUMERO_PEDIDO,U.DESCRIPCION AS UNIDAD,'
       
         '(O1.EXTEND - O1.TOTALDCT) TSIMPUESTO,(O1.extend + O1.VLR_IVA - O' +
         '1.TOTALDCT + O1.IMPCONSUMO)TOTAL,coalesce((O1.IMPCONSUMO/o1.exte' +
@@ -793,6 +793,7 @@ object Main: TMain
         'D,O1.SERIALES DESC_ADICIONAL'
       'FROM OEDET O1'
       'INNER JOIN ITEM I ON O1.item = I.ITEM'
+      'INNER JOIN UNIDAD U ON O1.cod_unidad_venta = U.COD_UNIDAD'
       'where O1.tipo=:Tipo and O1.number=:number')
     Left = 160
     Top = 320
@@ -907,6 +908,10 @@ object Main: TMain
     object QFacDetalleNUMERO_PEDIDO: TIntegerField
       FieldName = 'NUMERO_PEDIDO'
     end
+    object QFacDetalleUNIDAD: TStringField
+      FieldName = 'UNIDAD'
+      Size = 80
+    end
   end
   object QFacImpuestos: TFDQuery
     Connection = Conexion
@@ -980,7 +985,7 @@ object Main: TMain
     Left = 208
     Top = 152
     Bitmap = {
-      494C010101000800480010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101010008004C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       00000000000000000000000000000000000000000000D3D2CF31515151AE5151
       51AE515151AE515151AE515151AE515151AE515151AE515151AE515151AE5151
@@ -1513,7 +1518,7 @@ object Main: TMain
     SQL.Strings = (
       
         'SELECT O1.item, I.descripcion, (O1.qtyship)*(-1) qtyship, O1.pri' +
-        'ce,O1.BONO,O1.CONTEO,'
+        'ce,O1.BONO,O1.CONTEO,U.DESCRIPCION AS UNIDAD,'
       
         '((O1.EXTEND)*(-1) - (O1.TOTALDCT)*(-1)) TSIMPUESTO,((O1.extend)*' +
         '(-1) + (O1.VLR_IVA)*(-1) - (O1.TOTALDCT)*(-1) + (O1.IMPCONSUMO)*' +
@@ -1530,6 +1535,7 @@ object Main: TMain
         'END,O1.SERIALES DESC_ADICIONAL'
       'FROM oedet O1'
       'INNER JOIN ITEM I ON O1.item = I.ITEM'
+      'INNER JOIN UNIDAD U ON O1.cod_unidad_venta = U.COD_UNIDAD'
       'where O1.tipo=:Tipo and O1.number=:number AND O1.QTYSHIP <> 0')
     Left = 40
     Top = 320
@@ -1652,6 +1658,10 @@ object Main: TMain
       FieldName = 'DESC_ADICIONAL'
       Origin = 'SERIALES'
       Size = 32000
+    end
+    object QDevDetalleUNIDAD: TStringField
+      FieldName = 'UNIDAD'
+      Size = 80
     end
   end
   object QDevImpuestos: TFDQuery
@@ -1844,6 +1854,10 @@ object Main: TMain
       FieldName = 'RES_DIAN'
       Size = 150
     end
+    object MemNotaDESCRIPCION: TStringField
+      FieldName = 'DESCRIPCION'
+      Size = 200
+    end
   end
   object QNotDetalle: TFDQuery
     Connection = Conexion
@@ -1991,7 +2005,9 @@ object Main: TMain
   object QSys: TFDQuery
     Connection = Conexion
     SQL.Strings = (
-      'select retei,FEDID,COMPANY,ADDRESS1,ADDRESS2,PHONE,CITY from sys')
+      
+        'select retei,FEDID,COMPANY,ADDRESS1,ADDRESS2,PHONE,CITY,MFACT fr' +
+        'om sys')
     Left = 264
     Top = 152
     object QSysRETEI: TFloatField
@@ -2031,6 +2047,11 @@ object Main: TMain
     object QSysADDRESS2: TStringField
       FieldName = 'ADDRESS2'
       Size = 33
+    end
+    object QSysMFACT: TMemoField
+      FieldName = 'MFACT'
+      Origin = 'MFACT'
+      BlobType = ftMemo
     end
   end
   object QSeriales: TFDQuery
