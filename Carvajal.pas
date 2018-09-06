@@ -56,6 +56,7 @@ var
   Headers: ISOAPHeaders;
   iREFLista: IXMLFACTURA_REF;
   iTIMLista: IXMLFACTURA_TIM;
+  iOVTLista: IXMLFACTURA_OVT;
   iITELista: IXMLFACTURA_ITE;
   iITETIILista: IXMLFACTURA_ITE_TII;
   iITEIDELista: IXMLFACTURA_ITE_IDE;
@@ -250,45 +251,50 @@ begin
             end;
             Main.QFacImpuestos.Next;
           end;
-          // if Main.memFACTURARETIVA.AsFloat <> 0 then
-          // begin
-          // iTIMLista := iFactura.TIM.Add;
-          // iTIMLista.TIM_1 := 'true';
-          // iTIMLista.TIM_2 := Main.memFACTURARETIVA.AsInteger;
-          // iTIMLista.TIM_3 := Main.memFACTURACOD_MONEDA.AsString;
-          // iTIMLista.IMP.IMP_1 := '02C';
-          // iTIMLista.IMP.IMP_2 := Main.memFACTURAVIVA.AsInteger;
-          // iTIMLista.IMP.IMP_3 := Main.memFACTURACOD_MONEDA.AsString;
-          // iTIMLista.IMP.IMP_4 := Main.memFACTURARETIVA.AsInteger;
-          // iTIMLista.IMP.IMP_5 := Main.memFACTURACOD_MONEDA.AsString;
-          // iTIMLista.IMP.IMP_6 := Main.QSysRETEI.AsInteger;
-          // end;
-          // if Main.memFACTURARETE.AsFloat <> 0 then
-          // begin
-          // iTIMLista := iFactura.TIM.Add;
-          // iTIMLista.TIM_1 := 'true';
-          // iTIMLista.TIM_2 := Main.memFACTURARETE.AsInteger;
-          // iTIMLista.TIM_3 := Main.memFACTURACOD_MONEDA.AsString;
-          // iTIMLista.IMP.IMP_1 := '01C';
-          // iTIMLista.IMP.IMP_2 := Main.memFACTURASUBTOTAL.AsInteger;
-          // iTIMLista.IMP.IMP_3 := Main.memFACTURACOD_MONEDA.AsString;
-          // iTIMLista.IMP.IMP_4 := Main.memFACTURARETE.AsInteger;
-          // iTIMLista.IMP.IMP_5 := Main.memFACTURACOD_MONEDA.AsString;
-          // iTIMLista.IMP.IMP_6 := Main.memFACTURAPORC_RETE.AsInteger;
-          // end;
+          if Main.memFACTURARETIVA.AsFloat <> 0 then
+          begin
+            iOVTLista := iFactura.OVT.Add;
+            iOVTLista.OVT_1 := '02C';
+            iOVTLista.OVT_2 := Main.memFACTURARETIVA.AsFloat;
+            iOVTLista.OVT_3 := Main.memFACTURACOD_MONEDA.AsString;
+
+          end
+          Else
+          Begin
+            iOVTLista := iFactura.OVT.Add;
+            iOVTLista.OVT_1 := '02C';
+            iOVTLista.OVT_2 := 0;
+            iOVTLista.OVT_3 := Main.memFACTURACOD_MONEDA.AsString;
+          End;
+
+          if Main.memFACTURARETE.AsFloat <> 0 then
+          begin
+            iOVTLista := iFactura.OVT.Add;
+            iOVTLista.OVT_1 := '01C';
+            iOVTLista.OVT_2 := Main.memFACTURARETE.AsFloat;
+            iOVTLista.OVT_3 := Main.memFACTURACOD_MONEDA.AsString;
+          end
+          Else
+          Begin
+            iOVTLista := iFactura.OVT.Add;
+            iOVTLista.OVT_1 := '01C';
+            iOVTLista.OVT_2 := 0;
+            iOVTLista.OVT_3 := Main.memFACTURACOD_MONEDA.AsString;
+          End;
           if Main.memFACTURARETICA.AsFloat <> 0 then
           begin
-            iTIMLista := iFactura.TIM.Add;
-            iTIMLista.TIM_1 := 'true';
-            iTIMLista.TIM_2 := Main.memFACTURARETE.AsInteger;
-            iTIMLista.TIM_3 := Main.memFACTURACOD_MONEDA.AsString;
-            iTIMLista.IMP.IMP_1 := '03';
-            iTIMLista.IMP.IMP_2 := Main.memFACTURASUBTOTAL.AsInteger;
-            iTIMLista.IMP.IMP_3 := Main.memFACTURACOD_MONEDA.AsString;
-            iTIMLista.IMP.IMP_4 := Main.memFACTURARETICA.AsInteger;
-            iTIMLista.IMP.IMP_5 := Main.memFACTURACOD_MONEDA.AsString;
-            iTIMLista.IMP.IMP_6 := Main.memFACTURAPORC_ICA.AsInteger;
-          end;
+            iOVTLista := iFactura.OVT.Add;
+            iOVTLista.OVT_1 := '03C';
+            iOVTLista.OVT_2 := Main.memFACTURARETICA.AsFloat;
+            iOVTLista.OVT_3 := Main.memFACTURACOD_MONEDA.AsString;
+          end
+          Else
+          Begin
+            iOVTLista := iFactura.OVT.Add;
+            iOVTLista.OVT_1 := '03C';
+            iOVTLista.OVT_2 := Main.memFACTURARETICA.AsFloat;
+            iOVTLista.OVT_3 := Main.memFACTURACOD_MONEDA.AsString;
+          End;
         END;
         // TIPO DE CAMBIO
         if Main.memFACTURACOD_MONEDA.AsString <> 'COP' then
@@ -312,8 +318,9 @@ begin
         // NOTAS
         if Main.memFACTURACOMMENTS.AsString <> '' then
         BEGIN
-          iFactura.NOT_.Add.NOT_1 := Main.memFACTURACOMMENTS.AsString;
+          iFactura.NOT_.Add.NOT_1 := '3_' + Main.memFACTURACOMMENTS.AsString;
         END;
+        iFactura.NOT_.Add.NOT_1 := '6_' + Main.memFACTURADIAS_PAGO.AsString;
         if Main.MemFacturaOCNUMERO.AsString <> '' then
         begin
           iFactura.ORC.ORC_1 := Main.MemFacturaOCNUMERO.AsString;
@@ -335,6 +342,7 @@ begin
         iFactura.MEP.MEP_3 := FormatDateTime('yyyy-mm-dd',
           Main.memFACTURAfecha_pago.AsDateTime);
         iFactura.MEP.MEP_5 := Main.memFACTURADIAS_PAGO.AsString;
+
 
         Main.QFacDetalle.Close;
         Main.QFacDetalle.ParamByName('Tipo').AsString :=
@@ -523,6 +531,7 @@ var
   h: Integer;
   iREFLista: IXMLFACTURA_REF;
   iTIMLista: IXMLFACTURA_TIM;
+  iOVTLista: IXMLFACTURA_OVT;
   iITELista: IXMLFACTURA_ITE;
   iITETIILista: IXMLFACTURA_ITE_TII;
   iITEIDELista: IXMLFACTURA_ITE_IDE;
@@ -682,44 +691,26 @@ begin
           end;
           if Main.QnotDetalleAPLI_IMPUESTO.AsString = 'RETEIVA' then
           begin
-            iTIMLista := iFactura.TIM.Add;
-            iTIMLista.TIM_1 := 'true';
-            iTIMLista.TIM_2 := Main.QnotDetalleVALOR.AsInteger;
-            iTIMLista.TIM_3 := 'COP';
-            iTIMLista.IMP.IMP_1 := '02C';
-            iTIMLista.IMP.IMP_2 := Main.QnotDetalleBASE.AsInteger;
-            iTIMLista.IMP.IMP_3 := 'COP';
-            iTIMLista.IMP.IMP_4 := Main.QnotDetalleVALOR.AsInteger;
-            iTIMLista.IMP.IMP_5 := 'COP';
-            iTIMLista.IMP.IMP_6 := Main.QSysRETEI.AsFloat;
+            iOVTLista := iFactura.OVT.Add;
+            iOVTLista.OVT_1 := '02C';
+            iOVTLista.OVT_2 := Main.QnotDetalleVALOR.AsInteger;
+            iOVTLista.OVT_3 := 'COP';
             vRIva := Main.QnotDetalleVALOR.AsFloat;
           end;
           if Main.QnotDetalleAPLI_IMPUESTO.AsString = 'RETEFUENTE' then
           begin
-            iTIMLista := iFactura.TIM.Add;
-            iTIMLista.TIM_1 := 'true';
-            iTIMLista.TIM_2 := Main.QnotDetalleVALOR.AsInteger;
-            iTIMLista.TIM_3 := 'COP';
-            iTIMLista.IMP.IMP_1 := '01C';
-            iTIMLista.IMP.IMP_2 := Main.QnotDetalleBASE.AsInteger;
-            iTIMLista.IMP.IMP_3 := 'COP';
-            iTIMLista.IMP.IMP_4 := Main.QnotDetalleVALOR.AsInteger;
-            iTIMLista.IMP.IMP_5 := 'COP';
-            iTIMLista.IMP.IMP_6 := Main.QnotDetallePORCENRETENCION.AsFloat;
+            iOVTLista := iFactura.OVT.Add;
+            iOVTLista.OVT_1 := '01C';
+            iOVTLista.OVT_2 := Main.QnotDetalleVALOR.AsInteger;
+            iOVTLista.OVT_3 := 'COP';
             vRet := Main.QnotDetalleVALOR.AsFloat;
           end;
           if Main.QnotDetalleAPLI_IMPUESTO.AsString = 'ICA' then
           begin
-            iTIMLista := iFactura.TIM.Add;
-            iTIMLista.TIM_1 := 'true';
-            iTIMLista.TIM_2 := Main.QnotDetalleVALOR.AsInteger;
-            iTIMLista.TIM_3 := 'COP';
-            iTIMLista.IMP.IMP_1 := '03';
-            iTIMLista.IMP.IMP_2 := Main.QnotDetalleBASE.AsInteger;
-            iTIMLista.IMP.IMP_3 := 'COP';
-            iTIMLista.IMP.IMP_4 := Main.QnotDetalleVALOR.AsInteger;
-            iTIMLista.IMP.IMP_5 := 'COP';
-            iTIMLista.IMP.IMP_6 := Main.QnotDetallePORCENRETENCION.AsFloat;
+            iOVTLista := iFactura.OVT.Add;
+            iOVTLista.OVT_1 := '03C';
+            iOVTLista.OVT_2 := Main.QnotDetalleVALOR.AsInteger;
+            iOVTLista.OVT_3 := 'COP';
             vIca := Main.QnotDetalleVALOR.AsFloat;
           end;
           Main.QNotDetalle.Next;
@@ -878,6 +869,7 @@ var
   Headers: ISOAPHeaders;
   iREFLista: IXMLFACTURA_REF;
   iTIMLista: IXMLFACTURA_TIM;
+  iOVTLista: IXMLFACTURA_OVT;
   iITELista: IXMLFACTURA_ITE;
   iITETIILista: IXMLFACTURA_ITE_TII;
   iITEIDELista: IXMLFACTURA_ITE_IDE;
@@ -1040,43 +1032,48 @@ begin
         end;
         if Main.memDevolucionRETIVA.AsFloat <> 0 then
         begin
-          iTIMLista := iFactura.TIM.Add;
-          iTIMLista.TIM_1 := 'true';
-          iTIMLista.TIM_2 := Main.memDevolucionRETIVA.AsInteger;
-          iTIMLista.TIM_3 := Main.memDevolucionCOD_MONEDA.AsString;
-          iTIMLista.IMP.IMP_1 := '02C';
-          iTIMLista.IMP.IMP_2 := Main.memDevolucionVIVA.AsInteger;
-          iTIMLista.IMP.IMP_3 := Main.memDevolucionCOD_MONEDA.AsString;
-          iTIMLista.IMP.IMP_4 := Main.memDevolucionRETIVA.AsInteger;
-          iTIMLista.IMP.IMP_5 := Main.memDevolucionCOD_MONEDA.AsString;
-          iTIMLista.IMP.IMP_6 := Main.QSysRETEI.AsInteger;
-        end;
+          iOVTLista := iFactura.OVT.Add;
+          iOVTLista.OVT_1 := '02C';
+          iOVTLista.OVT_2 := Main.memDevolucionRETIVA.AsFloat;
+          iOVTLista.OVT_3 := Main.memDevolucionCOD_MONEDA.AsString;
+
+        end
+        Else
+        Begin
+          iOVTLista := iFactura.OVT.Add;
+          iOVTLista.OVT_1 := '02C';
+          iOVTLista.OVT_2 := 0;
+          iOVTLista.OVT_3 := Main.memDevolucionCOD_MONEDA.AsString;
+        End;
+
         if Main.memDevolucionRETE.AsFloat <> 0 then
         begin
-          iTIMLista := iFactura.TIM.Add;
-          iTIMLista.TIM_1 := 'true';
-          iTIMLista.TIM_2 := Main.memDevolucionRETE.AsInteger;
-          iTIMLista.TIM_3 := Main.memDevolucionCOD_MONEDA.AsString;
-          iTIMLista.IMP.IMP_1 := '01C';
-          iTIMLista.IMP.IMP_2 := Main.memDevolucionSUBTOTAL.AsInteger;
-          iTIMLista.IMP.IMP_3 := Main.memDevolucionCOD_MONEDA.AsString;
-          iTIMLista.IMP.IMP_4 := Main.memDevolucionRETE.AsInteger;
-          iTIMLista.IMP.IMP_5 := Main.memDevolucionCOD_MONEDA.AsString;
-          iTIMLista.IMP.IMP_6 := Main.memDevolucionPORC_RETE.AsInteger;
-        end;
+          iOVTLista := iFactura.OVT.Add;
+          iOVTLista.OVT_1 := '01C';
+          iOVTLista.OVT_2 := Main.memDevolucionRETE.AsFloat;
+          iOVTLista.OVT_3 := Main.memDevolucionCOD_MONEDA.AsString;
+        end
+        Else
+        Begin
+          iOVTLista := iFactura.OVT.Add;
+          iOVTLista.OVT_1 := '01C';
+          iOVTLista.OVT_2 := 0;
+          iOVTLista.OVT_3 := Main.memDevolucionCOD_MONEDA.AsString;
+        End;
         if Main.memDevolucionRETICA.AsFloat <> 0 then
         begin
-          iTIMLista := iFactura.TIM.Add;
-          iTIMLista.TIM_1 := 'true';
-          iTIMLista.TIM_2 := Main.memDevolucionRETE.AsInteger;
-          iTIMLista.TIM_3 := Main.memDevolucionCOD_MONEDA.AsString;
-          iTIMLista.IMP.IMP_1 := '03';
-          iTIMLista.IMP.IMP_2 := Main.memDevolucionSUBTOTAL.AsInteger;
-          iTIMLista.IMP.IMP_3 := Main.memDevolucionCOD_MONEDA.AsString;
-          iTIMLista.IMP.IMP_4 := Main.memDevolucionRETICA.AsInteger;
-          iTIMLista.IMP.IMP_5 := Main.memDevolucionCOD_MONEDA.AsString;
-          iTIMLista.IMP.IMP_6 := Main.memDevolucionPORC_ICA.AsInteger;
-        end;
+          iOVTLista := iFactura.OVT.Add;
+          iOVTLista.OVT_1 := '03C';
+          iOVTLista.OVT_2 := Main.memDevolucionRETICA.AsFloat;
+          iOVTLista.OVT_3 := Main.memDevolucionCOD_MONEDA.AsString;
+        end
+        Else
+        Begin
+          iOVTLista := iFactura.OVT.Add;
+          iOVTLista.OVT_1 := '03C';
+          iOVTLista.OVT_2 := Main.memDevolucionRETICA.AsFloat;
+          iOVTLista.OVT_3 := Main.memDevolucionCOD_MONEDA.AsString;
+        End;
         // NOTAS
         if Main.memDevolucionCOMMENTS.AsString <> '' then
         BEGIN
