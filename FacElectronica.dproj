@@ -89,7 +89,7 @@
         <DCC_RemoteDebug>false</DCC_RemoteDebug>
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <AppEnableHighDPI>true</AppEnableHighDPI>
-        <Debugger_RunParams>SAI 1 10.10.10.226:D:\SAIOPEN\nutritec2017.FDB</Debugger_RunParams>
+        <Debugger_RunParams>SAI 1 10.10.10.226:D:\SAIOPEN\FACTORY.FDB</Debugger_RunParams>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <Icon_MainIcon>FacElectronica_Icon.ico</Icon_MainIcon>
@@ -117,7 +117,6 @@
             <Form>Main</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="Comun\Service.pas"/>
         <DCCReference Include="Comun\uFacNutritec.pas"/>
         <DCCReference Include="Carvajal.pas"/>
         <DCCReference Include="EditarCorreo.pas">
@@ -128,6 +127,7 @@
         <DCCReference Include="Comun\InvoiceService1.pas"/>
         <DCCReference Include="Comun\uSecurity.pas"/>
         <DCCReference Include="Comun\wsse.pas"/>
+        <DCCReference Include="Comun\Service1.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

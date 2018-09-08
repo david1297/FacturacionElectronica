@@ -19,8 +19,8 @@ uses
   Generics.Collections, RegularExpressions, StrUtils, Xml.xmldom, Xml.XMLIntf,
   Xml.XMLDoc,
   InvokeRegistry,
-  System.ImageList, Vcl.ImgList, Service, uFacNutritec, Carvajal, EditarCorreo,
-  Factory;
+  System.ImageList, Vcl.ImgList, uFacNutritec, Carvajal, EditarCorreo,
+  Factory, Service1;
 
 type
   TConfig = class
@@ -372,6 +372,8 @@ implementation
 
 {$R *.dfm}
 
+
+
 procedure TMain.ConsultaDevoluciones;
 var
   vQ: TFDQuery;
@@ -712,7 +714,7 @@ begin
       'INNER JOIN SHIPTO S ON C.ID_N=S.ID_N  where C.id_n = ' + Nit.ToString +
       ' and  C.ID_N=T.ID_N');
 
-    Result := Cliente.Create;
+    Result := Service1.Cliente.Create;
 
     if (vQ.FieldByName('tipo_contribuyente').AsString = '0') or
       (vQ.FieldByName('tipo_contribuyente').AsString = '2') then
@@ -746,7 +748,7 @@ end;
 
 function TMain.GetFoliosRestantes: FoliosRemainingResponse2;
 begin
-  Result := Service.GetIService().FoliosRestantes(vlTokenEmpresa,
+  Result := Service1.GetIService().foliosRestantes(vlTokenEmpresa,
     vlTokenPassword);
 end;
 

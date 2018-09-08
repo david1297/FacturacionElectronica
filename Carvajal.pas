@@ -13,7 +13,7 @@ uses System.Classes, Vcl.Graphics,
   FireDAC.Phys.SQLiteDef, FireDAC.Stan.ExprFuncs, FireDAC.Phys.SQLiteVDataSet,
   DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls, DynVarsEh, EhLibVCL,
   GridsEh, DBAxisGridsEh, DBGridEh, MemTableDataEh, MemTableEh, Vcl.DBCtrls,
-  Vcl.Mask, DBCtrlsEh, Service, System.NetEncoding, System.Threading, Activex,
+  Vcl.Mask, DBCtrlsEh, Service1, System.NetEncoding, System.Threading, Activex,
   Generics.Collections,
   RegularExpressions, StrUtils, Xml.xmldom, Xml.XMLIntf, Xml.XMLDoc,
   System.SysUtils, System.Variants, uFacNutritec, InvoiceService1,
@@ -108,7 +108,7 @@ begin
           finally
             Free;
           end;
-        vCliente := Main.getCliente(Main.memFACTURANIT.AsInteger);
+        vCliente := Main.GetCliente(Main.memFACTURANIT.AsInteger);
         iFactura := NewFACTURA;
         // INFORMACION CABECERA
         iFactura.ENC.ENC_1 := 'INVOIC';
@@ -316,7 +316,6 @@ begin
         iFactura.DRF.DRF_6 := Main.MemFacturaNUMHASTA.AsInteger;
 
         // NOTAS
-
         with TStringList.Create do
           try
             Delimiter := '-';
@@ -329,14 +328,14 @@ begin
           finally
             Free;
           end;
-
         if Main.memFACTURACOMMENTS.AsString <> '' then
         BEGIN
           iFactura.NOT_.Add.NOT_1 := '3.-' + Main.memFACTURACOMMENTS.AsString;
         END;
-
         iFactura.NOT_.Add.NOT_1 := '6.-' + Main.memFACTURADIAS_PAGO.AsString
           + ' Dias';
+
+        // ORDEN DE COMPRA
         if Main.MemFacturaOCNUMERO.AsString <> '' then
         begin
           iFactura.ORC.ORC_1 := Main.MemFacturaOCNUMERO.AsString;
@@ -453,14 +452,14 @@ begin
           END;
           Main.QFacDetalle.Next;
         END;
-        vStringStream := TStringStream.Create(iFactura.Xml);
-        try
-          vStringStream.SaveToFile(Main.vRuta + '/' +
-            Main.memFACTURATIPO.AsString + Main.memFACTURANUMERO.AsString
-            + '.xml');
-        finally
-          vStringStream.DisposeOf;
-        end;
+        // vStringStream := TStringStream.Create(iFactura.Xml);
+        // try
+        // vStringStream.SaveToFile(Main.vRuta + '/' +
+        // Main.memFACTURATIPO.AsString + Main.memFACTURANUMERO.AsString
+        // + '.xml');
+        // finally
+        // vStringStream.DisposeOf;
+        // end;
         vArchivo := TStringStream.Create(iFactura.Xml);
         vArchivoDest := TStringStream.Create;
         System.NetEncoding.TBase64Encoding.Base64.Encode(vArchivo,

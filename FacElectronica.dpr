@@ -3,14 +3,14 @@ program FacElectronica;
 uses
   Vcl.Forms,
   Principal in 'Principal.pas' {Main},
-  Service in 'Comun\Service.pas',
   uFacNutritec in 'Comun\uFacNutritec.pas',
   Carvajal in 'Carvajal.pas',
   EditarCorreo in 'EditarCorreo.pas' {Form1},
   Factory in 'Factory.pas',
   InvoiceService1 in 'Comun\InvoiceService1.pas',
   uSecurity in 'Comun\uSecurity.pas',
-  wsse in 'Comun\wsse.pas';
+  wsse in 'Comun\wsse.pas',
+  Service1 in 'Comun\Service1.pas';
 
 {$R *.res}
 

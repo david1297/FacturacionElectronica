@@ -1,8 +1,8 @@
 // ************************************************************************ //
 // The types declared in this file were generated from data read from the
 // WSDL File described below:
-// WSDL     : http://intdemo.dfacture.com.co/ws/obj/Service.svc?wsdl
-//  >Import : http://intdemo.dfacture.com.co/ws/obj/Service.svc?wsdl>0
+// WSDL     : http://intdemo.dfacture.com.co/ws/obj/Service.svc?WSDL
+//  >Import : http://intdemo.dfacture.com.co/ws/obj/Service.svc?WSDL>0
 //  >Import : http://intdemo.dfacture.com.co/ws/obj/Service.svc?xsd=xsd0
 //  >Import : http://intdemo.dfacture.com.co/ws/obj/Service.svc?xsd=xsd2
 //  >Import : http://intdemo.dfacture.com.co/ws/obj/Service.svc?xsd=xsd3
@@ -10,10 +10,10 @@
 //  >Import : http://intdemo.dfacture.com.co/ws/obj/Service.svc?xsd=xsd1
 // Encoding : utf-8
 // Version  : 1.0
-// (24/03/2018 4:36:42 p. m. - - $Rev: 90173 $)
+// (07/09/2018 10:32:26 a. m. - - $Rev: 90173 $)
 // ************************************************************************ //
 
-unit Service;
+unit Service1;
 
 interface
 
@@ -157,8 +157,8 @@ type
     FtipoIdentificacion: string;
     FtipoIdentificacion_Specified: boolean;
     FtipoPersona: string;
-    Fnit: string;
     FtipoPersona_Specified: boolean;
+    Fnit: string;
     Fnit_Specified: Boolean;
     procedure Setapellido(Index: Integer; const Astring: string);
     function  apellido_Specified(Index: Integer): boolean;
@@ -191,9 +191,9 @@ type
     procedure SettipoIdentificacion(Index: Integer; const Astring: string);
     function  tipoIdentificacion_Specified(Index: Integer): boolean;
     procedure SettipoPersona(Index: Integer; const Astring: string);
-    procedure Setnit(Index: Integer; const Astring: string);
     function  tipoPersona_Specified(Index: Integer): boolean;
     function  nit_Specified(Index: Integer): boolean;
+    procedure Setnit(Index: Integer; const Astring: string);
   published
     property apellido:           string  Index (IS_OPTN or IS_NLBL) read Fapellido write Setapellido stored apellido_Specified;
     property ciudad:             string  Index (IS_OPTN or IS_NLBL) read Fciudad write Setciudad stored ciudad_Specified;
@@ -904,7 +904,11 @@ implementation
   uses System.SysUtils, Principal;
 
 function GetIService(UseWSDL: Boolean; Addr: string; HTTPRIO: THTTPRIO): IService;
-
+//const
+//  defWSDL = 'http://intdemo.dfacture.com.co/ws/obj/Service.svc?WSDL';
+//  defURL  = 'http://intdemo.dfacture.com.co/ws/obj/Service.svc';
+//  defSvc  = 'Service';
+//  defPrt  = 'BasicHttpBinding_IService';
 var
   RIO: THTTPRIO;
   defWSDL :string;
@@ -916,7 +920,6 @@ begin
   defURL  := Main.vUrl;
   defSvc  := 'Service';
   defPrt  := 'BasicHttpBinding_IService';
-
   Result := nil;
   if (Addr = '') then
   begin
@@ -1181,20 +1184,21 @@ begin
   FtipoPersona := Astring;
   FtipoPersona_Specified := True;
 end;
-procedure Cliente2.Setnit(Index: Integer; const Astring: string);
-begin
-  Fnit := Astring;
-  Fnit_Specified := True;
-end;
 
 function Cliente2.tipoPersona_Specified(Index: Integer): boolean;
 begin
   Result := FtipoPersona_Specified;
 end;
+procedure Cliente2.Setnit(Index: Integer; const Astring: string);
+begin
+  Fnit := Astring;
+  Fnit_Specified := True;
+end;
 function Cliente2.nit_Specified(Index: Integer): boolean;
 begin
   Result := Fnit_Specified;
 end;
+
 procedure FacturaImpuestos2.SetbaseImponibleTOTALImp(Index: Integer; const Astring: string);
 begin
   FbaseImponibleTOTALImp := Astring;

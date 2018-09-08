@@ -13,10 +13,10 @@ uses System.Classes, Vcl.Graphics,
   FireDAC.Phys.SQLiteDef, FireDAC.Stan.ExprFuncs, FireDAC.Phys.SQLiteVDataSet,
   DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls, DynVarsEh, EhLibVCL,
   GridsEh, DBAxisGridsEh, DBGridEh, MemTableDataEh, MemTableEh, Vcl.DBCtrls,
-  Vcl.Mask, DBCtrlsEh, Service, System.NetEncoding, System.Threading, Activex,
+  Vcl.Mask, DBCtrlsEh,  System.NetEncoding, System.Threading, Activex,
   Generics.Collections,
   RegularExpressions, StrUtils, Xml.xmldom, Xml.XMLIntf, Xml.XMLDoc,
-  System.SysUtils, System.Variants, uFacNutritec, ComObj;
+  System.SysUtils, System.Variants, uFacNutritec, ComObj, Service1;
 
 type
   PFactory = class
@@ -71,7 +71,7 @@ begin
     begin
       Main.MemDevolucion.Open;
       Main.MemDevolucion.Edit;
-      vRespuesta := Service.GetIService().EnvioCorreo(Main.vlTokenEmpresa,
+      vRespuesta := Service1.GetIService().EnvioCorreo(Main.vlTokenEmpresa,
         Main.vlTokenPassword, Main.MemDevolucionPREFIJO_DIAN.AsString +
         Main.MemDevolucionNUMBER.AsString, Main.MemDevolucionEMAIL.AsString);
       ShowMessage('Documento: ' + Main.MemDevolucionPREFIJO_DIAN.AsString + ' - ' +
@@ -109,7 +109,7 @@ begin
     begin
       Main.memFACTURA.Open;
       Main.memFACTURA.Edit;
-      vRespuesta := Service.GetIService().EnvioCorreo(Main.vlTokenEmpresa,
+      vRespuesta := Service1.GetIService().EnvioCorreo(Main.vlTokenEmpresa,
         Main.vlTokenPassword, Main.memFACTURAPREFIJO_DIAN.AsString +
         Main.memFACTURANUMERO.AsString, Main.memFACTURAEMAIL.AsString);
       ShowMessage('Documento: ' + Main.memFACTURAPREFIJO_DIAN.AsString + ' - ' +
@@ -146,7 +146,7 @@ begin
     begin
       Main.memNota.Open;
       Main.memNota.Edit;
-      vRespuesta := Service.GetIService().EnvioCorreo(Main.vlTokenEmpresa,
+      vRespuesta := Service1.GetIService().EnvioCorreo(Main.vlTokenEmpresa,
         Main.vlTokenPassword, Main.memNotaPREFIJO_DIAN.AsString +
         Main.memNotaBATCH.AsString, Main.memNotaEMAIL.AsString);
       ShowMessage('Documento: ' + Main.memNotaPREFIJO_DIAN.AsString + ' - ' +
@@ -431,7 +431,7 @@ begin
       vFactura.fechaEmisionDocumentoModificado :=
         FormatDateTime('YYYY-MM-DD HH:MM:SS',
         Main.MemDevolucionFECHA_FV.AsDateTime);
-      vRespuesta := Service.GetIService().Enviar(Main.vlTokenEmpresa,
+      vRespuesta := Service1.GetIService().Enviar(Main.vlTokenEmpresa,
         Main.vlTokenPassword, vFactura);
       if vRespuesta.resultado = 'Procesado' then
       begin
@@ -781,7 +781,7 @@ begin
         ReplaceStr(FormatFloat('##0.##',
         (Main.memFACTURADESTOTAL.AsFloat / Main.memFACTURATASA.AsFloat)),
         ',', '.');
-      vRespuesta := Service.GetIService().Enviar(Main.vlTokenEmpresa,
+       vRespuesta := Service1.GetIService().Enviar(Main.vlTokenEmpresa,
         Main.vlTokenPassword, vFactura);
       if vRespuesta.cufe <> '' then
       begin
@@ -1074,7 +1074,7 @@ begin
         Main.memNotaINVC.AsString;
       vFactura.fechaEmisionDocumentoModificado :=
         FormatDateTime('YYYY-MM-DD HH:MM:SS', Main.memNotaFECHA_FV.AsDateTime);
-      vRespuesta := Service.GetIService().Enviar(Main.vlTokenEmpresa,
+      vRespuesta := Service1.GetIService().Enviar(Main.vlTokenEmpresa,
         Main.vlTokenPassword, vFactura);
       if vRespuesta.resultado = 'Procesado' then
       begin
@@ -1128,13 +1128,13 @@ begin
       vHoy := Now;
       vDias := Trunc(vHoy - Main.MemFacturaFECHA.AsDateTime);
 
-      vEstadoFV := Service.GetIService().EstadoDocumento(Main.vlTokenEmpresa,
+      vEstadoFV := Service1.GetIService().EstadoDocumento(Main.vlTokenEmpresa,
         Main.vlTokenPassword, (Main.MemDevolucionPREFIJO_DIAN.AsString +
         Main.MemDevolucionNUMBER.AsString)).acuseRespuesta;
-      vAcuseFV := Service.GetIService().EstadoDocumento(Main.vlTokenEmpresa,
+      vAcuseFV := Service1.GetIService().EstadoDocumento(Main.vlTokenEmpresa,
         Main.vlTokenPassword, (Main.MemDevolucionPREFIJO_DIAN.AsString +
         Main.MemDevolucionNUMBER.AsString)).acuseEstatus;
-      vComentario := Service.GetIService().EstadoDocumento(Main.vlTokenEmpresa,
+      vComentario := Service1.GetIService().EstadoDocumento(Main.vlTokenEmpresa,
         Main.vlTokenPassword, (Main.MemDevolucionPREFIJO_DIAN.AsString +
         Main.MemDevolucionNUMBER.AsString)).acuseComentario;
 
@@ -1192,20 +1192,20 @@ begin
       vHoy := Now;
       vDias := Trunc(vHoy - Main.MemFacturaFECHA.AsDateTime);
 
-      vEstadoFV := Service.GetIService().EstadoDocumento(Main.vlTokenEmpresa,
+      vEstadoFV := Service1.GetIService().EstadoDocumento(Main.vlTokenEmpresa,
         Main.vlTokenPassword,
         (Main.memFACTURAPREFIJO_DIAN.AsString + Main.memFACTURANUMERO.AsString))
         .acuseRespuesta;
 
-      vAcuseFV := Service.GetIService().EstadoDocumento(Main.vlTokenEmpresa,
+      vAcuseFV := Service1.GetIService().EstadoDocumento(Main.vlTokenEmpresa,
         Main.vlTokenPassword,
         (Main.memFACTURAPREFIJO_DIAN.AsString + Main.memFACTURANUMERO.AsString))
         .acuseEstatus;
-      vStatus := Service.GetIService().EstadoDocumento(Main.vlTokenEmpresa,
+      vStatus := Service1.GetIService().EstadoDocumento(Main.vlTokenEmpresa,
         Main.vlTokenPassword,
         (Main.memFACTURAPREFIJO_DIAN.AsString + Main.memFACTURANUMERO.AsString))
         .estatusDocumento;
-      vComentario := Service.GetIService().EstadoDocumento(Main.vlTokenEmpresa,
+      vComentario := Service1.GetIService().EstadoDocumento(Main.vlTokenEmpresa,
         Main.vlTokenPassword,
         (Main.memFACTURAPREFIJO_DIAN.AsString + Main.memFACTURANUMERO.AsString))
         .acuseComentario;
@@ -1263,14 +1263,14 @@ begin
       vHoy := Now;
       vDias := Trunc(vHoy - Main.MemFacturaFECHA.AsDateTime);
 
-      vEstadoFV := Service.GetIService().EstadoDocumento(Main.vlTokenEmpresa,
+      vEstadoFV := Service1.GetIService().EstadoDocumento(Main.vlTokenEmpresa,
         Main.vlTokenPassword,
         (Main.memNotaPREFIJO_DIAN.AsString + Main.memNotaBATCH.AsString))
         .acuseRespuesta;
-      vAcuseFV := Service.GetIService().EstadoDocumento(Main.vlTokenEmpresa,
+      vAcuseFV := Service1.GetIService().EstadoDocumento(Main.vlTokenEmpresa,
         Main.vlTokenPassword,
         (Main.memNotaPREFIJO_DIAN.AsString + Main.memNotaBATCH.AsString)).acuseEstatus;
-      vComentario := Service.GetIService().EstadoDocumento(Main.vlTokenEmpresa,
+      vComentario := Service1.GetIService().EstadoDocumento(Main.vlTokenEmpresa,
         Main.vlTokenPassword,
         (Main.memNotaPREFIJO_DIAN.AsString + Main.memNotaBATCH.AsString))
         .acuseComentario;
@@ -1332,7 +1332,7 @@ begin
       begin
         Main.MemDevolucion.Open;
         Main.MemDevolucion.Edit;
-        vRespuesta := Service.GetIService().DescargaPDF(Main.vlTokenEmpresa,
+        vRespuesta := Service1.GetIService().DescargaPDF(Main.vlTokenEmpresa,
           Main.vlTokenPassword, Main.MemDevolucionPREFIJO_DIAN.AsString +
           Main.MemDevolucionNUMBER.AsString);
         if vRespuesta.documento <> '' then
@@ -1397,7 +1397,7 @@ begin
       begin
         Main.memFACTURA.Open;
         Main.memFACTURA.Edit;
-        vRespuesta := Service.GetIService().DescargaPDF(Main.vlTokenEmpresa,
+        vRespuesta := Service1.GetIService().DescargaPDF(Main.vlTokenEmpresa,
           Main.vlTokenPassword, Main.memFACTURAPREFIJO_DIAN.AsString +
           Main.memFACTURANUMERO.AsString);
         if vRespuesta.documento <> '' then
@@ -1463,7 +1463,7 @@ begin
       begin
         Main.memNota.Open;
         Main.memNota.Edit;
-        vRespuesta := Service.GetIService().DescargaPDF(Main.vlTokenEmpresa,
+        vRespuesta := Service1.GetIService().DescargaPDF(Main.vlTokenEmpresa,
           Main.vlTokenPassword, Main.memNotaPREFIJO_DIAN.AsString +
           Main.memNotaBATCH.AsString);
         if vRespuesta.documento <> '' then
@@ -1527,7 +1527,7 @@ begin
       begin
         Main.MemDevolucion.Open;
         Main.MemDevolucion.Edit;
-        vRespuesta := Service.GetIService().DescargaXML(Main.vlTokenEmpresa,
+        vRespuesta := Service1.GetIService().DescargaXML(Main.vlTokenEmpresa,
           Main.vlTokenPassword, Main.MemDevolucionPREFIJO_DIAN.AsString +
           Main.MemDevolucionNUMBER.AsString);
         if vRespuesta.documento <> '' then
@@ -1593,7 +1593,7 @@ begin
       begin
         Main.memFACTURA.Open;
         Main.memFACTURA.Edit;
-        vRespuesta := Service.GetIService().DescargaXML(Main.vlTokenEmpresa,
+        vRespuesta := Service1.GetIService().DescargaXML(Main.vlTokenEmpresa,
           Main.vlTokenPassword, Main.memFACTURAPREFIJO_DIAN.AsString +
           Main.memFACTURANUMERO.AsString);
         if vRespuesta.documento <> '' then
@@ -1659,7 +1659,7 @@ begin
       begin
         Main.memNota.Open;
         Main.memNota.Edit;
-        vRespuesta := Service.GetIService().DescargaXML(Main.vlTokenEmpresa,
+        vRespuesta := Service1.GetIService().DescargaXML(Main.vlTokenEmpresa,
           Main.vlTokenPassword, Main.memNotaPREFIJO_DIAN.AsString +
           Main.memNotaBATCH.AsString);
         if vRespuesta.documento <> '' then

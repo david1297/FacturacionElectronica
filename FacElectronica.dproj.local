@@ -6,11 +6,11 @@
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="Comun"/>
-    <File Path="Comun\Service.pas"/>
     <File Path="Comun\uFacNutritec.pas"/>
     <File Path="Comun\InvoiceService1.pas"/>
     <File Path="Comun\uSecurity.pas"/>
     <File Path="Comun\wsse.pas"/>
+    <File Path="Comun\Service1.pas"/>
     <File Path="EditarCorreo.pas"/>
     <File Path="EditarCorreo.dfm"/>
     <File Path="Principal.pas"/>

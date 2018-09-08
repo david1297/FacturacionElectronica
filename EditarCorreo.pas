@@ -15,7 +15,7 @@ uses
   FireDAC.Phys.SQLiteDef, FireDAC.Stan.ExprFuncs, FireDAC.Phys.SQLiteVDataSet,
   DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls, DynVarsEh, EhLibVCL,
   GridsEh, DBAxisGridsEh, DBGridEh, MemTableDataEh, MemTableEh, Vcl.DBCtrls,
-  Vcl.Mask, DBCtrlsEh, Service, System.NetEncoding, System.Threading, Activex,
+  Vcl.Mask, DBCtrlsEh, Service1, System.NetEncoding, System.Threading, Activex,
   Generics.Collections, RegularExpressions, StrUtils, Xml.xmldom, Xml.XMLIntf,
   Xml.XMLDoc;
 
