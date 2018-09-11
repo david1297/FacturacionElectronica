@@ -300,6 +300,8 @@ type
     QFacDetalleUNIDAD: TStringField;
     QDevDetalleUNIDAD: TStringField;
     MemNotaDESCRIPCION: TStringField;
+    MemNotaFECHA_HORA: TStringField;
+    MemDevolucionOCNUMERO: TStringField;
     procedure FormCreate(Sender: TObject);
     procedure ConsultarClick(Sender: TObject);
     procedure EnviarClick(Sender: TObject);
@@ -392,7 +394,7 @@ begin
     vQ.Close;
     vQ.SQL.Clear;
     vQ.SQL.Add
-      ('SELECT  ''EDITAR''  LOGO,O.HORCRE,p.fecha fecha_pago,p.DIAS DIAS_PAGO,o.COMMENTS,O.OTROSCARGOS,O.COD_MONEDA,C.PHONE1,PA.COD_ISO,O.FECHA, O.DUEDATE,O.ID_N NIT, S.email EMAIL,O.CONCEPTO_DV,O.ENVIADO_DEV,O.dev_tipofac CRUCE, O.dev_factura INVC, '
+      ('SELECT  ''EDITAR''  LOGO,O.HORCRE,p.fecha fecha_pago,o.OCNUMERO,p.DIAS DIAS_PAGO,o.COMMENTS,O.OTROSCARGOS,O.COD_MONEDA,C.PHONE1,PA.COD_ISO,O.FECHA, O.DUEDATE,O.ID_N NIT, S.email EMAIL,O.CONCEPTO_DV,O.ENVIADO_DEV,O.dev_tipofac CRUCE, O.dev_factura INVC, '
       + '(select fv.cufe from oe fv where fv.tipo=O.dev_tipofac and fv.number=o.dev_factura) CUFE,'
       + ' (select fv.fecha from oe fv where fv.tipo=O.dev_tipofac and fv.number=o.dev_factura) FECHA_FV,S.SUCCLIENTE,'
       + ' O.TIPO, O.NUMBER , (O.SUBTOTAL)*(-1) SUBTOTAL,(O.SALESTAX)*(-1) TOTALIMP,'
@@ -509,10 +511,10 @@ begin
     vQ.Close;
     vQ.SQL.Clear;
     vQ.SQL.Add
-      ('SELECT DISTINCT ''EDITAR''  LOGO,S.SUCCLIENTE, cu.company,S.email EMAIL,CU.addr1,S.CONTACT1,S.CARGO1,CU.PHONE1,PA.COD_ISO,MT.DESCRIPCION AS MOTIVO,CE.TIPO, CE.BATCH, CE.FECHA, CE.CONCEPTO_NOTAFE, CE.ENVIADO,'
+      ('SELECT DISTINCT ''EDITAR''  LOGO,S.SUCCLIENTE,CE.FECHA_HORA, cu.company,S.email EMAIL,CU.addr1,S.CONTACT1,S.CARGO1,CU.PHONE1,PA.COD_ISO,MT.DESCRIPCION AS MOTIVO,CE.TIPO, CE.BATCH, CE.FECHA, CE.CONCEPTO_NOTAFE, CE.ENVIADO,'
       + ' O.SUBTOTAL,substring(R.tipo_retencion from 1 for 1) TIPO_RETENCION,' +
       ' cE.DUEDATE, c.cruce, c.invc, CE.ID_N,''False'' SELECCIONAR,TI.PREFIJO_DIAN,TI.RES_DIAN,' +
-      ' CE.TOTAL AS VALOR,O.cufe, O.FECHA FECHA_FV,O.RFAPLICADA,C.OBSERV DESCRIPCION ' +
+      ' CE.TOTAL AS VALOR,O.cufe, O.FECHA FECHA_FV,O.RFAPLICADA,CE.OBSERV DESCRIPCION ' +
       ' FROM CARPROEN CE ' +
       ' INNER JOIN  CARPRODE C ON C.tipo=CE.tipo AND C.batch=CE.batch' +
       ' INNER JOIN SHIPTO S ON C.ID_N=S.ID_N AND CE.SHIPTO = S.SUCCLIENTE ' +

@@ -323,7 +323,19 @@ begin
             DelimitedText := Main.QSysMFACT.AsString;
             for I := 1 to Count - 1 do
             begin
-              iFactura.NOT_.Add.NOT_1 := I.ToString + '.-' + Strings[I];
+              if I = 1 then
+              begin
+                iFactura.NOT_.Add.NOT_1 := I.ToString + '.-' + Strings[I] +
+                  '|Resolucion No.' + Main.MemFacturaRES_DIAN.AsString +
+                  ' Fecha:' + FormatDateTime('yyyy-mm-dd',
+                  Main.MemFacturaFECHAINIFAC.AsDateTime) + ' Autoriza Del ' +
+                  Main.MemFacturaPREFIJO_DIAN.AsString + ' ' +
+                  Main.MemFacturaNUMDESDE.AsString + ' Al ' +
+                  Main.MemFacturaPREFIJO_DIAN.AsString + ' ' +
+                  Main.MemFacturaNUMDESDE.AsString;
+              end
+              else
+                iFactura.NOT_.Add.NOT_1 := I.ToString + '.-' + Strings[I];
             end;
           finally
             Free;
@@ -604,7 +616,7 @@ begin
           finally
             Free;
           end;
-        vCliente := Main.getCliente(Main.memNotaID_N.AsInteger);
+        vCliente := Main.GetCliente(Main.memNotaID_N.AsInteger);
         iFactura := NewNOTA;
         // INFORMACION CABECERA
         iFactura.ENC.ENC_1 := Main.QTip_DocTIPO.AsString;
@@ -616,7 +628,18 @@ begin
           Main.memNotaBATCH.AsString;
         iFactura.ENC.ENC_7 := FormatDateTime('yyyy-mm-dd',
           Main.memNotaFECHA.AsDateTime);
-        iFactura.ENC.ENC_8 := '07:30:01'; // LAS NOTAS NO MANEJA HORA
+        with TStringList.Create do
+          try
+            Delimiter := ' ';
+            StrictDelimiter := True;
+            DelimitedText := Main.MemNotaFECHA_HORA.AsString;
+            for I := 0 to Count - 1 do
+            begin
+              iFactura.ENC.ENC_8 := Strings[1];
+            end;
+          finally
+            Free;
+          end;
         iFactura.ENC.ENC_9 := 9;
         iFactura.ENC.ENC_10 := 'COP';
         iFactura.ENC.ENC_16 := FormatDateTime('yyyy-mm-dd',
@@ -962,7 +985,7 @@ begin
           finally
             Free;
           end;
-        vCliente := Main.getCliente(Main.memDevolucionNit.AsInteger);
+        vCliente := Main.GetCliente(Main.memDevolucionNit.AsInteger);
         iFactura := NewNOTA;
         // INFORMACION CABECERA
         iFactura.ENC.ENC_1 := 'NC';
@@ -1139,6 +1162,11 @@ begin
         iFactura.NOT_.Add.NOT_1 := '6.-' + Main.memDevolucionDIAS_PAGO.AsString
           + ' Dias';
 
+          // ORDEN DE COMPRA
+        if Main.MemDevolucionOCNUMERO.AsString <> '' then
+        begin
+          iFactura.ORC.ORC_1 := Main.MemDevolucionOCNUMERO.AsString;
+        end;
         // REFERENCIA
         iREFLista := iFactura.REF.Add;
         iREFLista.REF_1 := 'IV';
@@ -1205,6 +1233,15 @@ begin
             iITEIDELista.IDE_3 := Main.memDevolucionCOD_MONEDA.AsString;
             iITEIDELista.IDE_7 := Main.QDevDetalleEXTEND.AsFloat;
             iITEIDELista.IDE_8 := Main.memDevolucionCOD_MONEDA.AsString;
+          END
+          ELSE
+          BEGIN
+            iITEIDELista := iITELista.IDE.Add;
+            iITEIDELista.IDE_1 := 'false';
+            iITEIDELista.IDE_2 := 0;
+            iITEIDELista.IDE_3 := Main.memDevolucionCOD_MONEDA.AsString;
+            iITEIDELista.IDE_7 := Main.QDevDetalleEXTEND.AsFloat;;
+            iITEIDELista.IDE_8 := Main.memDevolucionCOD_MONEDA.AsString;
           END;
           // IMPUESTOS DEL ITEM
           if Main.QDevDetalleVLR_IVA.AsFloat <> 0 then
@@ -1237,14 +1274,14 @@ begin
           END;
           Main.QDevDetalle.Next;
         END;
-        // vStringStream := TStringStream.Create(iFactura.Xml);
-        // try
-        // vStringStream.SaveToFile(Main.vRuta + '/' +
-        // Main.memDevolucionTIPO.AsString + Main.memDevolucionNUMBER.AsString
-        // + '.xml');
-        // finally
-        // vStringStream.DisposeOf;
-        // end;
+        vStringStream := TStringStream.Create(iFactura.Xml);
+        try
+          vStringStream.SaveToFile(Main.vRuta + '/' +
+            Main.memDevolucionTIPO.AsString + Main.memDevolucionNUMBER.AsString
+            + '.xml');
+        finally
+          vStringStream.DisposeOf;
+        end;
         vArchivo := TStringStream.Create(iFactura.Xml);
         vArchivoDest := TStringStream.Create;
         System.NetEncoding.TBase64Encoding.Base64.Encode(vArchivo,

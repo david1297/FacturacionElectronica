@@ -396,10 +396,6 @@ object Main: TMain
       object PFacturas: TTabSheet
         Caption = 'Facturas'
         ImageIndex = 1
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object GridFacturas: TDBGridEh
           Left = 0
           Top = 0
@@ -556,10 +552,6 @@ object Main: TMain
       object PNotas: TTabSheet
         Caption = 'Notas'
         ImageIndex = 2
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object GridNotas: TDBGridEh
           Left = 0
           Top = 0
@@ -993,7 +985,7 @@ object Main: TMain
     Left = 208
     Top = 152
     Bitmap = {
-      494C010101000800500010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010101000800580010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       00000000000000000000000000000000000000000000D3D2CF31515151AE5151
       51AE515151AE515151AE515151AE515151AE515151AE515151AE515151AE5151
@@ -1515,6 +1507,9 @@ object Main: TMain
       FieldName = 'PREFIJO_DIAN'
       Size = 5
     end
+    object MemDevolucionOCNUMERO: TStringField
+      FieldName = 'OCNUMERO'
+    end
   end
   object DDevolucion: TDataSource
     DataSet = MemDevolucion
@@ -1558,7 +1553,7 @@ object Main: TMain
         Name = 'NUMBER'
         DataType = ftInteger
         ParamType = ptInput
-        Value = 167
+        Value = 6
       end>
     object QDevDetalleITEM: TStringField
       FieldName = 'ITEM'
@@ -1866,11 +1861,16 @@ object Main: TMain
       FieldName = 'DESCRIPCION'
       Size = 200
     end
+    object MemNotaFECHA_HORA: TStringField
+      FieldName = 'FECHA_HORA'
+    end
   end
   object QNotDetalle: TFDQuery
     Connection = Conexion
     SQL.Strings = (
-      'SELECT C.ACCT CUENTA,A.APLI_IMPUESTO,A.PORCENRETENCION,C.BASE,'
+      
+        'SELECT DISTINCT C.ACCT CUENTA,A.APLI_IMPUESTO,A.PORCENRETENCION,' +
+        'C.BASE,'
       
         'IIF(C.CRUCE IN(select T.CLASE FROM TIPDOC T WHERE T.TIPO = '#39'FA'#39')' +
         ' AND (A.APLI_IMPUESTO='#39#39' OR A.APLI_IMPUESTO IS NULL) ,'#39'S'#39','#39'N'#39') A' +
@@ -1900,13 +1900,13 @@ object Main: TMain
         Name = 'TIPO'
         DataType = ftString
         ParamType = ptInput
-        Value = 'N11'
+        Value = 'NCE'
       end
       item
         Name = 'BATCH'
         DataType = ftInteger
         ParamType = ptInput
-        Value = 15
+        Value = 5
       end>
     object QNotDetalleCUENTA: TFloatField
       FieldName = 'CUENTA'
