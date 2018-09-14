@@ -407,7 +407,7 @@ begin
           iITELista.ITE_19 := Main.QFacDetalleBASE.AsFloat /
             Main.memFACTURATASA.AsFloat;
           iITELista.ITE_20 := Main.memFACTURACOD_MONEDA.AsString;
-          iITELista.ITE_21 := Main.QFacDetalleTOTAL.AsFloat /
+          iITELista.ITE_21 := Main.QFacDetalleBASE.AsFloat /
             Main.memFACTURATASA.AsFloat;
           iITELista.ITE_22 := Main.memFACTURACOD_MONEDA.AsString;
           // DESCUENTO DEL ITEM
@@ -1222,7 +1222,7 @@ begin
           iITELista.ITE_17 := Main.QDevDetalleITEM.AsString;
           iITELista.ITE_19 := Main.QDevDetalleBASE.AsFloat;
           iITELista.ITE_20 := Main.memDevolucionCOD_MONEDA.AsString;
-          iITELista.ITE_21 := Main.QDevDetalleTOTAL.AsFloat;
+          iITELista.ITE_21 := Main.QDevDetalleBASE.AsFloat;
           iITELista.ITE_22 := Main.memDevolucionCOD_MONEDA.AsString;
           // DESCUENTO DEL ITEM
           if Main.QDevDetalleTOTALDCT.AsFloat <> 0 then
