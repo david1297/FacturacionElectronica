@@ -91,10 +91,14 @@
         <AppEnableHighDPI>true</AppEnableHighDPI>
         <Debugger_RunParams>SAI 1 10.10.10.226:D:\SAIOPEN\nutritec2017.FDB</Debugger_RunParams>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <VerInfo_Locale>1033</VerInfo_Locale>
         <Icon_MainIcon>FacElectronica_Icon.ico</Icon_MainIcon>
-        <UWP_DelphiLogo44>..\..\..\..\Desktop\redoarrow_rehace_1547.png</UWP_DelphiLogo44>
-        <UWP_DelphiLogo150>..\..\..\..\Desktop\redoarrow_rehace_1547.png</UWP_DelphiLogo150>
+        <UWP_DelphiLogo44>redoarrow_rehace_1547.png</UWP_DelphiLogo44>
+        <UWP_DelphiLogo150>redoarrow_rehace_1547.png</UWP_DelphiLogo150>
+        <VerInfo_MajorVer>9</VerInfo_MajorVer>
+        <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=9.0.2.3;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Build>3</VerInfo_Build>
+        <VerInfo_Release>2</VerInfo_Release>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
@@ -127,7 +131,7 @@
         <DCCReference Include="Comun\InvoiceService1.pas"/>
         <DCCReference Include="Comun\uSecurity.pas"/>
         <DCCReference Include="Comun\wsse.pas"/>
-        <DCCReference Include="Comun\Service1.pas"/>
+        <DCCReference Include="Comun\Service.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -158,7 +162,7 @@
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="3">
-                <DeployFile LocalName="..\..\..\..\Desktop\redoarrow_rehace_1547.png" Configuration="Debug" Class="UWP_DelphiLogo44">
+                <DeployFile LocalName="redoarrow_rehace_1547.png" Configuration="Debug" Class="UWP_DelphiLogo44">
                     <Platform Name="Win32">
                         <RemoteDir>Assets\</RemoteDir>
                         <RemoteName>Logo44x44.png</RemoteName>

@@ -10,7 +10,7 @@ uses
   InvoiceService1 in 'Comun\InvoiceService1.pas',
   uSecurity in 'Comun\uSecurity.pas',
   wsse in 'Comun\wsse.pas',
-  Service1 in 'Comun\Service1.pas';
+  Service in 'Comun\Service.pas';
 
 {$R *.res}
 

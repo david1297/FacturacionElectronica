@@ -20,7 +20,7 @@ uses
   Xml.XMLDoc,
   InvokeRegistry,
   System.ImageList, Vcl.ImgList, uFacNutritec, Carvajal, EditarCorreo,
-  Factory, Service1;
+  Factory, Service;
 
 type
   TConfig = class
@@ -716,7 +716,7 @@ begin
       'INNER JOIN SHIPTO S ON C.ID_N=S.ID_N  where C.id_n = ' + Nit.ToString +
       ' and  C.ID_N=T.ID_N');
 
-    Result := Service1.Cliente.Create;
+    Result := Service.Cliente.Create;
 
     if (vQ.FieldByName('tipo_contribuyente').AsString = '0') or
       (vQ.FieldByName('tipo_contribuyente').AsString = '2') then
@@ -750,7 +750,7 @@ end;
 
 function TMain.GetFoliosRestantes: FoliosRemainingResponse2;
 begin
-  Result := Service1.GetIService().foliosRestantes(vlTokenEmpresa,
+  Result := Service.GetIService().foliosRestantes(vlTokenEmpresa,
     vlTokenPassword);
 end;
 

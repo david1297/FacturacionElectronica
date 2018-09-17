@@ -396,6 +396,10 @@ object Main: TMain
       object PFacturas: TTabSheet
         Caption = 'Facturas'
         ImageIndex = 1
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object GridFacturas: TDBGridEh
           Left = 0
           Top = 0
@@ -552,6 +556,10 @@ object Main: TMain
       object PNotas: TTabSheet
         Caption = 'Notas'
         ImageIndex = 2
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object GridNotas: TDBGridEh
           Left = 0
           Top = 0
@@ -984,7 +992,7 @@ object Main: TMain
     Left = 208
     Top = 152
     Bitmap = {
-      494C010101000800600010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010101000800640010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       00000000000000000000000000000000000000000000D3D2CF31515151AE5151
       51AE515151AE515151AE515151AE515151AE515151AE515151AE515151AE5151
