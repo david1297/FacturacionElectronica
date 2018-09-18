@@ -473,14 +473,14 @@ begin
           END;
           Main.QFacDetalle.Next;
         END;
-         vStringStream := TStringStream.Create(iFactura.Xml);
-         try
-         vStringStream.SaveToFile(Main.vRuta + '/' +
-         Main.memFACTURATIPO.AsString + Main.memFACTURANUMERO.AsString
-         + '.xml');
-         finally
-         vStringStream.DisposeOf;
-         end;
+//         vStringStream := TStringStream.Create(iFactura.Xml);
+//         try
+//         vStringStream.SaveToFile(Main.vRuta + '/' +
+//         Main.memFACTURATIPO.AsString + Main.memFACTURANUMERO.AsString
+//         + '.xml');
+//         finally
+//         vStringStream.DisposeOf;
+//         end;
         vArchivo := TStringStream.Create(iFactura.Xml);
         vArchivoDest := TStringStream.Create;
         System.NetEncoding.TBase64Encoding.Base64.Encode(vArchivo,
