@@ -58,6 +58,7 @@ var
   iTIMLista: IXMLFACTURA_TIM;
   iOVTLista: IXMLFACTURA_OVT;
   iITELista: IXMLFACTURA_ITE;
+  iDSCLista: IXMLFACTURA_DSC;
   iITETIILista: IXMLFACTURA_ITE_TII;
   iITEIDELista: IXMLFACTURA_ITE_IDE;
   iITEIRFLista: IXMLFACTURA_ITE_IRF;
@@ -146,7 +147,7 @@ begin
         iFactura.EMI.CDE.CDE_1 := 1;
         iFactura.EMI.CDE.CDE_2 := 'CONTABILIDAD';
         iFactura.EMI.CDE.CDE_3 := Main.QSysPHONE.AsString;
-        iFactura.EMI.CDE.CDE_4 := 'CONTABILIDAD@NUTRITEC.COM.CO';
+        iFactura.EMI.CDE.CDE_4 := 'servicio.cliente@nutritec.com.co';
 
         // INFORMACION DEL ADQUIRIENTE
         iFactura.ADQ.ADQ_1 := vCliente.tipoPersona.ToInteger;
@@ -306,13 +307,41 @@ begin
           iFactura.TDC.TDC_4 := FormatDateTime('yyyy-mm-dd',
             Main.memFACTURAFECHA.AsDateTime);
           iFactura.NOT_.Add.NOT_1 := '8.-' + Main.memFACTURAPHONE1.AsString;
-          iFactura.IEN.IEN_1 := Main.MemFacturaADDR1.AsString;
+          iFactura.IEN.IEN_1 := Main.memFACTURAADDR1.AsString;
           iFactura.IEN.IEN_2 := vCliente.departamento;
           iFactura.IEN.IEN_4 := vCliente.ciudad;
           iFactura.IEN.IEN_6 := Main.memFACTURACOD_ISO.AsString;
-
+          iFactura.TET.TET_1 := '';
+          iFactura.TET.TET_4 := vCliente.ciudad + ' ' + vCliente.departamento;
 
         END;
+        if Main.memFACTURAOTROSCARGOS.AsFloat <> 0 then
+        BEGIN
+          iDSCLista := iFactura.DSC.Add;
+          iDSCLista.DSC_1 := 'true';
+          iDSCLista.DSC_2 := 0;
+          iDSCLista.DSC_3 := Main.memFACTURAOTROSCARGOS.AsFloat;
+          iDSCLista.DSC_4 := Main.memFACTURACOD_MONEDA.AsString;
+          iDSCLista.DSC_5 := '1';
+          iDSCLista.DSC_6 := 'Otros';
+        END
+        else
+        BEGIN
+          iDSCLista := iFactura.DSC.Add;
+          iDSCLista.DSC_1 := 'true';
+          iDSCLista.DSC_2 := 0;
+          iDSCLista.DSC_3 := 0;
+          iDSCLista.DSC_4 := Main.memFACTURACOD_MONEDA.AsString;
+          iDSCLista.DSC_5 := '1';
+          iDSCLista.DSC_6 := 'Otros';
+        END;
+        iDSCLista := iFactura.DSC.Add;
+        iDSCLista.DSC_1 := 'true';
+        iDSCLista.DSC_2 := 0;
+        iDSCLista.DSC_3 := 0;
+        iDSCLista.DSC_4 := Main.memFACTURACOD_MONEDA.AsString;
+        iDSCLista.DSC_5 := '1';
+        iDSCLista.DSC_6 := 'Flete';
 
         // RESOLUCION
         iFactura.DRF.DRF_1 := Main.MemFacturaRES_DIAN.AsString;
@@ -413,6 +442,7 @@ begin
           iITELista.ITE_12 := Main.QFacDetalleDESC_ADICIONAL.AsString + ' - ' +
             Main.QFacDetalleUNIDAD.AsString;
           iITELista.ITE_17 := Main.QFacDetalleITEM.AsString;
+          iITELista.ITE_18 := Main.QFacDetalleITEM.AsString;
           iITELista.ITE_19 := Main.QFacDetalleBASE.AsFloat /
             Main.memFACTURATASA.AsFloat;
           iITELista.ITE_20 := Main.memFACTURACOD_MONEDA.AsString;
@@ -473,14 +503,14 @@ begin
           END;
           Main.QFacDetalle.Next;
         END;
-//         vStringStream := TStringStream.Create(iFactura.Xml);
-//         try
-//         vStringStream.SaveToFile(Main.vRuta + '/' +
-//         Main.memFACTURATIPO.AsString + Main.memFACTURANUMERO.AsString
-//         + '.xml');
-//         finally
-//         vStringStream.DisposeOf;
-//         end;
+        // vStringStream := TStringStream.Create(iFactura.Xml);
+        // try
+        // vStringStream.SaveToFile(Main.vRuta + '/' +
+        // Main.memFACTURATIPO.AsString + Main.memFACTURANUMERO.AsString
+        // + '.xml');
+        // finally
+        // vStringStream.DisposeOf;
+        // end;
         vArchivo := TStringStream.Create(iFactura.Xml);
         vArchivoDest := TStringStream.Create;
         System.NetEncoding.TBase64Encoding.Base64.Encode(vArchivo,
@@ -667,7 +697,7 @@ begin
         iFactura.EMI.CDE.CDE_1 := 1;
         iFactura.EMI.CDE.CDE_2 := 'CONTABILIDAD';
         iFactura.EMI.CDE.CDE_3 := Main.QSysPHONE.AsString;
-        iFactura.EMI.CDE.CDE_4 := 'CONTABILIDAD@NUTRITEC.COM.CO';
+        iFactura.EMI.CDE.CDE_4 := 'servicio.cliente@nutritec.com.co';
         // INFORMACION DEL ADQUIRIENTE
         iFactura.ADQ.ADQ_1 := vCliente.tipoPersona.ToInteger;
         iFactura.ADQ.ADQ_2 := vCliente.Nit.ToInteger;
@@ -1025,7 +1055,7 @@ begin
         iFactura.EMI.CDE.CDE_1 := 1;
         iFactura.EMI.CDE.CDE_2 := 'CONTABILIDAD';
         iFactura.EMI.CDE.CDE_3 := Main.QSysPHONE.AsString;
-        iFactura.EMI.CDE.CDE_4 := 'CONTABILIDAD@NUTRITEC.COM.CO';
+        iFactura.EMI.CDE.CDE_4 := 'servicio.cliente@nutritec.com.co';
         // INFORMACION DEL ADQUIRIENTE
         iFactura.ADQ.ADQ_1 := vCliente.tipoPersona.ToInteger;
         iFactura.ADQ.ADQ_2 := vCliente.Nit.ToInteger;

@@ -20,6 +20,7 @@ type
 
   IXMLFACTURA = interface;
   IXMLFACTURA_ENC = interface;
+  IXMLFACTURA_TET = interface;
   IXMLFACTURA_EMI = interface;
   IXMLFACTURA_EMI_CDE = interface;
   IXMLFACTURA_ADQ = interface;
@@ -34,6 +35,8 @@ type
   IXMLFACTURA_DRF = interface;
   IXMLFACTURA_NOT = interface;
   IXMLFACTURA_NOTList = interface;
+  IXMLFACTURA_DSC = interface;
+  IXMLFACTURA_DSCList = interface;
   IXMLFACTURA_ORC = interface;
   IXMLFACTURA_CDN = interface;
   IXMLFACTURA_REF = interface;
@@ -57,6 +60,7 @@ type
     ['{FEA01178-F3E1-4957-A87D-AF1A475EB010}']
     { Property Accessors }
     function Get_ENC: IXMLFACTURA_ENC;
+    function Get_TET: IXMLFACTURA_TET;
     function Get_EMI: IXMLFACTURA_EMI;
     function Get_ADQ: IXMLFACTURA_ADQ;
     function Get_TOT: IXMLFACTURA_TOT;
@@ -65,6 +69,7 @@ type
     function Get_TDC: IXMLFACTURA_TDC;
     function Get_DRF: IXMLFACTURA_DRF;
     function Get_NOT_: IXMLFACTURA_NOTList;
+    function Get_DSC: IXMLFACTURA_DSCList;
     function Get_ORC: IXMLFACTURA_ORC;
     function Get_CDN: IXMLFACTURA_CDN;
     function Get_REF: IXMLFACTURA_REFList;
@@ -74,6 +79,7 @@ type
     function Get_ITE: IXMLFACTURA_ITEList;
     { Methods & Properties }
     property ENC: IXMLFACTURA_ENC read Get_ENC;
+    property TET: IXMLFACTURA_TET read Get_TET;
     property EMI: IXMLFACTURA_EMI read Get_EMI;
     property ADQ: IXMLFACTURA_ADQ read Get_ADQ;
     property TOT: IXMLFACTURA_TOT read Get_TOT;
@@ -82,6 +88,7 @@ type
     property TDC: IXMLFACTURA_TDC read Get_TDC;
     property DRF: IXMLFACTURA_DRF read Get_DRF;
     property NOT_: IXMLFACTURA_NOTList read Get_NOT_;
+    property DSC: IXMLFACTURA_DSCList read Get_DSC;
     property ORC: IXMLFACTURA_ORC read Get_ORC;
     property CDN: IXMLFACTURA_CDN read Get_CDN;
     property REF: IXMLFACTURA_REFList read Get_REF;
@@ -145,6 +152,26 @@ type
     property ENC_14: UnicodeString read Get_ENC_14 write Set_ENC_14;
     property ENC_15: Double read Get_ENC_15 write Set_ENC_15;
     property ENC_16: UnicodeString read Get_ENC_16 write Set_ENC_16;
+  end;
+
+  { IXMLFACTURA_TET }
+
+  IXMLFACTURA_TET = interface(IXMLNode)
+    ['{E94DEBE3-4924-46A2-A799-91D3DD453393}']
+    { Property Accessors }
+    function Get_TET_1: UnicodeString;
+    function Get_TET_2: UnicodeString;
+    function Get_TET_3: UnicodeString;
+    function Get_TET_4: UnicodeString;
+    procedure Set_TET_1(Value: UnicodeString);
+    procedure Set_TET_2(Value: UnicodeString);
+    procedure Set_TET_3(Value: UnicodeString);
+    procedure Set_TET_4(Value: UnicodeString);
+    { Methods & Properties }
+    property TET_1: UnicodeString read Get_TET_1 write Set_TET_1;
+    property TET_2: UnicodeString read Get_TET_2 write Set_TET_2;
+    property TET_3: UnicodeString read Get_TET_3 write Set_TET_3;
+    property TET_4: UnicodeString read Get_TET_4 write Set_TET_4;
   end;
 
   { IXMLFACTURA_EMI }
@@ -511,6 +538,54 @@ type
 
     function Get_Item(Index: Integer): IXMLFACTURA_NOT;
     property Items[Index: Integer]: IXMLFACTURA_NOT read Get_Item; default;
+  end;
+
+  { IXMLFACTURA_DSC }
+
+  IXMLFACTURA_DSC = interface(IXMLNode)
+    ['{97C17588-7448-415B-A571-699FF7D98459}']
+    { Property Accessors }
+    function Get_DSC_1: UnicodeString;
+    function Get_DSC_2: Double;
+    function Get_DSC_3: Double;
+    function Get_DSC_4: UnicodeString;
+    function Get_DSC_5: UnicodeString;
+    function Get_DSC_6: UnicodeString;
+    function Get_DSC_7: Double;
+    function Get_DSC_8: UnicodeString;
+    function Get_DSC_9: Integer;
+
+    procedure Set_DSC_1(Value: UnicodeString);
+    procedure Set_DSC_2(Value: Double);
+    procedure Set_DSC_3(Value: Double);
+    procedure Set_DSC_4(Value: UnicodeString);
+    procedure Set_DSC_5(Value: UnicodeString);
+    procedure Set_DSC_6(Value: UnicodeString);
+    procedure Set_DSC_7(Value: Double);
+    procedure Set_DSC_8(Value: UnicodeString);
+    procedure Set_DSC_9(Value: Integer);
+    { Methods & Properties }
+    property DSC_1: UnicodeString read Get_DSC_1 write Set_DSC_1;
+    property DSC_2: Double read Get_DSC_2 write Set_DSC_2;
+    property DSC_3: Double read Get_DSC_3 write Set_DSC_3;
+    property DSC_4: UnicodeString read Get_DSC_4 write Set_DSC_4;
+    property DSC_5: UnicodeString read Get_DSC_5 write Set_DSC_5;
+    property DSC_6: UnicodeString read Get_DSC_6 write Set_DSC_6;
+    property DSC_7: Double read Get_DSC_7 write Set_DSC_7;
+    property DSC_8: UnicodeString read Get_DSC_8 write Set_DSC_8;
+    property DSC_9: Integer read Get_DSC_9 write Set_DSC_9;
+  end;
+
+  { IXMLFACTURA_DSCList }
+
+  IXMLFACTURA_DSCList = interface(IXMLNodeCollection)
+    ['{85B357CC-FA0F-4A56-8FDA-BCB77E60B44B}']
+    { Methods & Properties }
+    function Add: IXMLFACTURA_DSC;
+    function Insert(const Index: Integer): IXMLFACTURA_DSC;
+
+    function Get_Item(Index: Integer): IXMLFACTURA_DSC;
+    property Items[Index: Integer]: IXMLFACTURA_DSC read Get_Item; default;
   end;
 
   { IXMLFACTURA_ORC }
@@ -913,6 +988,7 @@ type
 
   TXMLFACTURA = class;
   TXMLFACTURA_ENC = class;
+  TXMLFACTURA_TET = class;
   TXMLFACTURA_EMI = class;
   TXMLFACTURA_EMI_CDE = class;
   TXMLFACTURA_ADQ = class;
@@ -927,6 +1003,8 @@ type
   TXMLFACTURA_DRF = class;
   TXMLFACTURA_NOT = class;
   TXMLFACTURA_NOTList = class;
+  TXMLFACTURA_DSC = class;
+  TXMLFACTURA_DSCList = class;
   TXMLFACTURA_ORC = class;
   TXMLFACTURA_CDN = class;
   TXMLFACTURA_REF = class;
@@ -948,6 +1026,7 @@ type
   TXMLFACTURA = class(TXMLNode, IXMLFACTURA)
   private
     FNOT_: IXMLFACTURA_NOTList;
+    FDSC: IXMLFACTURA_DSCList;
     FREF: IXMLFACTURA_REFList;
     FTIM: IXMLFACTURA_TIMList;
     FOVT: IXMLFACTURA_OVTList;
@@ -955,6 +1034,7 @@ type
   protected
     { IXMLFACTURA }
     function Get_ENC: IXMLFACTURA_ENC;
+    function Get_TET: IXMLFACTURA_TET;
     function Get_EMI: IXMLFACTURA_EMI;
     function Get_ADQ: IXMLFACTURA_ADQ;
     function Get_TOT: IXMLFACTURA_TOT;
@@ -963,6 +1043,7 @@ type
     function Get_TDC: IXMLFACTURA_TDC;
     function Get_DRF: IXMLFACTURA_DRF;
     function Get_NOT_: IXMLFACTURA_NOTList;
+    function Get_DSC: IXMLFACTURA_DSCList;
     function Get_ORC: IXMLFACTURA_ORC;
     function Get_CDN: IXMLFACTURA_CDN;
     function Get_REF: IXMLFACTURA_REFList;
@@ -1011,6 +1092,22 @@ type
     procedure Set_ENC_14(Value: UnicodeString);
     procedure Set_ENC_15(Value: Double);
     procedure Set_ENC_16(Value: UnicodeString);
+  end;
+
+  { TXMLFACTURA_TET }
+
+  TXMLFACTURA_TET = class(TXMLNode, IXMLFACTURA_TET)
+  protected
+    { IXMLFACTURA_ENC }
+    function Get_TET_1: UnicodeString;
+    function Get_TET_2: UnicodeString;
+    function Get_TET_3: UnicodeString;
+    function Get_TET_4: UnicodeString;
+    procedure Set_TET_1(Value: UnicodeString);
+    procedure Set_TET_2(Value: UnicodeString);
+    procedure Set_TET_3(Value: UnicodeString);
+    procedure Set_TET_4(Value: UnicodeString);
+
   end;
 
   { TXMLFACTURA_EMI }
@@ -1287,6 +1384,41 @@ type
 
     function Get_Item(Index: Integer): IXMLFACTURA_NOT;
   end;
+  { TXMLFACTURA_DSC }
+
+  TXMLFACTURA_DSC = class(TXMLNode, IXMLFACTURA_DSC)
+  protected
+    { IXMLFACTURA_DSC }
+    function Get_DSC_1: UnicodeString;
+    function Get_DSC_2: Double;
+    function Get_DSC_3: Double;
+    function Get_DSC_4: UnicodeString;
+    function Get_DSC_5: UnicodeString;
+    function Get_DSC_6: UnicodeString;
+    function Get_DSC_7: Double;
+    function Get_DSC_8: UnicodeString;
+    function Get_DSC_9: Integer;
+    procedure Set_DSC_1(Value: UnicodeString);
+    procedure Set_DSC_2(Value: Double);
+    procedure Set_DSC_3(Value: Double);
+    procedure Set_DSC_4(Value: UnicodeString);
+    procedure Set_DSC_5(Value: UnicodeString);
+    procedure Set_DSC_6(Value: UnicodeString);
+    procedure Set_DSC_7(Value: Double);
+    procedure Set_DSC_8(Value: UnicodeString);
+    procedure Set_DSC_9(Value: Integer);
+  end;
+
+  { TXMLFACTURA_DSCList }
+
+  TXMLFACTURA_DSCList = class(TXMLNodeCollection, IXMLFACTURA_DSCList)
+  protected
+    { IXMLFACTURA_DSCList }
+    function Add: IXMLFACTURA_DSC;
+    function Insert(const Index: Integer): IXMLFACTURA_DSC;
+
+    function Get_Item(Index: Integer): IXMLFACTURA_DSC;
+  end;
 
   { TXMLFACTURA_ORC }
 
@@ -1464,11 +1596,11 @@ type
   public
     procedure AfterConstruction; override;
   end;
-  { TXMLFACTURA_NOTList }
+  { TXMLFACTURA_ITEList }
 
   TXMLFACTURA_ITEList = class(TXMLNodeCollection, IXMLFACTURA_ITEList)
   protected
-    { IXMLFACTURA_NOTList }
+    { IXMLFACTURA_ITEList }
     function Add: IXMLFACTURA_ITE;
     function Insert(const Index: Integer): IXMLFACTURA_ITE;
 
@@ -1637,6 +1769,7 @@ end;
 procedure TXMLFACTURA.AfterConstruction;
 begin
   RegisterChildNode('ENC', TXMLFACTURA_ENC);
+  RegisterChildNode('TET', TXMLFACTURA_TET);
   RegisterChildNode('EMI', TXMLFACTURA_EMI);
   RegisterChildNode('ADQ', TXMLFACTURA_ADQ);
   RegisterChildNode('TOT', TXMLFACTURA_TOT);
@@ -1645,6 +1778,7 @@ begin
   RegisterChildNode('TDC', TXMLFACTURA_TDC);
   RegisterChildNode('DRF', TXMLFACTURA_DRF);
   RegisterChildNode('NOT', TXMLFACTURA_NOT);
+  RegisterChildNode('DSC', TXMLFACTURA_DSC);
   RegisterChildNode('ORC', TXMLFACTURA_ORC);
   RegisterChildNode('CDN', TXMLFACTURA_CDN);
   RegisterChildNode('REF', TXMLFACTURA_REF);
@@ -1654,6 +1788,8 @@ begin
   RegisterChildNode('ITE', TXMLFACTURA_ITE);
   FNOT_ := CreateCollection(TXMLFACTURA_NOTList, IXMLFACTURA_NOT, 'NOT')
     as IXMLFACTURA_NOTList;
+  FDSC := CreateCollection(TXMLFACTURA_DSCList, IXMLFACTURA_DSC, 'DSC')
+    as IXMLFACTURA_DSCList;
   FREF := CreateCollection(TXMLFACTURA_REFList, IXMLFACTURA_REF, 'REF')
     as IXMLFACTURA_REFList;
   FTIM := CreateCollection(TXMLFACTURA_TIMList, IXMLFACTURA_TIM, 'TIM')
@@ -1668,6 +1804,11 @@ end;
 function TXMLFACTURA.Get_ENC: IXMLFACTURA_ENC;
 begin
   Result := ChildNodes['ENC'] as IXMLFACTURA_ENC;
+end;
+
+function TXMLFACTURA.Get_TET: IXMLFACTURA_TET;
+begin
+  Result := ChildNodes['TET'] as IXMLFACTURA_TET;
 end;
 
 function TXMLFACTURA.Get_EMI: IXMLFACTURA_EMI;
@@ -1689,6 +1830,7 @@ function TXMLFACTURA.Get_TIM: IXMLFACTURA_TIMList;
 begin
   Result := FTIM;
 end;
+
 function TXMLFACTURA.Get_OVT: IXMLFACTURA_OVTList;
 begin
   Result := FOVT;
@@ -1707,6 +1849,10 @@ end;
 function TXMLFACTURA.Get_NOT_: IXMLFACTURA_NOTList;
 begin
   Result := FNOT_;
+end;
+function TXMLFACTURA.Get_DSC: IXMLFACTURA_DSCList;
+begin
+  Result := FDSC;
 end;
 
 function TXMLFACTURA.Get_ORC: IXMLFACTURA_ORC;
@@ -1904,6 +2050,48 @@ end;
 procedure TXMLFACTURA_ENC.Set_ENC_16(Value: UnicodeString);
 begin
   ChildNodes['ENC_16'].NodeValue := Value;
+end;
+
+{ TXMLFACTURA_TET }
+
+function TXMLFACTURA_TET.Get_TET_1: UnicodeString;
+begin
+  Result := ChildNodes['TET_1'].Text;
+end;
+
+procedure TXMLFACTURA_TET.Set_TET_1(Value: UnicodeString);
+begin
+  ChildNodes['TET_1'].NodeValue := Value;
+end;
+
+function TXMLFACTURA_TET.Get_TET_2: UnicodeString;
+begin
+  Result := ChildNodes['TET_2'].Text;
+end;
+
+procedure TXMLFACTURA_TET.Set_TET_2(Value: UnicodeString);
+begin
+  ChildNodes['TET_2'].NodeValue := Value;
+end;
+
+function TXMLFACTURA_TET.Get_TET_3: UnicodeString;
+begin
+  Result := ChildNodes['TET_3'].Text;
+end;
+
+procedure TXMLFACTURA_TET.Set_TET_3(Value: UnicodeString);
+begin
+  ChildNodes['TET_3'].NodeValue := Value;
+end;
+
+function TXMLFACTURA_TET.Get_TET_4: UnicodeString;
+begin
+  Result := ChildNodes['TET_4'].Text;
+end;
+
+procedure TXMLFACTURA_TET.Set_TET_4(Value: UnicodeString);
+begin
+  ChildNodes['TET_4'].NodeValue := Value;
 end;
 
 { TXMLFACTURA_EMI }
@@ -2604,6 +2792,7 @@ procedure TXMLFACTURA_OVT.Set_OVT_3(Value: UnicodeString);
 begin
   ChildNodes['OVT_3'].NodeValue := Value;
 end;
+
 function TXMLFACTURA_OVT.Get_OVT_4: UnicodeString;
 begin
   Result := ChildNodes['OVT_4'].Text;
@@ -2613,6 +2802,7 @@ procedure TXMLFACTURA_OVT.Set_OVT_4(Value: UnicodeString);
 begin
   ChildNodes['OVT_4'].NodeValue := Value;
 end;
+
 function TXMLFACTURA_OVT.Get_OVT_5: UnicodeString;
 begin
   Result := ChildNodes['OVT_5'].Text;
@@ -2622,6 +2812,7 @@ procedure TXMLFACTURA_OVT.Set_OVT_5(Value: UnicodeString);
 begin
   ChildNodes['OVT_5'].NodeValue := Value;
 end;
+
 function TXMLFACTURA_OVT.Get_OVT_6: UnicodeString;
 begin
   Result := ChildNodes['OVT_6'].Text;
@@ -2754,6 +2945,99 @@ function TXMLFACTURA_NOTList.Add: IXMLFACTURA_NOT;
 begin
   Result := AddItem(-1) as IXMLFACTURA_NOT;
 end;
+
+{ TXMLFACTURA_DSC }
+
+function TXMLFACTURA_DSC.Get_DSC_1: UnicodeString;
+begin
+  Result := ChildNodes['DSC_1'].Text;
+end;
+
+procedure TXMLFACTURA_DSC.Set_DSC_1(Value: UnicodeString);
+begin
+  ChildNodes['DSC_1'].NodeValue := Value;
+end;
+
+function TXMLFACTURA_DSC.Get_DSC_2: Double;
+begin
+  Result := ChildNodes['DSC_2'].NodeValue;
+end;
+
+procedure TXMLFACTURA_DSC.Set_DSC_2(Value: Double);
+begin
+  ChildNodes['DSC_2'].NodeValue := Value;
+end;
+function TXMLFACTURA_DSC.Get_DSC_3: Double;
+begin
+  Result := ChildNodes['DSC_3'].NodeValue;
+end;
+
+procedure TXMLFACTURA_DSC.Set_DSC_3(Value: Double);
+begin
+  ChildNodes['DSC_3'].NodeValue := Value;
+end;
+function TXMLFACTURA_DSC.Get_DSC_4: UnicodeString;
+begin
+  Result := ChildNodes['DSC_4'].Text;
+end;
+
+procedure TXMLFACTURA_DSC.Set_DSC_4(Value: UnicodeString);
+begin
+  ChildNodes['DSC_4'].NodeValue := Value;
+end;
+
+function TXMLFACTURA_DSC.Get_DSC_5: UnicodeString;
+begin
+  Result := ChildNodes['DSC_5'].Text;
+end;
+
+procedure TXMLFACTURA_DSC.Set_DSC_5(Value: UnicodeString);
+begin
+  ChildNodes['DSC_5'].NodeValue := Value;
+end;
+function TXMLFACTURA_DSC.Get_DSC_6: UnicodeString;
+begin
+  Result := ChildNodes['DSC_6'].Text;
+end;
+
+procedure TXMLFACTURA_DSC.Set_DSC_6(Value: UnicodeString);
+begin
+  ChildNodes['DSC_6'].NodeValue := Value;
+end;
+
+procedure TXMLFACTURA_DSC.Set_DSC_7(Value: Double);
+begin
+  ChildNodes['DSC_7'].NodeValue := Value;
+end;
+function TXMLFACTURA_DSC.Get_DSC_7: Double;
+begin
+  Result := ChildNodes['DSC_7'].NodeValue;
+end;
+function TXMLFACTURA_DSC.Get_DSC_8: UnicodeString;
+begin
+  Result := ChildNodes['DSC_8'].Text;
+end;
+
+procedure TXMLFACTURA_DSC.Set_DSC_8(Value: UnicodeString);
+begin
+  ChildNodes['DSC_8'].NodeValue := Value;
+end;
+procedure TXMLFACTURA_DSC.Set_DSC_9(Value: Integer);
+begin
+  ChildNodes['DSC_9'].NodeValue := Value;
+end;
+function TXMLFACTURA_DSC.Get_DSC_9: Integer;
+begin
+  Result := ChildNodes['DSC_9'].NodeValue;
+end;
+
+{ TXMLFACTURA_DSCList }
+
+function TXMLFACTURA_DSCList.Add: IXMLFACTURA_DSC;
+begin
+  Result := AddItem(-1) as IXMLFACTURA_DSC;
+end;
+
 { TXMLFACTURA_TIMList }
 
 function TXMLFACTURA_TIMList.Add: IXMLFACTURA_TIM;
@@ -2778,10 +3062,16 @@ begin
   Result := AddItem(Index) as IXMLFACTURA_NOT;
 end;
 
+function TXMLFACTURA_DSCList.Insert(const Index: Integer): IXMLFACTURA_DSC;
+begin
+  Result := AddItem(Index) as IXMLFACTURA_DSC;
+end;
+
 function TXMLFACTURA_TIMList.Insert(const Index: Integer): IXMLFACTURA_TIM;
 begin
   Result := AddItem(Index) as IXMLFACTURA_TIM;
 end;
+
 function TXMLFACTURA_OVTList.Insert(const Index: Integer): IXMLFACTURA_OVT;
 begin
   Result := AddItem(Index) as IXMLFACTURA_OVT;
@@ -2796,11 +3086,16 @@ function TXMLFACTURA_NOTList.Get_Item(Index: Integer): IXMLFACTURA_NOT;
 begin
   Result := List[Index] as IXMLFACTURA_NOT;
 end;
+function TXMLFACTURA_DSCList.Get_Item(Index: Integer): IXMLFACTURA_DSC;
+begin
+  Result := List[Index] as IXMLFACTURA_DSC;
+end;
 
 function TXMLFACTURA_TIMList.Get_Item(Index: Integer): IXMLFACTURA_TIM;
 begin
   Result := List[Index] as IXMLFACTURA_TIM;
 end;
+
 function TXMLFACTURA_OVTList.Get_Item(Index: Integer): IXMLFACTURA_OVT;
 begin
   Result := List[Index] as IXMLFACTURA_OVT;
