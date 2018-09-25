@@ -396,7 +396,7 @@ begin
     vQ.SQL.Add
       ('SELECT  ''EDITAR''  LOGO,O.HORCRE,p.fecha fecha_pago,o.OCNUMERO,p.DIAS DIAS_PAGO,o.COMMENTS,O.OTROSCARGOS,O.COD_MONEDA,C.PHONE1,PA.COD_ISO,O.FECHA, O.DUEDATE,O.ID_N NIT, S.email EMAIL,O.CONCEPTO_DV,O.ENVIADO_DEV,O.dev_tipofac CRUCE, O.dev_factura INVC, '
       + '(select fv.cufe from oe fv where fv.tipo=O.dev_tipofac and fv.number=o.dev_factura) CUFE,'
-      + ' (select fv.fecha from oe fv where fv.tipo=O.dev_tipofac and fv.number=o.dev_factura) FECHA_FV,S.SUCCLIENTE,'
+      + ' (select fv.fecha from oe fv where fv.tipo=O.dev_tipofac and fv.number=o.dev_factura) FECHA_FV,S.SUCCLIENTE,TI.PREFIJO_DIAN,TI.RES_DIAN,'
       + ' O.TIPO, O.NUMBER , (O.SUBTOTAL)*(-1) SUBTOTAL,(O.SALESTAX)*(-1) TOTALIMP,'
       + ' (O.TOTAL)*(-1) TOTAL, C.addr1,' +
       ' FP.tipo AS medios_pago, (O.salestax)*(-1) VIVA,' +
@@ -458,7 +458,7 @@ begin
       ('SELECT ''EDITAR''  LOGO,S.SUCCLIENTE,o.OCNUMERO,O.NROREMISION,c.company NOMBRE,S.CONTACT1,S.CARGO1,coalesce(MT.TASA,1) tasa,p.fecha fecha_pago,p.DIAS DIAS_PAGO,o.COMMENTS,'
       + ' O.OTROSCARGOS,IIF(O.COD_MONEDA =''DOLAR'',''COP'',O.COD_MONEDA) COD_MONEDA,C.PHONE1,PA.COD_ISO,O.ID_N NIT,S.email EMAIL,O.TIPO,O.FECHA,'
       + ' O.HORCRE,O.DUEDATE,O.NUMBER NUMERO,O.SUBTOTAL,O.SALESTAX TOTALIMP,O.TOTAL,TI.PREFIJO_DIAN,TI.RES_DIAN,'
-      + ' O.CUFE,C.addr1,FP.tipo AS medios_pago,O.salestax VIVA,O.disc1 RETE, O.disc2 RETICA,O.disc3 RETIVA,TI.PREFIJO_DIAN,TI.RES_DIAN,'
+      + ' O.CUFE,C.addr1,FP.tipo AS medios_pago,O.salestax VIVA,O.disc1 RETE, O.disc2 RETICA,O.disc3 RETIVA,'
       + ' O.impconsumo,R.porcentaje porc_rete,'
       +' FA.NUMDESDE,FA.NUMHASTA,FA.FECHAVENFAC,FA.FECHAINIFAC,'+
       ' substring(R.tipo_retencion from 1 for 1) tipo_retencion,o.porceniva Porc_Iva,'

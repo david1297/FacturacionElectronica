@@ -1016,6 +1016,8 @@ type
   TXMLFACTURA_ITEList = class;
   TXMLFACTURA_ITE_IDE = class;
   TXMLFACTURA_ITE_IDEList = class;
+  TXMLFACTURA_ITE_IRF = class;
+  TXMLFACTURA_ITE_IRFList = class;
   TXMLFACTURA_ITE_TII = class;
   TXMLFACTURA_ITE_TIIList = class;
   TXMLFACTURA_ITE_TII_IIM = class;
@@ -1647,7 +1649,7 @@ type
 
   TXMLFACTURA_ITE_IRF = class(TXMLNode, IXMLFACTURA_ITE_IRF)
   protected
-    { IXMLFACTURA_ITE_IDE }
+    { IXMLFACTURA_ITE_IRF }
     function Get_IRF_1: UnicodeString;
     function Get_IRF_2: UnicodeString;
     function Get_IRF_3: UnicodeString;
@@ -1664,7 +1666,7 @@ type
 
   TXMLFACTURA_ITE_IRFList = class(TXMLNodeCollection, IXMLFACTURA_ITE_IRFList)
   protected
-    { IXMLFACTURA_ITE_IDEList }
+    { IXMLFACTURA_ITE_IRFList }
     function Add: IXMLFACTURA_ITE_IRF;
     function Insert(const Index: Integer): IXMLFACTURA_ITE_IRF;
 
