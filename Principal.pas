@@ -471,7 +471,7 @@ begin
       ' INNER JOIN PAISES PA ON (C.PAIS = PA.PAIS)' +
       ' INNER JOIN CIUDADES CS ON C.city=CS.ciudad' +
       ' INNER JOIN TIPDOC TI ON (TI.CLASE = O.TIPO)' +
-      'INNER JOIN FATIPDOC FA ON (O.ID_USUARIO = FA.ID_USUARIO)' +
+      ' INNER JOIN FATIPDOC FA ON (O.ID_USUARIO = FA.ID_USUARIO)' +
       ' LEFT JOIN MONEDA_TASAS MT ON O.COD_MONEDA=MT.CODIGO AND O.FECHA = MT.FECHA where O.FECHA BETWEEN :FI and :FF');
     vQ.ParamByName('FI').AsDate := Desde.Date;
     vQ.ParamByName('FF').AsDate := Hasta.Date;

@@ -383,15 +383,15 @@ type
     ['{24B49282-C8AD-47E0-9E0F-1B5B10D77CDA}']
     { Property Accessors }
     function Get_TIM_1: UnicodeString;
-    function Get_TIM_2: Integer;
+    function Get_TIM_2: Double;
     function Get_TIM_3: UnicodeString;
     function Get_IMP: IXMLFACTURA_TIM_IMP;
     procedure Set_TIM_1(Value: UnicodeString);
-    procedure Set_TIM_2(Value: Integer);
+    procedure Set_TIM_2(Value: Double);
     procedure Set_TIM_3(Value: UnicodeString);
     { Methods & Properties }
     property TIM_1: UnicodeString read Get_TIM_1 write Set_TIM_1;
-    property TIM_2: Integer read Get_TIM_2 write Set_TIM_2;
+    property TIM_2: Double read Get_TIM_2 write Set_TIM_2;
     property TIM_3: UnicodeString read Get_TIM_3 write Set_TIM_3;
     property IMP: IXMLFACTURA_TIM_IMP read Get_IMP;
   end;
@@ -415,20 +415,20 @@ type
     function Get_IMP_1: string;
     function Get_IMP_2: Integer;
     function Get_IMP_3: UnicodeString;
-    function Get_IMP_4: Integer;
+    function Get_IMP_4: Double;
     function Get_IMP_5: UnicodeString;
     function Get_IMP_6: Double;
     procedure Set_IMP_1(Value: string);
     procedure Set_IMP_2(Value: Integer);
     procedure Set_IMP_3(Value: UnicodeString);
-    procedure Set_IMP_4(Value: Integer);
+    procedure Set_IMP_4(Value: Double);
     procedure Set_IMP_5(Value: UnicodeString);
     procedure Set_IMP_6(Value: Double);
     { Methods & Properties }
     property IMP_1: string read Get_IMP_1 write Set_IMP_1;
     property IMP_2: Integer read Get_IMP_2 write Set_IMP_2;
     property IMP_3: UnicodeString read Get_IMP_3 write Set_IMP_3;
-    property IMP_4: Integer read Get_IMP_4 write Set_IMP_4;
+    property IMP_4: Double read Get_IMP_4 write Set_IMP_4;
     property IMP_5: UnicodeString read Get_IMP_5 write Set_IMP_5;
     property IMP_6: Double read Get_IMP_6 write Set_IMP_6;
   end;
@@ -1265,11 +1265,11 @@ type
   protected
     { IXMLFACTURA_TIM }
     function Get_TIM_1: UnicodeString;
-    function Get_TIM_2: Integer;
+    function Get_TIM_2: Double;
     function Get_TIM_3: UnicodeString;
     function Get_IMP: IXMLFACTURA_TIM_IMP;
     procedure Set_TIM_1(Value: UnicodeString);
-    procedure Set_TIM_2(Value: Integer);
+    procedure Set_TIM_2(Value: Double);
     procedure Set_TIM_3(Value: UnicodeString);
   public
     procedure AfterConstruction; override;
@@ -1292,13 +1292,13 @@ type
     function Get_IMP_1: string;
     function Get_IMP_2: Integer;
     function Get_IMP_3: UnicodeString;
-    function Get_IMP_4: Integer;
+    function Get_IMP_4: Double;
     function Get_IMP_5: UnicodeString;
     function Get_IMP_6: Double;
     procedure Set_IMP_1(Value: string);
     procedure Set_IMP_2(Value: Integer);
     procedure Set_IMP_3(Value: UnicodeString);
-    procedure Set_IMP_4(Value: Integer);
+    procedure Set_IMP_4(Value: Double);
     procedure Set_IMP_5(Value: UnicodeString);
     procedure Set_IMP_6(Value: Double);
   end;
@@ -2676,12 +2676,12 @@ begin
   ChildNodes['TIM_1'].NodeValue := Value;
 end;
 
-function TXMLFACTURA_TIM.Get_TIM_2: Integer;
+function TXMLFACTURA_TIM.Get_TIM_2: Double;
 begin
   Result := ChildNodes['TIM_2'].NodeValue;
 end;
 
-procedure TXMLFACTURA_TIM.Set_TIM_2(Value: Integer);
+procedure TXMLFACTURA_TIM.Set_TIM_2(Value: Double);
 begin
   ChildNodes['TIM_2'].NodeValue := Value;
 end;
@@ -2733,12 +2733,12 @@ begin
   ChildNodes['IMP_3'].NodeValue := Value;
 end;
 
-function TXMLFACTURA_TIM_IMP.Get_IMP_4: Integer;
+function TXMLFACTURA_TIM_IMP.Get_IMP_4: Double;
 begin
   Result := ChildNodes['IMP_4'].NodeValue;
 end;
 
-procedure TXMLFACTURA_TIM_IMP.Set_IMP_4(Value: Integer);
+procedure TXMLFACTURA_TIM_IMP.Set_IMP_4(Value: Double);
 begin
   ChildNodes['IMP_4'].NodeValue := Value;
 end;

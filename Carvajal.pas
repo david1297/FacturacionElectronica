@@ -47,6 +47,8 @@ uses Principal;
 
 procedure PCarvajal.EnviarFacturas;
 var
+  VlrIva : Double;
+  VlrIco : Double;
   MyRIO: THTTPRIO;
   servicio: invoiceService;
   downRes: UploadResponse;
@@ -222,36 +224,43 @@ begin
             Main.memFACTURANUMERO.AsInteger;
           Main.QFacImpuestos.Open;
           Main.QFacImpuestos.First;
+
+          VlrIva := 0;
+          VlrIco := 0;
+
           while not Main.QFacImpuestos.Eof do
           begin
-            if Main.QFacImpuestosVLR_IVA.AsFloat <> 0 then
+            VlrIva := VlrIva +  Main.QFacImpuestosVLR_IVA.AsFloat;
+            VlrIco := VlrIco +  Main.QFacImpuestosVLR_CONSUMO.AsFloat;
+            Main.QFacImpuestos.Next;
+          end;
+
+           if VlrIva <> 0 then
             begin
               iTIMLista := iFactura.TIM.Add;
               iTIMLista.TIM_1 := 'false';
-              iTIMLista.TIM_2 := Main.QFacImpuestosVLR_IVA.AsInteger;
+              iTIMLista.TIM_2 := VlrIva;
               iTIMLista.TIM_3 := Main.memFACTURACOD_MONEDA.AsString;
               iTIMLista.IMP.IMP_1 := '01';
               iTIMLista.IMP.IMP_2 := Main.QFacImpuestosBASE.AsInteger;
               iTIMLista.IMP.IMP_3 := Main.memFACTURACOD_MONEDA.AsString;
-              iTIMLista.IMP.IMP_4 := Main.QFacImpuestosVLR_IVA.AsInteger;
+              iTIMLista.IMP.IMP_4 := VlrIva;
               iTIMLista.IMP.IMP_5 := Main.memFACTURACOD_MONEDA.AsString;
-              iTIMLista.IMP.IMP_6 := Main.QFacImpuestosPORC_IVA.AsInteger;
+              iTIMLista.IMP.IMP_6 := Main.QFacImpuestosPORC_IVA.AsFloat;
             end;
             if Main.QFacImpuestosVLR_CONSUMO.AsFloat <> 0 then
             begin
               iTIMLista := iFactura.TIM.Add;
               iTIMLista.TIM_1 := 'false';
-              iTIMLista.TIM_2 := Main.QFacImpuestosVLR_CONSUMO.AsInteger;
+              iTIMLista.TIM_2 := VlrIco;
               iTIMLista.TIM_3 := Main.memFACTURACOD_MONEDA.AsString;
               iTIMLista.IMP.IMP_1 := '02';
               iTIMLista.IMP.IMP_2 := Main.QFacImpuestosBASE.AsInteger;
               iTIMLista.IMP.IMP_3 := Main.memFACTURACOD_MONEDA.AsString;
-              iTIMLista.IMP.IMP_4 := Main.QFacImpuestosVLR_CONSUMO.AsInteger;
+              iTIMLista.IMP.IMP_4 := VlrIco;
               iTIMLista.IMP.IMP_5 := Main.memFACTURACOD_MONEDA.AsString;
               iTIMLista.IMP.IMP_6 := Main.QFacImpuestosPORC_CONSUMO.AsInteger;
             end;
-            Main.QFacImpuestos.Next;
-          end;
           if Main.memFACTURARETIVA.AsFloat <> 0 then
           begin
             iOVTLista := iFactura.OVT.Add;
