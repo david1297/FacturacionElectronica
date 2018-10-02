@@ -47,8 +47,8 @@ uses Principal;
 
 procedure PCarvajal.EnviarFacturas;
 var
-  VlrIva : Double;
-  VlrIco : Double;
+  VlrIva: Double;
+  VlrIco: Double;
   MyRIO: THTTPRIO;
   servicio: invoiceService;
   downRes: UploadResponse;
@@ -176,23 +176,29 @@ begin
         iFactura.ADQ.CDA.CDA_3 := Main.memFACTURAPHONE1.AsString;
         iFactura.ADQ.CDA.CDA_4 := Main.memFACTURAEMAIL.AsString;
         // IMPORTES TOTALES
-        iFactura.TOT.TOT_1 := StrToFloat( FormatFloat('0.00', Main.memFACTURASUBTOTAL.AsFloat /
+        iFactura.TOT.TOT_1 :=
+          StrToFloat(FormatFloat('0.00', Main.memFACTURASUBTOTAL.AsFloat /
           Main.memFACTURATASA.AsFloat));
         iFactura.TOT.TOT_2 := Main.memFACTURACOD_MONEDA.AsString;
-        iFactura.TOT.TOT_3 := StrToFloat( FormatFloat('0.00',
+        iFactura.TOT.TOT_3 :=
+          StrToFloat(FormatFloat('0.00',
           (Main.memFACTURASUBTOTAL.AsFloat - Main.memFACTURADESTOTAL.AsFloat) /
           Main.memFACTURATASA.AsFloat));
         iFactura.TOT.TOT_4 := Main.memFACTURACOD_MONEDA.AsString;
-        iFactura.TOT.TOT_5 :=StrToFloat( FormatFloat('0.00',  Main.memFACTURATOTAL.AsFloat /
+        iFactura.TOT.TOT_5 :=
+          StrToFloat(FormatFloat('0.00', Main.memFACTURATOTAL.AsFloat /
           Main.memFACTURATASA.AsFloat));
         iFactura.TOT.TOT_6 := Main.memFACTURACOD_MONEDA.AsString;
-        iFactura.TOT.TOT_7 := StrToFloat( FormatFloat('0.00', Main.memFACTURATOTAL.AsFloat /
+        iFactura.TOT.TOT_7 :=
+          StrToFloat(FormatFloat('0.00', Main.memFACTURATOTAL.AsFloat /
           Main.memFACTURATASA.AsFloat));
         iFactura.TOT.TOT_8 := Main.memFACTURACOD_MONEDA.AsString;
-        iFactura.TOT.TOT_9 := StrToFloat( FormatFloat('0.00', Main.memFACTURADESTOTAL.AsFloat /
+        iFactura.TOT.TOT_9 :=
+          StrToFloat(FormatFloat('0.00', Main.memFACTURADESTOTAL.AsFloat /
           Main.memFACTURATASA.AsFloat));
         iFactura.TOT.TOT_10 := Main.memFACTURACOD_MONEDA.AsString;
-        iFactura.TOT.TOT_11 := StrToFloat( FormatFloat('0.00',  Main.memFACTURAOTROSCARGOS.AsFloat /
+        iFactura.TOT.TOT_11 :=
+          StrToFloat(FormatFloat('0.00', Main.memFACTURAOTROSCARGOS.AsFloat /
           Main.memFACTURATASA.AsFloat));
         iFactura.TOT.TOT_12 := Main.memFACTURACOD_MONEDA.AsString;
         iFactura.TOT.TOT_13 := 0;
@@ -230,37 +236,37 @@ begin
 
           while not Main.QFacImpuestos.Eof do
           begin
-            VlrIva := VlrIva +  Main.QFacImpuestosVLR_IVA.AsFloat;
-            VlrIco := VlrIco +  Main.QFacImpuestosVLR_CONSUMO.AsFloat;
+            VlrIva := VlrIva + Main.QFacImpuestosVLR_IVA.AsFloat;
+            VlrIco := VlrIco + Main.QFacImpuestosVLR_CONSUMO.AsFloat;
             Main.QFacImpuestos.Next;
           end;
 
-           if VlrIva <> 0 then
-            begin
-              iTIMLista := iFactura.TIM.Add;
-              iTIMLista.TIM_1 := 'false';
-              iTIMLista.TIM_2 := VlrIva;
-              iTIMLista.TIM_3 := Main.memFACTURACOD_MONEDA.AsString;
-              iTIMLista.IMP.IMP_1 := '01';
-              iTIMLista.IMP.IMP_2 := Main.QFacImpuestosBASE.AsInteger;
-              iTIMLista.IMP.IMP_3 := Main.memFACTURACOD_MONEDA.AsString;
-              iTIMLista.IMP.IMP_4 := VlrIva;
-              iTIMLista.IMP.IMP_5 := Main.memFACTURACOD_MONEDA.AsString;
-              iTIMLista.IMP.IMP_6 := Main.QFacImpuestosPORC_IVA.AsFloat;
-            end;
-            if Main.QFacImpuestosVLR_CONSUMO.AsFloat <> 0 then
-            begin
-              iTIMLista := iFactura.TIM.Add;
-              iTIMLista.TIM_1 := 'false';
-              iTIMLista.TIM_2 := VlrIco;
-              iTIMLista.TIM_3 := Main.memFACTURACOD_MONEDA.AsString;
-              iTIMLista.IMP.IMP_1 := '02';
-              iTIMLista.IMP.IMP_2 := Main.QFacImpuestosBASE.AsInteger;
-              iTIMLista.IMP.IMP_3 := Main.memFACTURACOD_MONEDA.AsString;
-              iTIMLista.IMP.IMP_4 := VlrIco;
-              iTIMLista.IMP.IMP_5 := Main.memFACTURACOD_MONEDA.AsString;
-              iTIMLista.IMP.IMP_6 := Main.QFacImpuestosPORC_CONSUMO.AsInteger;
-            end;
+          if VlrIva <> 0 then
+          begin
+            iTIMLista := iFactura.TIM.Add;
+            iTIMLista.TIM_1 := 'false';
+            iTIMLista.TIM_2 := VlrIva;
+            iTIMLista.TIM_3 := Main.memFACTURACOD_MONEDA.AsString;
+            iTIMLista.IMP.IMP_1 := '01';
+            iTIMLista.IMP.IMP_2 := Main.QFacImpuestosBASE.AsInteger;
+            iTIMLista.IMP.IMP_3 := Main.memFACTURACOD_MONEDA.AsString;
+            iTIMLista.IMP.IMP_4 := VlrIva;
+            iTIMLista.IMP.IMP_5 := Main.memFACTURACOD_MONEDA.AsString;
+            iTIMLista.IMP.IMP_6 := Main.QFacImpuestosPORC_IVA.AsFloat;
+          end;
+          if VlrIco <> 0 then
+          begin
+            iTIMLista := iFactura.TIM.Add;
+            iTIMLista.TIM_1 := 'false';
+            iTIMLista.TIM_2 := VlrIco;
+            iTIMLista.TIM_3 := Main.memFACTURACOD_MONEDA.AsString;
+            iTIMLista.IMP.IMP_1 := '02';
+            iTIMLista.IMP.IMP_2 := Main.QFacImpuestosBASE.AsInteger;
+            iTIMLista.IMP.IMP_3 := Main.memFACTURACOD_MONEDA.AsString;
+            iTIMLista.IMP.IMP_4 := VlrIco;
+            iTIMLista.IMP.IMP_5 := Main.memFACTURACOD_MONEDA.AsString;
+            iTIMLista.IMP.IMP_6 := Main.QFacImpuestosPORC_CONSUMO.AsInteger;
+          end;
           if Main.memFACTURARETIVA.AsFloat <> 0 then
           begin
             iOVTLista := iFactura.OVT.Add;
@@ -394,12 +400,11 @@ begin
         iFactura.NOT_.Add.NOT_1 := '6.-' + Main.memFACTURADIAS_PAGO.AsString
           + ' Dias';
 
- // ORDEN DE COMPRA
+        // ORDEN DE COMPRA
         if Main.MemFacturaOCNUMERO.AsString <> '' then
         begin
 
-
-           iFactura.ORC.ORC_1 := Main.MemFacturaOCNUMERO.AsString;
+          iFactura.ORC.ORC_1 := Main.MemFacturaOCNUMERO.AsString;
         end;
 
         // MEDIO DE PAGO
@@ -441,10 +446,12 @@ begin
           end;
           iITELista.ITE_3 := Main.QFacDetalleQTYSHIP.AsFloat;
           iITELista.ITE_4 := Main.QFacDetalleUOFMSALES.AsString;
-          iITELista.ITE_5 := StrToFloat( FormatFloat('0.00', Main.QFacDetalleEXTEND.AsFloat /
+          iITELista.ITE_5 :=
+            StrToFloat(FormatFloat('0.00', Main.QFacDetalleEXTEND.AsFloat /
             Main.memFACTURATASA.AsFloat));
           iITELista.ITE_6 := Main.memFACTURACOD_MONEDA.AsString;
-          iITELista.ITE_7 := StrToFloat( FormatFloat('0.00', Main.QFacDetallePRICE.AsFloat /
+          iITELista.ITE_7 :=
+            StrToFloat(FormatFloat('0.00', Main.QFacDetallePRICE.AsFloat /
             Main.memFACTURATASA.AsFloat));
           iITELista.ITE_8 := Main.memFACTURACOD_MONEDA.AsString;
           iITELista.ITE_9 := Main.QFacDetalleITEM.AsString;
@@ -454,10 +461,12 @@ begin
             Main.QFacDetalleUNIDAD.AsString;
           iITELista.ITE_17 := Main.QFacDetalleITEM.AsString;
           iITELista.ITE_18 := Main.QFacDetalleITEM.AsString;
-          iITELista.ITE_19 := StrToFloat( FormatFloat('0.00', Main.QFacDetalleBASE.AsFloat /
+          iITELista.ITE_19 :=
+            StrToFloat(FormatFloat('0.00', Main.QFacDetalleBASE.AsFloat /
             Main.memFACTURATASA.AsFloat));
           iITELista.ITE_20 := Main.memFACTURACOD_MONEDA.AsString;
-          iITELista.ITE_21 := StrToFloat( FormatFloat('0.00', Main.QFacDetalleBASE.AsFloat /
+          iITELista.ITE_21 :=
+            StrToFloat(FormatFloat('0.00', Main.QFacDetalleBASE.AsFloat /
             Main.memFACTURATASA.AsFloat));
           iITELista.ITE_22 := Main.memFACTURACOD_MONEDA.AsString;
           // DESCUENTO DEL ITEM
@@ -465,10 +474,12 @@ begin
           BEGIN
             iITEIDELista := iITELista.IDE.Add;
             iITEIDELista.IDE_1 := 'false';
-            iITEIDELista.IDE_2 := StrToFloat( FormatFloat('0.00', Main.QFacDetalleTOTALDCT.AsFloat /
+            iITEIDELista.IDE_2 :=
+              StrToFloat(FormatFloat('0.00', Main.QFacDetalleTOTALDCT.AsFloat /
               Main.memFACTURATASA.AsFloat));
             iITEIDELista.IDE_3 := Main.memFACTURACOD_MONEDA.AsString;
-            iITEIDELista.IDE_7 := StrToFloat( FormatFloat('0.00', Main.QFacDetalleEXTEND.AsFloat /
+            iITEIDELista.IDE_7 :=
+              StrToFloat(FormatFloat('0.00', Main.QFacDetalleEXTEND.AsFloat /
               Main.memFACTURATASA.AsFloat));
             iITEIDELista.IDE_8 := Main.memFACTURACOD_MONEDA.AsString;
           END
@@ -478,17 +489,18 @@ begin
             iITEIDELista.IDE_1 := 'false';
             iITEIDELista.IDE_2 := 0;
             iITEIDELista.IDE_3 := Main.memFACTURACOD_MONEDA.AsString;
-            iITEIDELista.IDE_7 := StrToFloat( FormatFloat('0.00', Main.QFacDetalleEXTEND.AsFloat /
+            iITEIDELista.IDE_7 :=
+              StrToFloat(FormatFloat('0.00', Main.QFacDetalleEXTEND.AsFloat /
               Main.memFACTURATASA.AsFloat));
             iITEIDELista.IDE_8 := Main.memFACTURACOD_MONEDA.AsString;
           END;
           // ORDEN DE COMPRA
-        if Main.MemFacturaOCNUMERO.AsString <> '' then
-        begin
-          iITEIRFLista := iITELista.IRF.Add;
-          iITEIRFLista.IRF_1 := 'ON';
-          iITEIRFLista.IRF_2 := Main.MemFacturaOCNUMERO.AsString;
-        end;
+          if Main.MemFacturaOCNUMERO.AsString <> '' then
+          begin
+            iITEIRFLista := iITELista.IRF.Add;
+            iITEIRFLista.IRF_1 := 'ON';
+            iITEIRFLista.IRF_2 := Main.MemFacturaOCNUMERO.AsString;
+          end;
 
           // IMPUESTOS DEL ITEM
           if Main.QFacDetalleVLR_IVA.AsFloat <> 0 then
@@ -521,14 +533,14 @@ begin
           END;
           Main.QFacDetalle.Next;
         END;
-         vStringStream := TStringStream.Create(iFactura.Xml);
-         try
-         vStringStream.SaveToFile(Main.vRuta + '/' +
-         Main.memFACTURATIPO.AsString + Main.memFACTURANUMERO.AsString
-         + '.xml');
-         finally
-         vStringStream.DisposeOf;
-         end;
+        vStringStream := TStringStream.Create(iFactura.Xml);
+        try
+          vStringStream.SaveToFile(Main.vRuta + '/' +
+            Main.memFACTURATIPO.AsString + Main.memFACTURANUMERO.AsString
+            + '.xml');
+        finally
+          vStringStream.DisposeOf;
+        end;
         vArchivo := TStringStream.Create(iFactura.Xml);
         vArchivoDest := TStringStream.Create;
         System.NetEncoding.TBase64Encoding.Base64.Encode(vArchivo,
@@ -982,6 +994,8 @@ end;
 
 procedure PCarvajal.EnviarDevoluciones;
 var
+  VlrIva: Double;
+  VlrIco: Double;
   docRes: DocumentStatusResponse;
   docReq: DocumentStatusRequest;
   MyRIO: THTTPRIO;
@@ -1122,35 +1136,43 @@ begin
           Main.memDevolucionNUMBER.AsInteger;
         Main.QDevImpuestos.Open;
         Main.QDevImpuestos.First;
+
+        VlrIva := 0;
+        VlrIco := 0;
+
         while not Main.QDevImpuestos.Eof do
         begin
-          if Main.QDevImpuestosVLR_IVA.AsFloat <> 0 then
-          begin
-            iTIMLista := iFactura.TIM.Add;
-            iTIMLista.TIM_1 := 'false';
-            iTIMLista.TIM_2 := Main.QDevImpuestosVLR_IVA.AsInteger;
-            iTIMLista.TIM_3 := Main.memDevolucionCOD_MONEDA.AsString;
-            iTIMLista.IMP.IMP_1 := '01';
-            iTIMLista.IMP.IMP_2 := Main.QDevImpuestosBASE.AsInteger;
-            iTIMLista.IMP.IMP_3 := Main.memDevolucionCOD_MONEDA.AsString;
-            iTIMLista.IMP.IMP_4 := Main.QDevImpuestosVLR_IVA.AsInteger;
-            iTIMLista.IMP.IMP_5 := Main.memDevolucionCOD_MONEDA.AsString;
-            iTIMLista.IMP.IMP_6 := Main.QDevImpuestosPORC_IVA.AsInteger;
-          end;
-          if Main.QDevImpuestosVLR_CONSUMO.AsFloat <> 0 then
-          begin
-            iTIMLista := iFactura.TIM.Add;
-            iTIMLista.TIM_1 := 'false';
-            iTIMLista.TIM_2 := Main.QDevImpuestosVLR_CONSUMO.AsInteger;
-            iTIMLista.TIM_3 := Main.memDevolucionCOD_MONEDA.AsString;
-            iTIMLista.IMP.IMP_1 := '02';
-            iTIMLista.IMP.IMP_2 := Main.QDevImpuestosBASE.AsInteger;
-            iTIMLista.IMP.IMP_3 := Main.memDevolucionCOD_MONEDA.AsString;
-            iTIMLista.IMP.IMP_4 := Main.QDevImpuestosVLR_CONSUMO.AsInteger;
-            iTIMLista.IMP.IMP_5 := Main.memDevolucionCOD_MONEDA.AsString;
-            iTIMLista.IMP.IMP_6 := Main.QDevImpuestosPORC_CONSUMO.AsInteger;
-          end;
+          VlrIva := VlrIva + Main.QDevImpuestosVLR_IVA.AsFloat;
+          VlrIco := VlrIco + Main.QDevImpuestosVLR_CONSUMO.AsFloat;
+
           Main.QDevImpuestos.Next;
+        end;
+
+        if VlrIva <> 0 then
+        begin
+          iTIMLista := iFactura.TIM.Add;
+          iTIMLista.TIM_1 := 'false';
+          iTIMLista.TIM_2 := VlrIva;
+          iTIMLista.TIM_3 := Main.memDevolucionCOD_MONEDA.AsString;
+          iTIMLista.IMP.IMP_1 := '01';
+          iTIMLista.IMP.IMP_2 := Main.QDevImpuestosBASE.AsInteger;
+          iTIMLista.IMP.IMP_3 := Main.memDevolucionCOD_MONEDA.AsString;
+          iTIMLista.IMP.IMP_4 := VlrIva;
+          iTIMLista.IMP.IMP_5 := Main.memDevolucionCOD_MONEDA.AsString;
+          iTIMLista.IMP.IMP_6 := Main.QDevImpuestosPORC_IVA.AsInteger;
+        end;
+        if VlrIco <> 0 then
+        begin
+          iTIMLista := iFactura.TIM.Add;
+          iTIMLista.TIM_1 := 'false';
+          iTIMLista.TIM_2 := VlrIco;
+          iTIMLista.TIM_3 := Main.memDevolucionCOD_MONEDA.AsString;
+          iTIMLista.IMP.IMP_1 := '02';
+          iTIMLista.IMP.IMP_2 := Main.QDevImpuestosBASE.AsInteger;
+          iTIMLista.IMP.IMP_3 := Main.memDevolucionCOD_MONEDA.AsString;
+          iTIMLista.IMP.IMP_4 := VlrIco;
+          iTIMLista.IMP.IMP_5 := Main.memDevolucionCOD_MONEDA.AsString;
+          iTIMLista.IMP.IMP_6 := Main.QDevImpuestosPORC_CONSUMO.AsInteger;
         end;
         if Main.memDevolucionRETIVA.AsFloat <> 0 then
         begin
